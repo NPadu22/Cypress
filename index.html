@@ -238,6 +238,11 @@ ol.rules li::before{content:counter(r);width:26px;height:26px;border-radius:7px;
 #bg text{font:800 44px var(--display);fill:var(--fg);opacity:.06}
 .app{position:relative;z-index:1}
 .hr{height:1px;background:var(--line);margin:4px 0}
+.fold summary{align-items:center}
+.fold.flag{border-color:color-mix(in srgb,var(--stop) 55%,var(--line))}
+.fsum{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.fsum .stamp{font-weight:400}
+.fold .chip{margin-left:auto}
 .a2hs{position:fixed;inset:0;z-index:90;background:rgba(0,12,31,.6);display:flex;align-items:flex-end;justify-content:center;padding:12px 12px calc(12px + env(safe-area-inset-bottom));animation:wuIn .25s ease both}
 .a2hs.out{animation:wuOut .3s ease forwards}
 .a2-sheet{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 18px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.45)}
@@ -371,16 +376,16 @@ const GUIDES={
 
 /* Basics: general sports nutrition for every athlete */
 const BASICS=[
- {n:"Eat often",d:"Eat 3 meals and 2–3 snacks every day. Don't skip breakfast.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
- {n:"Carbs are your fuel",d:"Rice, pasta, bread, tortillas, potatoes, oats and fruit power your training. Eat more on hard days.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
- {n:"Protein at every meal",d:"Chicken, eggs, fish, beef, Greek yogurt, milk, beans or tofu. It helps your muscles recover.",s:"Morton et al., Br J Sports Med 2018"},
- {n:"Add color",d:"Fruits and veggies at every meal give you vitamins that help you recover and stay healthy.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
- {n:"Some healthy fat",d:"Nuts, avocado, olive oil and fish are good. Keep portions small right before training.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
- {n:"Drink all day",d:"Carry a bottle everywhere. Pale-yellow pee means you're on track.",s:"ACSM Position Stand: Exercise and Fluid Replacement, 2007"},
- {n:"Fuel before, refuel after",d:"Eat before you train. Within an hour after, eat carbs + protein.",s:"ISSN Position Stand: Nutrient Timing, 2017"},
- {n:"Sleep is recovery",d:"Get at least 7–9 hours. Your body repairs while you sleep.",s:"AASM/SRS Consensus on Sleep Duration for Adults, 2015"},
- {n:"Eat enough",d:"Not eating enough makes you tired, slow and more likely to get hurt or sick.",s:"IOC Consensus Statement on REDs, 2023"},
- {n:"Food first",d:"Supplements come last. Check with {rd} first, and only use NSF Certified for Sport products.",s:"IOC Consensus Statement on Dietary Supplements, 2018"}
+ {n:"Eat often",d:"3 meals + 2–3 snacks. Never skip breakfast.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
+ {n:"Carbs are your fuel",d:"Rice, pasta, bread, oats, fruit. More on hard days.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
+ {n:"Protein at every meal",d:"Chicken, eggs, fish, yogurt, beans or tofu.",s:"Morton et al., Br J Sports Med 2018"},
+ {n:"Add color",d:"Fruits and veggies at every meal.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
+ {n:"Some healthy fat",d:"Nuts, avocado, olive oil. Small portions before training.",s:"ACSM/AND/DC Joint Position Statement, 2016"},
+ {n:"Drink all day",d:"Carry a bottle. Aim for pale-yellow pee.",s:"ACSM Position Stand: Exercise and Fluid Replacement, 2007"},
+ {n:"Fuel before, refuel after",d:"Eat before. Carbs + protein within an hour after.",s:"ISSN Position Stand: Nutrient Timing, 2017"},
+ {n:"Sleep is recovery",d:"7–9 hours. Your body repairs while you sleep.",s:"AASM/SRS Consensus on Sleep Duration for Adults, 2015"},
+ {n:"Eat enough",d:"Under-eating = tired, slow, hurt or sick.",s:"IOC Consensus Statement on REDs, 2023"},
+ {n:"Food first",d:"Supplements last. Ask {rd}. NSF Certified for Sport only.",s:"IOC Consensus Statement on Dietary Supplements, 2018"}
 ];
 const PLATES=[["Easy day","Rest or light practice",[25,25,50]],["Normal day","Regular practice or lift",[33,33,34]],["Hard day","Games, two-a-days, tournaments",[50,25,25]]];
 /* Three simple rules per sport */
@@ -601,8 +606,9 @@ function vHydro(){
   <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">Today</p><div class="pct">${oz}<small> / ${goal} oz</small></div></div><span class="chip ${h.n>=need?"ok":"gold"}">${h.n}/${need} bottles</span></div>
   <div class="bottles" role="group" aria-label="Bottles, ${BOTTLE} oz each">${Array.from({length:slots},(_,i)=>`<button class="btl" data-btl="${i}" aria-pressed="${i<h.n}" aria-label="Bottle ${i+1}"><svg viewBox="0 0 24 40"><path d="M9 2h6v4l3 4v26a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10l3-4z"/><rect class="fill" x="7.5" y="14" width="9" height="22.5" rx="1"/></svg></button>`).join("")}</div>
   <p class="stamp">1 bottle = ${BOTTLE} oz</p>
+  <details class="mdet"><summary>Adjust for training and heat</summary><div class="ans">
   <div class="stack" style="gap:6px"><span class="eyebrow">Training today</span><div class="choice">${[0,1,2,3,4].map(v=>`<button data-hhrs="${v}" aria-pressed="${h.hrs===v}">${v===4?"4+ hrs":v+" hr"+(v===1?"":"s")}</button>`).join("")}</div></div>
-  <div class="stack" style="gap:6px"><span class="eyebrow">Conditions</span><div class="choice">${[["cool","Cool"],["warm","Warm"],["hot","Hot (85°F+)"],["pool","Pool"]].map(([v,l])=>`<button data-hcond="${v}" aria-pressed="${h.cond===v}">${l}</button>`).join("")}</div></div>
+  <div class="stack" style="gap:6px"><span class="eyebrow">Conditions</span><div class="choice">${[["cool","Cool"],["warm","Warm"],["hot","Hot (85°F+)"],["pool","Pool"]].map(([v,l])=>`<button data-hcond="${v}" aria-pressed="${h.cond===v}">${l}</button>`).join("")}</div></div></div></details>
   <p class="small">Pale-yellow pee = good. Dark = drink more.</p>
   <p class="src">Starting goal; a sweat test gives your real number. IOM 2005; ACSM 2007</p>
  </div></section>`;
@@ -1026,7 +1032,7 @@ const MP_PLATE={easy:"Easy plate",practice:"Practice plate",match:"Big-day plate
 const MP_DAYTYPES=[["rest","Rest / light"],["practice","Practice"],["double","Two-a-day"],["match","Game day"]];
 function myArea(){return AREAS.find(a=>a.k===(profile&&profile.area))||null}
 function areaPicker(){return `<label for="area-pick" class="card" style="gap:8px">Where do you live? Picks adapt to your area.<select id="area-pick" data-areapick="1"><option value="">Choose your area</option>${AREAS.map(a=>`<option value="${a.k}" ${profile.area===a.k?"selected":""}>${esc(a.n)}</option>`).join("")}<option value="other" ${profile.area==="other"?"selected":""}>Somewhere else</option></select></label>`}
-function areaListHTML(a,title){return `<section><h2>${esc(title)}</h2>${a.eat.map(x=>`<div class="card stack" style="gap:6px"><div><h3>${esc(x.n)}</h3>${x.t?`<span class="stamp">${esc(x.t)}</span>`:""}</div><p class="muted">${esc(x.d)}</p></div>`).join("")}</section>`}
+function areaListHTML(a,title){return `<section><h2>${esc(title)}</h2><div class="stack" style="gap:8px">${a.eat.map(x=>`<details class="fold"><summary><span class="fsum"><b>${esc(x.n)}</b>${x.t?`<span class="stamp">${esc(x.t)}</span>`:""}</span></summary><div class="ans"><p class="small">${esc(x.d)}</p></div></details>`).join("")}</div></section>`}
 function clock(min){min=((min%1440)+1440)%1440;let h=Math.floor(min/60),m=min%60;const ap=h>=12?"pm":"am";h=h%12||12;return h+":"+String(m).padStart(2,"0")+" "+ap}
 function dowShort(iso){return new Date(iso+"T12:00:00").toLocaleDateString("en-US",{weekday:"short"}).toUpperCase()}
 let PLANPREF=Object.assign({pt:"pm",veg:false,days:{},sel:{},got:{}},store.get("planpref",{}));
@@ -1093,11 +1099,9 @@ function planHTML(){
      const pick=pickFor(type,i,x.bank,iso),done=pick&&isToday&&(J.days[iso]||[]).some(e=>e.what===pick.n),n=mealOptions(x.bank).length;
      return `<div class="mp-step"><span class="mp-when">${clock(x.t)}</span><div class="stack" style="gap:4px"><span class="eyebrow">${esc(x.n)}${x.plate?` · ${MP_PLATE[x.plate]}`:""}</span>
       ${pick?`<b>${esc(pick.n)}</b>`:`<b>No option fits your allergies here</b><p class="small">Ask ${esc(rdName())} for a swap.</p>`}
-      ${BANKNOTE[x.bank]?`<p class="muted small">${BANKNOTE[x.bank]}</p>`:""}
       ${pick&&pick.r?`<details class="mdet"><summary>How to make it</summary><div class="ans"><p class="small">${esc(pick.r)}</p>${pick.g&&pick.g.length?`<p class="stamp">You'll need: ${esc(pick.g.map(k=>(ING[k]||[k])[0].toLowerCase()).join(", "))}</p>`:""}</div></details>`:""}
       ${pick?`<div class="row" style="gap:8px;flex-wrap:wrap">${n>1?`<button class="btn ghost sm" data-planswap="${iso}:${type}:${PLANPREF.pt}:${i}">Swap</button>`:""}${isToday?`<button class="btn sm ${done?"ghost":""}" data-planlog="${i}">${done?"Logged ✓":"Log it"}</button>`:""}</div>`:""}</div></div>`}).join("")}
   </div></section>
-  <div class="card stack"><span class="eyebrow">The plates</span><p class="small">Easy plate: half fruit and vegetables, a quarter grains, a quarter protein. Practice plate: equal thirds. Big-day plate: half grains and starches. Add a little healthy fat and a drink every time.</p></div>
   ${grocery}
   <p class="src">Thomas, Erdman & Burke, ACSM/AND/DC position stand 2016; Kerksick et al., ISSN nutrient timing 2017; USOPC & University of Colorado Athlete's Plates</p>`;
 }
@@ -1122,39 +1126,38 @@ const CAMPUS=[
  {n:"Charger Café",where:"Student Center, 1st floor (in front of Admissions & Records)",hours:"Mon–Thu 8 am–3 pm · Fri 8 am–2 pm (semester)",tips:["Build a plate: a carb (rice, pasta, bread, potatoes) + a protein + fruit or veggies.","Morning practice? Grab breakfast here first.","After practice: a sandwich or hot plate plus milk or fruit covers carbs + protein."]},
  {n:"Cypresso",where:"Building 20, next to the Bookstore",hours:"Mon–Thu 7 am–6 pm · Fri 7 am–2 pm (semester) · cards only",tips:["Sandwiches + a milk-based drink (latte or chocolate milk) give carbs and protein.","Pastries are a quick carb, not a meal. Pair one with protein.","Watch the caffeine late in the day. It can wreck your sleep."]}
 ];
-const VENDING={snack:{where:"16 machines: Business, Cypress College Complex, Fine Arts, Gym, Library, Men's Locker Room and Tech Ed 3",best:[["Pretzels or baked chips","Quick carbs before practice",["Wheat/Gluten"]],["Granola or cereal bar","Carbs to bridge a long day",["Wheat/Gluten","Tree nut"]],["Peanuts, trail mix or nuts","Protein and fat; better after practice than right before",["Peanut","Tree nut"]],["Jerky","Protein that travels",["Soy"]],["Water or a sports drink","Sports drink for long, hot sessions",[]]],skip:"Skip energy drinks and candy as a meal. They don't refuel you."},
- hot:{where:"Foodture hot-food machines, open 24/7: north side of the Cypress College Complex, 1st floor, next to DSS",best:[["Chicken teriyaki with fried rice","Best pick: carbs + protein in one",["Soy","Wheat/Gluten","Egg"]],["Chicken chili","Protein-rich; add crackers or bread for carbs",[]],["Meatball pasta","Carbs + protein after practice",["Wheat/Gluten","Dairy","Egg"]],["Pizza or mac & cheese","Plenty of carbs, light on protein. Add a milk or a jerky stick",["Wheat/Gluten","Dairy"]],["Gluten-free margherita pizza","Option if you avoid gluten. Still check the label",["Dairy"]]]}};
+const VENDING={snack:{where:"Gym, Library, Business, Fine Arts, Tech Ed 3 and more",best:[["Pretzels or baked chips","Quick carbs pre-practice",["Wheat/Gluten"]],["Granola or cereal bar","Carbs for a long day",["Wheat/Gluten","Tree nut"]],["Peanuts, trail mix or nuts","Better after practice",["Peanut","Tree nut"]],["Jerky","Protein on the go",["Soy"]],["Water or a sports drink","Sports drink for long, hot sessions",[]]],skip:"Skip energy drinks and candy as a meal."},
+ hot:{where:"Open 24/7 · Cypress College Complex, 1st floor, by DSS",best:[["Chicken teriyaki with fried rice","Best pick: carbs + protein",["Soy","Wheat/Gluten","Egg"]],["Chicken chili","Add crackers for carbs",[]],["Meatball pasta","Good after practice",["Wheat/Gluten","Dairy","Egg"]],["Pizza or mac & cheese","Add milk or jerky for protein",["Wheat/Gluten","Dairy"]],["Gluten-free margherita pizza","Gluten-free option",["Dairy"]]]}};
 const STASH=[
  {g:"Quick carbs",items:[["Pretzels",["Wheat/Gluten"]],["Rice cakes",[]],["Dried fruit (raisins, mango)",[]],["Applesauce or fruit pouches",[]],["Fig bars",["Wheat/Gluten"]],["Instant oatmeal cups",[]],["Graham crackers",["Wheat/Gluten"]]]},
  {g:"Protein",items:[["Tuna or chicken pouches",["Fish"]],["Beef or turkey jerky",["Soy"]],["Shelf-stable milk boxes",["Dairy"]],["Shelf-stable soy milk boxes",["Soy"]],["Roasted chickpeas or edamame",["Soy"]],["Peanut or nut butter packets",["Peanut","Tree nut"]],["Sunflower seed butter packets",[]],["Protein bar (third-party tested)",["Dairy","Soy"]]]},
  {g:"Hydration",items:[["Empty water bottle",[]],["Electrolyte packets",[]]]},
  {g:"Handy extras",items:[["Spoon and napkins",[]],["Zip bags",[]],["Wet wipes",[]]]}
 ];
-const STASH_COMBOS=[["Tuna pouch + crackers + applesauce","Carbs + protein after practice"],["Nut or seed butter packet + rice cakes + milk box","Recovery that never needs a fridge"],["Jerky + pretzels + dried fruit","Long day between classes"],["Oatmeal cup + soy or dairy milk box","Breakfast when there's no time"]];
+const STASH_COMBOS=[["Tuna pouch + crackers + applesauce","Good after practice"],["Nut or seed butter packet + rice cakes + milk box","Recovery that never needs a fridge"],["Jerky + pretzels + dried fruit","Long day between classes"],["Oatmeal cup + soy or dairy milk box","Breakfast when there's no time"]];
 function vCampus(){
  const tagRow=a=>a.length?`<div class="tags">${a.map(x=>`<span class="chip ${myAllergens().includes(x)?"stop":""}">${esc(x)}</span>`).join("")}</div>`:"";
- const list=(L)=>L.map(([n,d,a])=>`<div class="basic" style="grid-template-columns:1fr"><div class="stack" style="gap:4px"><div class="row"><b class="grow">${esc(n)}</b>${hits(a).length?`<span class="chip stop">Has your allergen</span>`:""}</div><p class="muted small">${esc(d)}</p>${tagRow(a)}</div></div>`).join("");
+ const list=(L)=>L.map(([n,d,a])=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--line);align-items:flex-start"><div class="grow"><b class="small">${esc(n)}</b><p class="muted small">${esc(d)}</p></div>${hits(a).length?`<span class="chip stop">${esc(hits(a).join(", "))}</span>`:""}</div>`).join("");
  return `
-  ${CAMPUS.map(c=>`<div class="card stack"><div><h3>${esc(c.n)}</h3><span class="stamp">${esc(c.where)}</span></div><p class="small"><b>${esc(c.hours)}</b></p><ul class="clean small">${c.tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}
+  ${CAMPUS.map(c=>`<details class="fold"><summary><span class="fsum"><b>${esc(c.n)}</b><span class="stamp">${esc(c.hours)}</span></span></summary><div class="ans"><p class="stamp">${esc(c.where)}</p><ul class="clean small">${c.tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>`).join("")}
   <section><h2>Hot-food vending</h2><div class="card stack" style="gap:2px"><p class="stamp">${esc(VENDING.hot.where)}</p>${list(VENDING.hot.best)}</div></section>
-  <section><h2>Snack vending</h2><div class="card stack" style="gap:2px"><p class="stamp">${esc(VENDING.snack.where)}</p>${list(VENDING.snack.best)}<p class="small" style="padding-top:8px">${esc(VENDING.snack.skip)}</p></div></section>
-  <a class="btn ghost block" href="https://www.cypresscollege.edu/food-services" target="_blank" rel="noopener">Food Services hours and menus</a>`;
+  <section><h2>Snack vending</h2><div class="card stack" style="gap:2px"><p class="stamp">${esc(VENDING.snack.where)}</p>${list(VENDING.snack.best)}<p class="stamp" style="padding-top:8px">${esc(VENDING.snack.skip)}</p></div></section>
+  <a class="linkbtn" href="https://www.cypresscollege.edu/food-services" target="_blank" rel="noopener">Hours can change: Food Services page</a>`;
 }
 function vStash(){
  return `<p class="muted small">No fridge needed. Keep them in your backpack or gym bag.</p>
-  ${STASH.map(s=>`<section><h2>${esc(s.g)}</h2><div class="card stack" style="gap:2px">${s.items.map(([n,a])=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line)"><span class="grow">${esc(n)}</span>${hits(a).length?`<span class="chip stop">${esc(hits(a).join(", "))}</span>`:a.length?`<span class="stamp">${esc(a.join(", "))}</span>`:""}</div>`).join("")}</div></section>`).join("")}
+  ${STASH.map(s=>`<section><h2>${esc(s.g)}</h2><div class="card stack" style="gap:2px">${s.items.map(([n,a])=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line)"><span class="grow">${esc(n)}</span>${hits(a).length?`<span class="chip stop">${esc(hits(a).join(", "))}</span>`:""}</div>`).join("")}</div></section>`).join("")}
   <section><h2>Grab-and-go combos</h2><div class="card stack" style="gap:2px">${STASH_COMBOS.map(([n,d],i)=>`<div class="basic"><span class="bnum">${i+1}</span><div><b>${esc(n)}</b><p class="muted small">${esc(d)}</p></div></div>`).join("")}</div></section>
-  <div class="goldbox"><b>Keep your stash fresh</b><p class="small">Check dates and restock every few weeks. Cars and gym bags get hot, so skip chocolate and anything that melts. Toss any pouch or box that's swollen or leaking. Protein bars: only third-party tested ones (NSF Certified for Sport or Informed Sport).</p></div>
+  <details class="fold"><summary><span class="fsum"><b>Keep it fresh</b></span></summary><div class="ans"><p class="small">Restock every few weeks. Skip anything that melts. Toss swollen or leaking pouches. Protein bars: NSF Certified for Sport or Informed Sport only.</p></div></details>
   <p class="src">Source: USDA FSIS, Shelf-Stable Food Safety; ACSM/AND/DC Joint Position Statement, 2016</p>`;
 }
 let eatSeg="plan";
 function vEat(){
  const segs=[["plan","Plan"],["campus","Campus"],["out","Eat out"],["pack","Pack"],["shop","Groceries"]];
  if(!segs.some(x=>x[0]===eatSeg))eatSeg=({near:"campus",home:"out",chain:"out",stash:"pack",bag:"pack",road:"pack",grocery:"shop",free:"shop"})[eatSeg]||"plan";
- const placeCard=p=>{const h=hits(p.a);return `<div class="card place ${h.length?"flag":""}">
-   <div class="row"><div class="grow"><h3>${esc(p.n)}</h3>${p.where?`<span class="stamp">${esc(p.where)}</span>`:""}</div>${h.length?`<span class="chip stop">Has your allergen</span>`:""}</div>
-   <div class="order"><span class="eyebrow">Train day</span><span>${esc(p.train)}</span><span class="eyebrow">Light day</span><span>${esc(p.light)}</span></div>
-   ${p.a&&p.a.length?`<div class="tags">${p.a.map(a=>`<span class="chip ${myAllergens().includes(a)?"stop":""}">${esc(a)}</span>`).join("")}</div>`:""}</div>`};
+ const placeCard=p=>{const h=hits(p.a);return `<details class="fold ${h.length?"flag":""}"><summary><span class="fsum"><b>${esc(p.n)}</b>${p.where?`<span class="stamp">${esc(p.where)}</span>`:""}</span>${h.length?`<span class="chip stop">Allergen</span>`:""}</summary>
+   <div class="ans"><div class="order"><span class="eyebrow">Train day</span><span>${esc(p.train)}</span><span class="eyebrow">Light day</span><span>${esc(p.light)}</span></div>
+   ${p.a&&p.a.length?`<div class="tags">${p.a.map(a=>`<span class="chip ${myAllergens().includes(a)?"stop":""}">${esc(a)}</span>`).join("")}</div>`:""}</div></details>`};
  const places=g=>DATA.places.filter(p=>p.g===g).map(placeCard).join("")||`<p class="muted">Nothing listed yet.</p>`;
  const A=myArea();
  let body="";
@@ -1165,18 +1168,18 @@ function vEat(){
  }else if(eatSeg==="out"){
   body=areaPicker()+(A?areaListHTML(A,"Near you: "+A.short):profile.area==="other"?`<p class="muted small">Your area isn't listed yet. Tell ${esc(rdName())} where you live so we can add it.</p>`:"")+`<section><h2>Chains</h2>${places("Chain")}</section><p class="stamp">Tags show common allergens in each order. Always check the restaurant's allergen guide.</p>`;
  }else if(eatSeg==="pack"){
-  body=vStash()+`<section><h2>Build your bag</h2>${vBag()}</section><section><h2>Road trips</h2>${ROAD.map(r=>`<div class="card stack" style="gap:6px"><h3>${esc(r.n)}</h3><p class="muted small">${esc(r.d)}</p></div>`).join("")}</section>`;
+  body=vStash()+`<section><h2>Build your bag</h2>${vBag()}</section><section><h2>Road trips</h2><div class="stack" style="gap:8px">${ROAD.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }else{
   body=`<section><h2>Free groceries</h2>${`<div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
     <p class="small">Free for enrolled Cypress students. By appointment.</p>
-    <div class="order"><span class="eyebrow">Where</span><span>Student Life & Leadership, Building 8 (next to the Veterans Resource Center)</span>
+    <div class="order"><span class="eyebrow">Where</span><span>Building 8, Student Life & Leadership</span>
     <span class="eyebrow">Contact</span><span>basicneeds@cypresscollege.edu · (714) 484-7309</span></div>
     <a class="btn block" href="https://portal.soxbox.co/pantry/cypress-college" target="_blank" rel="noopener">Book a pantry visit</a>
-    <a class="btn ghost block" href="https://www.cypresscollege.edu/student-life/student-activities/food-bank/" target="_blank" rel="noopener">Hours and details</a>
-    <p class="stamp">Hours change by semester. Check the college page before you go.</p></div>
-   <div class="card stack"><h3>Make pantry food work for training</h3><ul class="clean"><li>Grab carbs (rice, pasta, oats, bread, cereal) and pair with protein (canned beans, tuna, peanut butter, eggs if offered).</li><li>Canned fruit and vegetables count. Rinse canned beans and vegetables to cut sodium.</li><li>Ask Basic Needs about CalFresh. Many college students qualify for monthly food benefits.</li></ul></div>
-   <div class="goldbox"><b>Short on food? Tell us.</b><p class="small">It's confidential, and it changes how we plan with you. Book a consult in the RD tab.</p></div>`}</section>`+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+GROCERY.map(s=>`<div class="card stack"><div><h3>${esc(s.n)}</h3><span class="stamp">${esc(s.where)}</span></div><p class="muted small">${esc(s.tip)}</p><ul class="clean">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div>`).join("")+
-   `<section><h2>Quick recipes</h2>${RECIPES.map(r=>`<div class="card tight stack" style="gap:4px"><div class="row"><b class="grow">${esc(r.n)}</b><span class="chip">${esc(r.t)}</span></div><p class="muted small">${esc(r.d)}</p></div>`).join("")}</section>`;
+    <a class="linkbtn" href="https://www.cypresscollege.edu/student-life/student-activities/food-bank/" target="_blank" rel="noopener">Hours and details</a>
+    </div>
+   <details class="fold"><summary><span class="fsum"><b>Make pantry food work for training</b></span></summary><div class="ans"><ul class="clean small"><li>Grab carbs (rice, pasta, oats, bread, cereal) and pair with protein (canned beans, tuna, peanut butter, eggs if offered).</li><li>Canned fruit and vegetables count. Rinse canned beans and vegetables to cut sodium.</li><li>Ask Basic Needs about CalFresh. Many college students qualify for monthly food benefits.</li></ul></div></details>
+   <p class="small"><b>Short on food?</b> Tell us. It's confidential.</p>`}</section>`+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+`<section><h2>Store lists</h2><div class="stack" style="gap:8px">`+GROCERY.map(s=>`<details class="fold"><summary><span class="fsum"><b>${esc(s.n)}</b><span class="stamp">${esc(s.where)}</span></span></summary><div class="ans"><p class="stamp">${esc(s.tip)}</p><ul class="clean small">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div></details>`).join("")+`</div></section>`+
+   `<section><h2>Quick recipes</h2><div class="stack" style="gap:8px">${RECIPES.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b><span class="stamp">${esc(r.t)}</span></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }
  return `<div class="view"><div><p class="eyebrow">No dining hall. No excuses.</p><h1 style="margin-top:6px">Eat</h1></div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
@@ -1187,9 +1190,9 @@ function vEat(){
 function vInjury(){
  return `<p class="muted small">Hurt? Healing runs on food. Don't skip meals.</p>
   <div class="stack">${REHAB.map(f=>`<details><summary>${esc(f.q)}</summary><div class="ans">${f.a.map(p=>`<p>${esc(p)}</p>`).join("")}<p class="src">Source: ${esc(f.s)}</p></div></details>`).join("")}</div>
-  <section><h2>Creatine</h2><div class="card stack">${CREATINE.a.map(p=>`<p>${fillRd(esc(p))}</p>`).join("")}<p class="src">Source: ${esc(CREATINE.s)}</p></div></section>
-  <section><h2>Fuel that protects you</h2><div class="card stack">${PREHAB_FUEL.map(f=>`<div><b>${esc(f.n)}</b><p class="muted small">${esc(f.d)}</p></div>`).join("")}<p class="src">Source: ${esc(PREHAB_FUEL_SRC)}</p></div></section>
-  <div class="card stack"><h3>Rehab-day plan</h3><p class="muted small">Set today to "Rehab day" on Home for a protein-forward plan.</p><button class="btn ghost" data-setrehab="1">Set today to Rehab day</button></div>
+  <details><summary>Creatine</summary><div class="ans">${CREATINE.a.map(p=>`<p>${fillRd(esc(p))}</p>`).join("")}<p class="src">Source: ${esc(CREATINE.s)}</p></div></details>
+  <details><summary>Fuel that protects you</summary><div class="ans">${PREHAB_FUEL.map(f=>`<p class="small"><b>${esc(f.n)}.</b> ${esc(f.d)}</p>`).join("")}<p class="src">Source: ${esc(PREHAB_FUEL_SRC)}</p></div></details>
+  <button class="btn ghost block" data-setrehab="1">Set today to Rehab day</button>
   <button class="btn block" data-go="rd" data-session="Injury & rehab nutrition">Book an injury nutrition session</button>`;
 }
 /* Training: warm-ups, prehab and rehab by body part */
@@ -1407,12 +1410,11 @@ function vLearn(){
    const s=sportById(draft.guide), g=GUIDES[draft.guide];
    body=`<button class="linkbtn" data-guideback="1" style="align-self:flex-start">‹ All sports</button>
     <div class="hero stack"><p class="eyebrow">${esc(s.who)} · sport guide</p><h1>${esc(s.n)}</h1><p class="muted">${esc(g.demand)}</p></div>
-    ${simpleCard(draft.guide)}${draft.guide===profile.sport||isStaff()?posterCard(draft.guide):""}<h2>More detail</h2>
-    <div class="card stack"><div><p class="eyebrow">How much carbs</p><p>${esc(g.carbs)}</p></div><div class="hr"></div>
+    ${simpleCard(draft.guide)}${draft.guide===profile.sport||isStaff()?posterCard(draft.guide):""}<details><summary>More detail</summary><div class="ans"><div><p class="eyebrow">How much carbs</p><p>${esc(g.carbs)}</p></div><div class="hr"></div>
      <div><p class="eyebrow">Game day</p><p>${esc(g.game)}</p></div><div class="hr"></div>
-     <div><p class="eyebrow">During play</p><p>${esc(g.during)}</p></div></div>
-    <section><h2>Charger tips</h2><div class="card"><ul class="clean">${g.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div></section>
-    <p class="src">Source: ${esc(g.src)}</p>`;
+     <div><p class="eyebrow">During play</p><p>${esc(g.during)}</p></div><div class="hr"></div>
+     <div><p class="eyebrow">Charger tips</p><ul class="clean small">${g.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>
+     <p class="src">Source: ${esc(g.src)}</p></div></details>`;
   }else{
    const list=SPORTS.filter(s=>!q||(sportLabel(s)+" "+GUIDES[s.id].demand+" "+GUIDES[s.id].tips.join(" ")).toLowerCase().includes(q));
    body=`<div class="sportgrid">${list.map(s=>`<button class="sportbtn ${s.id===profile.sport?"mine":""}" data-sportguide="${s.id}"><span class="eyebrow">${esc(s.who)}</span><b>${esc(s.n)}</b><span class="muted small">${esc(SIMPLE[s.id][0])}</span>${s.id===profile.sport?`<span class="chip gold" style="align-self:flex-start">Your team</span>`:""}</button>`).join("")}</div>`;
