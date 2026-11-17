@@ -46,6 +46,7 @@
 :root[data-theme="modernblue"]{ --bg:#0B2F55; --surface:#1C75BC; --surface-2:#2A86CF; --line:#4F9AD6; --fg:#FFFFFF; --muted:#E2ECF5; --gold:#FFF200; --gold-text:#FFF200; --on-gold:#003876; --info:#00AEEF; --stop:#FF8A8F; --ok:#9BD39A; color-scheme:dark }
 :root[data-theme="piazza"]{ --bg:#1D364D; --surface:#2C4D69; --surface-2:#4F728F; --line:#6A8BA6; --fg:#FFFFFF; --muted:#DAD7CC; --gold:#FED41F; --gold-text:#FED41F; --on-gold:#003876; --info:#7FD3F7; --stop:#FF7A7F; --ok:#8CC489; color-scheme:dark }
 :root[data-theme="tile"]{ --bg:#EFEBE2; --surface:#FBFAF6; --surface-2:#E3DED1; --line:#B6B2A3; --fg:#003876; --muted:#614219; --gold:#003876; --gold-text:#614219; --on-gold:#FED41F; --info:#4F728F; --stop:#C8161D; --ok:#366B34; color-scheme:light }
+:root[data-theme="tilered"]{ --bg:#001B3D; --surface:#003876; --surface-2:#0A4A8E; --line:#1E5694; --fg:#FFFFFF; --muted:#C9C6BA; --gold:#ED1C24; --gold-text:#FF7A7F; --on-gold:#FFFFFF; --info:#FED41F; --stop:#FF9EA2; --ok:#6FAF6B; color-scheme:dark }
 :root[data-theme="light"]{ --bg:#F4F3EF; --surface:#FFFFFF; --surface-2:#ECEAE3; --line:#D3CFC2; --fg:#003876; --muted:#4F728F; --gold-text:#614219; --info:#1C75BC; --stop:#C8161D; --ok:#366B34; color-scheme:light }
 :root[data-large="1"]{font-size:18px}
 *{box-sizing:border-box}
@@ -229,10 +230,10 @@ ol.rules li::before{content:counter(r);width:26px;height:26px;border-radius:7px;
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none;display:flex;justify-content:center}
 #bg svg{width:100%;max-width:640px;height:100%;animation:bgin .7s ease both}
 @keyframes bgin{from{opacity:0}to{opacity:1}}
-#bg .l{fill:none;stroke:var(--fg);stroke-width:2.2;opacity:.2}
-#bg .g{fill:none;stroke:var(--gold);stroke-width:2.8;opacity:.5}
-#bg .gf{fill:var(--gold);opacity:.5}
-#bg .f{fill:var(--fg);opacity:.09}
+#bg .l{fill:none;stroke:var(--fg);stroke-width:2.2;opacity:.14}
+#bg .g{fill:none;stroke:var(--gold);stroke-width:2.8;opacity:.36}
+#bg .gf{fill:var(--gold);opacity:.36}
+#bg .f{fill:var(--fg);opacity:.06}
 #bg .d{stroke-dasharray:6 8}
 #bg text{font:800 44px var(--display);fill:var(--fg);opacity:.06}
 .app{position:relative;z-index:1}
@@ -550,7 +551,7 @@ const LOGO="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAACXCAYAAADjyDymAA
 const BOLT='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>';
 
 /* ============ daily plan ============ */
-const THEMES=[["auto","Match phone",["#003876","#F4F3EF","#FED41F"]],["dark","Charger Blue",["#001B3D","#003876","#FED41F"]],["midnight","Midnight",["#000C1F","#00234C","#FED41F"]],["light","Daylight",["#F4F3EF","#FFFFFF","#003876"]],["goldrush","Premier Gold",["#FFF4C2","#FED41F","#003876"]],["cyan","Modern Cyan",["#00213F","#003876","#00AEEF"]],["modernblue","Modern Blue",["#0B2F55","#1C75BC","#FFF200"]],["piazza","Piazza Blue",["#1D364D","#4F728F","#FED41F"]],["tile","Cement & Tile",["#EFEBE2","#B6B2A3","#614219"]]];
+const THEMES=[["auto","Match phone",["#003876","#F4F3EF","#FED41F"]],["dark","Charger Blue",["#001B3D","#003876","#FED41F"]],["midnight","Midnight",["#000C1F","#00234C","#FED41F"]],["light","Daylight",["#F4F3EF","#FFFFFF","#003876"]],["goldrush","Premier Gold",["#FFF4C2","#FED41F","#003876"]],["cyan","Modern Cyan",["#00213F","#003876","#00AEEF"]],["modernblue","Modern Blue",["#0B2F55","#1C75BC","#FFF200"]],["piazza","Piazza Blue",["#1D364D","#4F728F","#FED41F"]],["tile","Cement & Tile",["#EFEBE2","#B6B2A3","#614219"]],["tilered","Tile Red",["#001B3D","#003876","#ED1C24"]]];
 const DAYTYPES=[["practice","Practice"],["game","Game day"],["double","Two-a-day"],["lift","Lift/conditioning"],["rehab","Rehab day"],["rest","Rest"]];
 function planFor(type,kind){
  const during={interval:"Water at every break. Sports drink if it's over an hour or hot.",skill:"Sip every inning or rotation. Small snack on long days.",power:"Sip between sets or drills. Easy carbs on long days.",aquatic:"Bottle on deck. Drink at every rest, even in the pool.",golf:"Snack every 3–4 holes. Drink at every tee box."}[kind]||"Drink at every break.";
@@ -1355,7 +1356,7 @@ function vMe(){
    <div class="row"><span class="grow muted">Eating style</span><b>${esc(profile.diet)}</b></div>
    <button class="btn ghost block" data-editprofile="1">Edit profile</button></div>
   <section><h2>Color scheme</h2><div class="card stack">
-   <p class="muted small">Eight schemes, all built from the official Cypress College palette.</p>
+   <p class="muted small">Nine schemes, all built from the official Cypress College palette.</p>
    <div class="themes">${THEMES.map(([v,l,c])=>`<button class="theme" data-theme="${v}" aria-pressed="${prefs.theme===v}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join("")}</span>${l}</button>`).join("")}</div>
    <div class="choice">${[["0","Standard text"],["1","Larger text"]].map(([v,l])=>`<button data-large="${v}" aria-pressed="${String(prefs.large?1:0)===v}">${l}</button>`).join("")}</div></div></section>
   ${boardState==="off"?"":`<section><h2>Team charge board</h2><div class="card stack"><p class="muted small">Your daily charge count and team are shared, with no name, to make your team's average. Nothing else leaves your phone.</p>
