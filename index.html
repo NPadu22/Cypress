@@ -238,6 +238,11 @@ ol.rules li::before{content:counter(r);width:26px;height:26px;border-radius:7px;
 #bg text{font:800 44px var(--display);fill:var(--fg);opacity:.06}
 .app{position:relative;z-index:1}
 .hr{height:1px;background:var(--line);margin:4px 0}
+.qlgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.qlgrid button{min-height:46px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:600;font-size:.86rem;cursor:pointer;padding:6px 4px;line-height:1.15}
+.qlgrid button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.qlface{width:52px;height:46px;border-radius:12px;border:1px solid var(--line);background:transparent;font-size:1.4rem;cursor:pointer}
+.qlface[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 18%,transparent)}
 .hero.welcome{min-height:210px;justify-content:flex-end}
 .hero.welcome::after{display:none}
 .hero-logo{position:absolute;right:-22%;top:-18%;width:96%;max-width:460px;opacity:.2;transform:rotate(-8deg);pointer-events:none;filter:saturate(1.1)}
@@ -252,7 +257,9 @@ ol.rules li::before{content:counter(r);width:26px;height:26px;border-radius:7px;
 .mp-step:last-child{border-bottom:0}
 .mp-when{font:700 .78rem/1.2 var(--mono);color:var(--gold-text);padding-top:2px}
 .mdet{background:transparent;border:1px dashed var(--line)}
-.mdet summary{padding:8px 12px;font-size:.88rem}
+.mdet summary{padding:10px 12px;font-size:.95rem}
+.mpn{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border-radius:6px;background:var(--gold);color:var(--on-gold);font:700 .75rem var(--mono)}
+.mpn{font-style:normal}
 /* walk-up intro */
 .walkup{position:fixed;inset:0;z-index:80;background:radial-gradient(120% 70% at 50% 110%,rgba(254,212,31,.28),transparent 60%),linear-gradient(180deg,#000C1F 0%,#001B3D 55%,#003876 100%);color:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 24px max(24px,env(safe-area-inset-bottom));animation:wuIn .35s ease both}
 .walkup.out{animation:wuOut .45s ease forwards}
@@ -411,11 +418,11 @@ function posterHTML(id){
 function posterCard(id){return `<button class="card stack postercard" data-poster="${id}" style="text-align:left;cursor:pointer"><span class="eyebrow">Your poster</span><div class="pthumb">${posterHTML(id)}</div><span class="linkbtn">View full size</span></button>`}
 function simpleCard(id){return `<div class="card stack"><p class="eyebrow">Your 3 rules</p><ol class="rules">${SIMPLE[id].map(r=>`<li>${esc(r)}</li>`).join("")}</ol></div>`}
 function vBasics(){
- return `<div class="hero stack"><p class="eyebrow">Sports nutrition 101 · every Charger</p><h1>The basics</h1><p class="muted">Get these right and you're ahead of most athletes.</p></div>
+ return `<div class="hero stack"><p class="eyebrow">Sports nutrition 101 · every Charger</p><h1>The basics</h1></div>
   <section><h2>Build your plate</h2><div class="card stack"><div class="plates">${PLATES.map(([n,d,v])=>`<div class="stack" style="gap:4px;align-items:center;text-align:center">${plateSVG(v)}<b>${n}</b><span class="stamp">${d}</span></div>`).join("")}</div>
    <div class="tags" style="justify-content:center"><span class="chip"><i class="dot" style="background:var(--gold)"></i>Carbs</span><span class="chip"><i class="dot" style="background:var(--info)"></i>Protein</span><span class="chip"><i class="dot" style="background:var(--ok)"></i>Fruits & veggies</span></div>
    <p class="src">Source: USOPC/UCCS Athlete's Plate</p></div></section>
-  <section><h2>10 rules for every athlete</h2><div class="card stack">${BASICS.map((b,i)=>`<div class="basic"><span class="bnum">${i+1}</span><div><b>${esc(b.n)}</b><p class="muted small">${fillRd(esc(b.d))}</p><p class="src">${esc(b.s)}</p></div></div>`).join("")}</div></section>
+  <section><h2>10 rules for every athlete</h2><div class="card stack">${BASICS.map((b,i)=>`<div class="basic"><span class="bnum">${i+1}</span><div><b>${esc(b.n)}</b><p class="muted small">${fillRd(esc(b.d))}</p></div></div>`).join("")}<p class="src">Sources: ${esc([...new Set(BASICS.map(b=>b.s))].join("; "))}</p></div></section>
   ${SIMPLE[profile.sport]?`<section><h2>Rules for ${isStaff()?"your team":"your sport"}</h2>${simpleCard(profile.sport)}<button class="btn ghost block" data-sportguide="${profile.sport}">Open the full sport guide</button></section>`:""}`;
 }
 
@@ -582,11 +589,11 @@ function vHydro(){
  return `<section><h2>Hydration</h2><div class="card stack">
   <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">Today</p><div class="pct">${oz}<small> / ${goal} oz</small></div></div><span class="chip ${h.n>=need?"ok":"gold"}">${h.n}/${need} bottles</span></div>
   <div class="bottles" role="group" aria-label="Bottles, ${BOTTLE} oz each">${Array.from({length:slots},(_,i)=>`<button class="btl" data-btl="${i}" aria-pressed="${i<h.n}" aria-label="Bottle ${i+1}"><svg viewBox="0 0 24 40"><path d="M9 2h6v4l3 4v26a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10l3-4z"/><rect class="fill" x="7.5" y="14" width="9" height="22.5" rx="1"/></svg></button>`).join("")}</div>
-  <p class="muted small">Tap a bottle each time you finish ${BOTTLE} oz.</p>
+  <p class="stamp">1 bottle = ${BOTTLE} oz</p>
   <div class="stack" style="gap:6px"><span class="eyebrow">Training today</span><div class="choice">${[0,1,2,3,4].map(v=>`<button data-hhrs="${v}" aria-pressed="${h.hrs===v}">${v===4?"4+ hrs":v+" hr"+(v===1?"":"s")}</button>`).join("")}</div></div>
   <div class="stack" style="gap:6px"><span class="eyebrow">Conditions</span><div class="choice">${[["cool","Cool"],["warm","Warm"],["hot","Hot (85°F+)"],["pool","Pool"]].map(([v,l])=>`<button data-hcond="${v}" aria-pressed="${h.cond===v}">${l}</button>`).join("")}</div></div>
-  <p class="small">Check your pee: pale yellow is good. Dark like apple juice means drink more.</p>
-  <p class="src">This is a starting goal. Your sweat test tells your real number. Source: IOM Dietary Reference Intakes for Water, 2005; ACSM Position Stand: Exercise and Fluid Replacement, 2007</p>
+  <p class="small">Pale-yellow pee = good. Dark = drink more.</p>
+  <p class="src">Starting goal; a sweat test gives your real number. IOM 2005; ACSM 2007</p>
  </div></section>`;
 }
 
@@ -645,7 +652,7 @@ function pushCharge(){
 function vBoard(){
  if(isStaff())return "";
  const sp=sportById(profile.sport);
- const head=`<div class="stack" style="gap:4px"><h2>Team charge board</h2><span class="stamp">This week · team averages only, no names</span></div>`;
+ const head=`<div class="stack" style="gap:4px"><h2>Team charge board</h2><span class="stamp">This week · no names</span></div>`;
  if(prefs.noBoard)return `<section>${head}<div class="card"><p class="muted small">You turned off sharing. Turn it back on in your profile to count for ${esc(sportLabel(sp))}.</p></div></section>`;
  if(boardState==="loading")return `<section>${head}<div class="card"><p class="muted small">Loading the board…</p></div></section>`;
  if(boardState==="off"||!boardRows)return "";
@@ -654,7 +661,7 @@ function vBoard(){
  const list=Object.entries(teams).map(([id,a])=>({id,n:a.length,pct:Math.round(a.reduce((x,y)=>x+y,0)/a.length*100)})).sort((a,b)=>b.pct-a.pct);
  if(!list.length)return `<section>${head}<div class="card"><p class="muted small">No charges yet this week. Fill your meter and put ${esc(sportLabel(sp))} on the board.</p></div></section>`;
  return `<section>${head}<div class="card stack board">${list.map((r,i)=>`<div class="brow ${r.id===profile.sport?"mine":""}"><span class="brank">${i+1}</span><div class="grow"><div class="row"><b class="grow">${esc(sportLabel(sportById(r.id)))}</b><span class="stamp">${r.pct}% · ${r.n} athlete${r.n>1?"s":""}</span></div><div class="bbar"><i style="width:${r.pct}%"></i></div></div></div>`).join("")}
-  <p class="muted small">Team score = how full everyone's meter was, averaged over this week.</p></div></section>`;
+  </div></section>`;
 }
 
 /* ============ snack-bag builder ============ */
@@ -683,7 +690,7 @@ function bagItems(){
 }
 function vBag(){
  const items=bagItems(), groups=[...new Set(items.map(i=>i.g))];
- return `<div class="card stack"><p class="muted small">Build your bag the night before. Coach's orders.</p>
+ return `<div class="card stack">
   <label for="bag-sport">Sport<select id="bag-sport">${SPORTS.map(s=>`<option value="${s.id}" ${(bag.sport||profile.sport)===s.id?"selected":""}>${esc(sportLabel(s))}</option>`).join("")}</select></label>
   <div class="stack" style="gap:6px"><span class="eyebrow">What's the day?</span><div class="choice">${[["practice","Practice"],["game","Game"],["tournament","Tournament / doubleheader / meet"],["road","Road trip"]].map(([v,l])=>`<button data-bagocc="${v}" aria-pressed="${bag.occ===v}">${l}</button>`).join("")}</div></div>
   <div class="choice"><button data-baghot="1" aria-pressed="${bag.hot}">Hot day (85°F+)</button></div></div>
@@ -697,7 +704,7 @@ let sampleFn=null, aiState="loading", aiBusy=false, aiAbort=null;
 (async()=>{try{if(!window.claude||!window.claude.use){aiState="off";return}sampleFn=await window.claude.use("sample");aiState=sampleFn?"ok":"off"}catch(e){aiState="off"}if(tab==="learn"&&learnSeg==="ask")render()})();
 function aiPreamble(){
  const sp=sportById(profile.sport);
- const content={BASICS,PLATES:PLATES.map(([n,d,v])=>({day:n,when:d,carbs:v[0]+"%",protein:v[1]+"%",fruitsVeggies:v[2]+"%"})),SPORT_RULES:Object.fromEntries(SPORTS.map(s=>[sportLabel(s),SIMPLE[s.id]])),FAQ,SPORT_GUIDES:Object.fromEntries(SPORTS.map(s=>[sportLabel(s),GUIDES[s.id]])),WOMEN:SEXGUIDES.women,MEN:SEXGUIDES.men,REHAB,CREATINE,PREHAB_FUEL,DAY_PLANS:Object.fromEntries(DAYTYPES.map(([id,l])=>[l,planFor(id,sp?.kind)])),RESTAURANTS:DATA.places,GROCERY,RECIPES,ROAD,
+ const content={CAMPUS_FOOD:{CAMPUS,VENDING},BAG_STASH:{STASH,STASH_COMBOS},BASICS,PLATES:PLATES.map(([n,d,v])=>({day:n,when:d,carbs:v[0]+"%",protein:v[1]+"%",fruitsVeggies:v[2]+"%"})),SPORT_RULES:Object.fromEntries(SPORTS.map(s=>[sportLabel(s),SIMPLE[s.id]])),FAQ,SPORT_GUIDES:Object.fromEntries(SPORTS.map(s=>[sportLabel(s),GUIDES[s.id]])),WOMEN:SEXGUIDES.women,MEN:SEXGUIDES.men,REHAB,CREATINE,PREHAB_FUEL,DAY_PLANS:Object.fromEntries(DAYTYPES.map(([id,l])=>[l,planFor(id,sp?.kind)])),RESTAURANTS:DATA.places,GROCERY,RECIPES,ROAD,
   FOOD_PANTRY:"Cypress College Basic Needs Resource Center & Food Pantry: free groceries for enrolled Cypress students, by appointment at portal.soxbox.co/pantry/cypress-college. Student Life & Leadership, Building 8, next to the Veterans Resource Center. basicneeds@cypresscollege.edu, (714) 484-7309.",
   HYDRATION:"Starting goal: about 74 oz (women) or 100 oz (men) of drinks a day, plus 16–32 oz per hour of training depending on heat. Pale-yellow pee is the check. A sweat test gives the real number."};
  return `You are "Ask the RD," the assistant inside "At the Clinic," the nutrition and athletic training app for Cypress College athletes (adults). The team dietitian is ${rdName()}.
@@ -841,7 +848,7 @@ function vOnboard(){
    <label for="f-diet">Eating style<select id="f-diet">${DIETS.map(d=>`<option ${p.diet===d?"selected":""}>${d}</option>`).join("")}</select></label>
    <button class="btn block" type="submit">${draft.editingProfile?"Save changes":"Get started"}</button>
    ${draft.editingProfile?`<button type="button" class="btn ghost block" data-cancelprofile="1">Cancel</button>`:""}
-   <p class="muted small">Saved on this phone only. Your dietitian doesn't see it unless you send it in a message.</p>
+   <p class="stamp">Saved on this phone only.</p>
   </form></div>`;
 }
 function vStop(){
@@ -867,27 +874,31 @@ function vHome(){
    <h1>Hey ${esc(first)}</h1>
    <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">Today's charge</p><div class="pct">${pct}<small>%</small></div></div><span class="chip gold">${n}/5 fueled</span></div>
    <div class="meterwrap"><div class="meter ${n===5?"full":""}" role="group" aria-label="Today's fueling moments">${plan.m.map(([w],i)=>`<button class="cell" data-cell="${i}" aria-pressed="${c.done.includes(i)}" aria-label="${esc(w)}"><span>${esc(w)}</span></button>`).join("")}</div></div>
-   <p class="muted small">Ate it? Tap it. Fill the battery every day.</p>
+   
   </div>
   ${c.type==="game"?vCountdown(c):""}
   ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann"><b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   <section><h2>What's on deck?</h2>
    <div class="seg" data-daytype="1">${DAYTYPES.map(([id,l])=>`<button data-dt="${id}" aria-pressed="${c.type===id}">${l}</button>`).join("")}</div>
-   <div class="card stack"><p class="eyebrow">Your plate</p><p>${esc(plan.plate)}</p><div class="hr"></div>
-    <div class="tl">${plan.m.map(([w,d])=>`<div class="tl-item"><span class="tl-dot"></span><div><b>${esc(w)}</b><span class="muted">${esc(d)}</span></div></div>`).join("")}</div>
-    <p class="src">Source: USOPC/UCCS Athlete's Plate; ACSM/AND/DC Joint Position Statement, 2016</p></div>
+   <div class="card stack"><p><b>${esc(plan.plate)}</b></p>
+    <div class="stack" style="gap:6px">${plan.m.map(([w,d],i)=>`<details class="mdet"><summary><span><span class="mpn">${i+1}</span>${esc(w)}</span></summary><div class="ans"><p class="small">${esc(d)}</p></div></details>`).join("")}</div>
+    <p class="src">USOPC/UCCS Athlete's Plate; ACSM/AND/DC 2016</p></div>
   </section>
   ${vHydro()}
   ${vBoard()}
-  ${sp?`<button class="card stack" style="text-align:left;cursor:pointer" data-sportguide="${sp.id}"><span class="eyebrow">Your 3 rules · ${esc(sportLabel(sp))}</span><ol class="rules">${SIMPLE[sp.id].map(r=>`<li>${esc(r)}</li>`).join("")}</ol><span class="linkbtn">Open sport guide</span></button>`:""}
   ${sp?posterCard(sp.id):""}
-  <div class="goldbox"><b>Free groceries on campus</b><p class="small">The Cypress College Food Pantry is open to enrolled students by appointment.</p><button class="linkbtn" style="align-self:flex-start" data-eatseg="free">See Free food</button></div>
  </div>`;
 }
 
 
 /* ===== From the LA Orbit app (Nick's guides): home-area eating and the weekly meal plan ===== */
 const AREAS=[
+ {k:"northoc",n:"Cypress · Buena Park · La Palma · Cerritos · Artesia · Anaheim",short:"Cypress & North OC",
+  eat:[{n:"Buena Park Koreatown",t:"Beach Blvd, Rosecrans to Orangethorpe · The Source OC",d:"90-plus Korean spots and The Source OC food halls. Bibimbap, soft-tofu soup with rice, and grilled meats with rice and banchan are carbs plus protein in one order. Pick grilled over fried before training."},
+   {n:"Little India",t:"Pioneer Blvd, Artesia",d:"Thali plates, dosa, and rice with dal or tandoori chicken. Lots of vegetarian protein (dal, chana, paneer). Save the fried snacks for after practice."},
+   {n:"Little Arabia",t:"Brookhurst St, Anaheim",d:"Chicken or beef shawarma plates with rice, hummus and salad, or a wrap with fruit on the side."},
+   {n:"Right by campus",t:"Valley View St & Katella Ave",d:"Burrito bowls, teriyaki plates and dumplings within minutes of school. See Near campus for orders."}],
+  shop:"Costco and Trader Joe's on Katella Ave in Cypress. Buena Park's Koreatown has H Mart, Hannam Chain and Zion Market for rice, tofu, eggs and produce, and Artesia's Indian grocers carry lentils, rice and spices for less."},
  {k:"sealbeach",n:"Seal Beach · Long Beach · Los Alamitos",short:"Seal Beach & Long Beach",
   eat:[{n:"Little Saigon",t:"Westminster & Garden Grove, next to Seal Beach",d:"Pho with extra chicken or beef, broken-rice plates (cơm tấm) and banh mi are carbs plus protein in one order, and pho broth helps you rehydrate."},
    {n:"Main Street & 2nd Street",t:"Seal Beach · Belmont Shore",d:"Walkable strips with poke, bowls, tacos and sandwiches. Build rice or tortillas + lean protein + vegetables; go easy on fried sides before a match."},
@@ -1025,7 +1036,7 @@ function groceryList(){const counts={};let meals=0;
 function groceryHTML(){const {by,meals}=groceryList(),wk=planWeek()[0],got=PLANPREF.got[wk]||[];
   const text=["Grocery list · At the Clinic · week of "+fmtDate(wk),...ING_SECTIONS.filter(s=>by[s]).flatMap(s=>["",s.toUpperCase(),...by[s].map(x=>"- "+x.label+(x.c>1?" (×"+x.c+")":""))])].join("\n");
   return `<div class="card stack" id="grocery"><div class="row"><h3 class="grow">Grocery list · next 7 days</h3><span class="stamp">${meals} meals & snacks</span></div>
-   <p class="muted small">Built from the meals planned for the week. Meals repeat every two days, so cook once and eat the leftovers. "×3" means it shows up in three meals. Tick things off as you shop.</p>
+   <p class="muted small">Meals repeat every 2 days: cook once, eat twice. Tap items as you shop.</p>
    ${ING_SECTIONS.filter(s=>by[s]).map(s=>`<div class="stack" style="gap:6px"><span class="eyebrow">${s}</span><div class="choice">${by[s].map(x=>`<button type="button" data-groc="${x.k}" aria-pressed="${got.includes(x.k)}">${esc(x.label)}${x.c>1?` ×${x.c}`:""}</button>`).join("")}</div></div>`).join("")}
    <div class="copybox" id="groc-copy" hidden>${esc(text)}</div>
    <div class="row" style="flex-wrap:wrap"><button class="btn sm" data-copy="groc-copy">Copy list</button><button class="btn ghost sm" data-grocreset="1">Clear ticks</button></div>
@@ -1048,7 +1059,7 @@ function prepPlan(){const counts={},mains=new Set(),bfast=new Set();
   return {steps,mains:[...mains]}}
 function prepHTML(){const {steps,mains}=prepPlan();
   return `<div class="card stack" id="prep"><div class="row"><h3 class="grow">Prep plan · batch-cook once</h3><span class="stamp">${steps.length} steps · about 90 min</span></div>
-   <p class="muted small">Do it on your lightest day. Most cooked food keeps 3–4 days in the fridge, so do a quick second prep midweek or freeze half.</p>
+   <p class="muted small">Cooked food keeps 3–4 days. Prep again midweek or freeze half.</p>
    <div class="tl">${steps.map(([h,d],i)=>`<div class="tl-item"><span class="tl-dot"></span><div><b>Step ${i+1} · ${esc(h)}</b><span class="muted small">${esc(d)}</span></div></div>`).join("")}</div>
    ${mains.length?`<p class="stamp">This week's main meals: ${esc(mains.join("; "))}.</p>`:""}
    <p class="src">Food storage: USDA FoodKeeper (cooked leftovers 3–4 days refrigerated; reheat to 165°F)</p></div>`}
@@ -1095,46 +1106,69 @@ function planClick(b){
     if(store.set("journal",J)){render();toast("Logged.")}return true}
   return false;
 }
+const CAMPUS=[
+ {n:"Charger Café",where:"Student Center, 1st floor (in front of Admissions & Records)",hours:"Mon–Thu 8 am–3 pm · Fri 8 am–2 pm (semester)",tips:["Build a plate: a carb (rice, pasta, bread, potatoes) + a protein + fruit or veggies.","Morning practice? Grab breakfast here first.","After practice: a sandwich or hot plate plus milk or fruit covers carbs + protein."]},
+ {n:"Cypresso",where:"Building 20, next to the Bookstore",hours:"Mon–Thu 7 am–6 pm · Fri 7 am–2 pm (semester) · cards only",tips:["Sandwiches + a milk-based drink (latte or chocolate milk) give carbs and protein.","Pastries are a quick carb, not a meal. Pair one with protein.","Watch the caffeine late in the day. It can wreck your sleep."]}
+];
+const VENDING={snack:{where:"16 machines: Business, Cypress College Complex, Fine Arts, Gym, Library, Men's Locker Room and Tech Ed 3",best:[["Pretzels or baked chips","Quick carbs before practice",["Wheat/Gluten"]],["Granola or cereal bar","Carbs to bridge a long day",["Wheat/Gluten","Tree nut"]],["Peanuts, trail mix or nuts","Protein and fat; better after practice than right before",["Peanut","Tree nut"]],["Jerky","Protein that travels",["Soy"]],["Water or a sports drink","Sports drink for long, hot sessions",[]]],skip:"Skip energy drinks and candy as a meal. They don't refuel you."},
+ hot:{where:"Foodture hot-food machines, open 24/7: north side of the Cypress College Complex, 1st floor, next to DSS",best:[["Chicken teriyaki with fried rice","Best pick: carbs + protein in one",["Soy","Wheat/Gluten","Egg"]],["Chicken chili","Protein-rich; add crackers or bread for carbs",[]],["Meatball pasta","Carbs + protein after practice",["Wheat/Gluten","Dairy","Egg"]],["Pizza or mac & cheese","Plenty of carbs, light on protein. Add a milk or a jerky stick",["Wheat/Gluten","Dairy"]],["Gluten-free margherita pizza","Option if you avoid gluten. Still check the label",["Dairy"]]]}};
+const STASH=[
+ {g:"Quick carbs",items:[["Pretzels",["Wheat/Gluten"]],["Rice cakes",[]],["Dried fruit (raisins, mango)",[]],["Applesauce or fruit pouches",[]],["Fig bars",["Wheat/Gluten"]],["Instant oatmeal cups",[]],["Graham crackers",["Wheat/Gluten"]]]},
+ {g:"Protein",items:[["Tuna or chicken pouches",["Fish"]],["Beef or turkey jerky",["Soy"]],["Shelf-stable milk boxes",["Dairy"]],["Shelf-stable soy milk boxes",["Soy"]],["Roasted chickpeas or edamame",["Soy"]],["Peanut or nut butter packets",["Peanut","Tree nut"]],["Sunflower seed butter packets",[]],["Protein bar (third-party tested)",["Dairy","Soy"]]]},
+ {g:"Hydration",items:[["Empty water bottle",[]],["Electrolyte packets",[]]]},
+ {g:"Handy extras",items:[["Spoon and napkins",[]],["Zip bags",[]],["Wet wipes",[]]]}
+];
+const STASH_COMBOS=[["Tuna pouch + crackers + applesauce","Carbs + protein after practice"],["Nut or seed butter packet + rice cakes + milk box","Recovery that never needs a fridge"],["Jerky + pretzels + dried fruit","Long day between classes"],["Oatmeal cup + soy or dairy milk box","Breakfast when there's no time"]];
+function vCampus(){
+ const tagRow=a=>a.length?`<div class="tags">${a.map(x=>`<span class="chip ${myAllergens().includes(x)?"stop":""}">${esc(x)}</span>`).join("")}</div>`:"";
+ const list=(L)=>L.map(([n,d,a])=>`<div class="basic" style="grid-template-columns:1fr"><div class="stack" style="gap:4px"><div class="row"><b class="grow">${esc(n)}</b>${hits(a).length?`<span class="chip stop">Has your allergen</span>`:""}</div><p class="muted small">${esc(d)}</p>${tagRow(a)}</div></div>`).join("");
+ return `
+  ${CAMPUS.map(c=>`<div class="card stack"><div><h3>${esc(c.n)}</h3><span class="stamp">${esc(c.where)}</span></div><p class="small"><b>${esc(c.hours)}</b></p><ul class="clean small">${c.tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}
+  <section><h2>Hot-food vending</h2><div class="card stack" style="gap:2px"><p class="stamp">${esc(VENDING.hot.where)}</p>${list(VENDING.hot.best)}</div></section>
+  <section><h2>Snack vending</h2><div class="card stack" style="gap:2px"><p class="stamp">${esc(VENDING.snack.where)}</p>${list(VENDING.snack.best)}<p class="small" style="padding-top:8px">${esc(VENDING.snack.skip)}</p></div></section>
+  <a class="btn ghost block" href="https://www.cypresscollege.edu/food-services" target="_blank" rel="noopener">Food Services hours and menus</a>`;
+}
+function vStash(){
+ return `<p class="muted small">No fridge needed. Keep them in your backpack or gym bag.</p>
+  ${STASH.map(s=>`<section><h2>${esc(s.g)}</h2><div class="card stack" style="gap:2px">${s.items.map(([n,a])=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line)"><span class="grow">${esc(n)}</span>${hits(a).length?`<span class="chip stop">${esc(hits(a).join(", "))}</span>`:a.length?`<span class="stamp">${esc(a.join(", "))}</span>`:""}</div>`).join("")}</div></section>`).join("")}
+  <section><h2>Grab-and-go combos</h2><div class="card stack" style="gap:2px">${STASH_COMBOS.map(([n,d],i)=>`<div class="basic"><span class="bnum">${i+1}</span><div><b>${esc(n)}</b><p class="muted small">${esc(d)}</p></div></div>`).join("")}</div></section>
+  <div class="goldbox"><b>Keep your stash fresh</b><p class="small">Check dates and restock every few weeks. Cars and gym bags get hot, so skip chocolate and anything that melts. Toss any pouch or box that's swollen or leaking. Protein bars: only third-party tested ones (NSF Certified for Sport or Informed Sport).</p></div>
+  <p class="src">Source: USDA FSIS, Shelf-Stable Food Safety; ACSM/AND/DC Joint Position Statement, 2016</p>`;
+}
 let eatSeg="plan";
 function vEat(){
- const segs=[["plan","Meal plan"],["near","Near campus"],["home","Near home"],["chain","Chains"],["bag","Snack bag"],["grocery","Grocery"],["free","Free food"],["road","Road trips"]];
- let body="";
+ const segs=[["plan","Plan"],["campus","Campus"],["out","Eat out"],["pack","Pack"],["shop","Groceries"]];
+ if(!segs.some(x=>x[0]===eatSeg))eatSeg=({near:"campus",home:"out",chain:"out",stash:"pack",bag:"pack",road:"pack",grocery:"shop",free:"shop"})[eatSeg]||"plan";
  const placeCard=p=>{const h=hits(p.a);return `<div class="card place ${h.length?"flag":""}">
    <div class="row"><div class="grow"><h3>${esc(p.n)}</h3>${p.where?`<span class="stamp">${esc(p.where)}</span>`:""}</div>${h.length?`<span class="chip stop">Has your allergen</span>`:""}</div>
    <div class="order"><span class="eyebrow">Train day</span><span>${esc(p.train)}</span><span class="eyebrow">Light day</span><span>${esc(p.light)}</span></div>
    ${p.a&&p.a.length?`<div class="tags">${p.a.map(a=>`<span class="chip ${myAllergens().includes(a)?"stop":""}">${esc(a)}</span>`).join("")}</div>`:""}</div>`};
+ const places=g=>DATA.places.filter(p=>p.g===g).map(placeCard).join("")||`<p class="muted">Nothing listed yet.</p>`;
+ const A=myArea();
+ let body="";
  if(eatSeg==="plan"){
   body=planHTML();
- }else if(eatSeg==="home"){
-  const A=myArea();
-  body=`<p class="muted">How to order near home so it works for training and games.</p>${areaPicker()}${A?areaListHTML(A,"Near you: "+A.short)+`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:profile.area==="other"?`<p class="muted small">Your area isn't listed yet. Use the chain orders and grocery lists, or tell ${esc(rdName())} where you live so we can add it.</p>`:""}`;
- }else if(eatSeg==="near"||eatSeg==="chain"){
-  const g=eatSeg==="near"?"Near campus":"Chain";
-  const list=DATA.places.filter(p=>p.g===g);
-  body=`<p class="muted small">${eatSeg==="near"?"Spots on and around Valley View St and Katella Ave.":"Go-to orders at chains around Cypress."} Allergen tags show common allergens in the suggested order. Always check the restaurant's own allergen guide.</p>
-   ${list.map(placeCard).join("")||`<p class="muted">Nothing listed yet.</p>`}`;
- }else if(eatSeg==="bag"){
-  body=vBag();
- }else if(eatSeg==="grocery"){
-  body=(myArea()?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(myArea().short)}</span><p>${esc(myArea().shop)}</p></div>`:"")+GROCERY.map(s=>`<div class="card stack"><div><h3>${esc(s.n)}</h3><span class="stamp">${esc(s.where)}</span></div><p class="muted small">${esc(s.tip)}</p><ul class="clean">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div>`).join("")+
-   `<section><h2>Quick recipes</h2>${RECIPES.map(r=>`<div class="card tight stack" style="gap:4px"><div class="row"><b class="grow">${esc(r.n)}</b><span class="chip">${esc(r.t)}</span></div><p class="muted small">${esc(r.d)}</p></div>`).join("")}</section>`;
- }else if(eatSeg==="free"){
-  body=`<div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
-    <p>Free groceries and basic-needs support for students enrolled at Cypress. Visits are by appointment.</p>
+ }else if(eatSeg==="campus"){
+  body=vCampus()+`<section><h2>Near campus</h2>${places("Near campus")}</section>`;
+ }else if(eatSeg==="out"){
+  body=areaPicker()+(A?areaListHTML(A,"Near you: "+A.short):profile.area==="other"?`<p class="muted small">Your area isn't listed yet. Tell ${esc(rdName())} where you live so we can add it.</p>`:"")+`<section><h2>Chains</h2>${places("Chain")}</section><p class="stamp">Tags show common allergens in each order. Always check the restaurant's allergen guide.</p>`;
+ }else if(eatSeg==="pack"){
+  body=vStash()+`<section><h2>Build your bag</h2>${vBag()}</section><section><h2>Road trips</h2>${ROAD.map(r=>`<div class="card stack" style="gap:6px"><h3>${esc(r.n)}</h3><p class="muted small">${esc(r.d)}</p></div>`).join("")}</section>`;
+ }else{
+  body=`<section><h2>Free groceries</h2>${`<div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
+    <p class="small">Free for enrolled Cypress students. By appointment.</p>
     <div class="order"><span class="eyebrow">Where</span><span>Student Life & Leadership, Building 8 (next to the Veterans Resource Center)</span>
-    <span class="eyebrow">Book</span><span>Reserve a time on the pantry portal</span>
     <span class="eyebrow">Contact</span><span>basicneeds@cypresscollege.edu · (714) 484-7309</span></div>
     <a class="btn block" href="https://portal.soxbox.co/pantry/cypress-college" target="_blank" rel="noopener">Book a pantry visit</a>
     <a class="btn ghost block" href="https://www.cypresscollege.edu/student-life/student-activities/food-bank/" target="_blank" rel="noopener">Hours and details</a>
     <p class="stamp">Hours change by semester. Check the college page before you go.</p></div>
    <div class="card stack"><h3>Make pantry food work for training</h3><ul class="clean"><li>Grab carbs (rice, pasta, oats, bread, cereal) and pair with protein (canned beans, tuna, peanut butter, eggs if offered).</li><li>Canned fruit and vegetables count. Rinse canned beans and vegetables to cut sodium.</li><li>Ask Basic Needs about CalFresh. Many college students qualify for monthly food benefits.</li></ul></div>
-   <div class="goldbox"><b>Short on food? Tell us.</b><p class="small">It's confidential, and it changes how we plan with you. Book a consult in the RD tab.</p></div>`;
- }else{
-  body=ROAD.map(r=>`<div class="card stack" style="gap:6px"><h3>${esc(r.n)}</h3><p class="muted">${esc(r.d)}</p></div>`).join("");
+   <div class="goldbox"><b>Short on food? Tell us.</b><p class="small">It's confidential, and it changes how we plan with you. Book a consult in the RD tab.</p></div>`}</section>`+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+GROCERY.map(s=>`<div class="card stack"><div><h3>${esc(s.n)}</h3><span class="stamp">${esc(s.where)}</span></div><p class="muted small">${esc(s.tip)}</p><ul class="clean">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div>`).join("")+
+   `<section><h2>Quick recipes</h2>${RECIPES.map(r=>`<div class="card tight stack" style="gap:4px"><div class="row"><b class="grow">${esc(r.n)}</b><span class="chip">${esc(r.t)}</span></div><p class="muted small">${esc(r.d)}</p></div>`).join("")}</section>`;
  }
  return `<div class="view"><div><p class="eyebrow">No dining hall. No excuses.</p><h1 style="margin-top:6px">Eat</h1></div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
-  ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> marks your allergens: ${esc(myAllergens().join(", "))}.</p>`:""}
+  ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> = your allergens</p>`:""}
   <div class="stack">${body}</div></div>`;
 }
 
@@ -1222,7 +1256,7 @@ function vTraining(){
  const segs=[["at","Report an injury"],["warm","Warm-ups"],["prehab","Prehab"],["rehab","Rehab"],["red","Warning signs"]];
  let body="";
  if(trainSeg==="at"){
-  body=atCard()+`<section><h2>Report an injury</h2><p class="muted small">Report every injury to ${esc(atNames(" or "))}. Even the small ones. This writes the message for you.</p>
+  body=atCard()+`<section><h2>Report an injury</h2><p class="muted small">Every injury, even small ones.</p>
    ${draft.atSent?`<div class="card stack"><span class="chip ok" style="align-self:flex-start">Ready to send</span><div class="copybox" id="at-copy">${esc(draft.atSent)}</div><div class="row" style="flex-wrap:wrap"><button class="btn" data-copy="at-copy">Copy message</button>${s.atEmail?`<a class="btn ghost" href="mailto:${esc(s.atEmail)}?subject=${encodeURIComponent("Injury report: "+profile.name)}&body=${encodeURIComponent(draft.atSent)}">Email</a>`:""}${s.atPhone?`<a class="btn ghost" href="sms:${esc(s.atPhone)}?&body=${encodeURIComponent(draft.atSent)}">Text</a>`:""}<button class="btn ghost" data-reset="atSent">New</button></div><p class="stamp">If Email or Text doesn't open, copy the message instead.</p></div>`:
    `<form class="card stack" id="f-at">
      <label for="at-where">What hurts?<input id="at-where" required placeholder="e.g. right ankle"></label>
@@ -1233,11 +1267,11 @@ function vTraining(){
    <div class="goldbox"><b>Hurt? Healing runs on food.</b><p class="small">See what to eat while you recover.</p><button class="linkbtn" style="align-self:flex-start" data-injurylink="1">Injury nutrition</button></div>`;
  }else if(trainSeg==="warm"){
   const b=(partPicker(),BODY.find(x=>x.id===bodyPart));
-  body=`<p class="muted small">Warm up every time. 5 minutes of easy jogging or skipping, then these moves, then sport drills. Stop if anything causes sharp pain.</p>${partPicker()}
+  body=`<p class="muted small">5 min easy jog, then these, then drills. Sharp pain? Stop.</p>${partPicker()}
    <section><h2>${esc(b.n)} warm-up</h2>${moveList(b.warm)}<p class="src">Source: Soligard et al., BMJ 2008 (FIFA 11+ warm-up)</p></section>`;
  }else if(trainSeg==="prehab"){
   const b=(partPicker(),BODY.find(x=>x.id===bodyPart));
-  body=`<p class="muted small">The best injury is the one that never happens. Do these 2–3 times a week. ${esc(atNames(" and "))} will set the plan that fits you. Stop if anything causes sharp pain.</p>${partPicker()}
+  body=`<p class="muted small">2–3 times a week. ${esc(atNames(" and "))} will set your plan. Sharp pain? Stop.</p>${partPicker()}
    <section><h2>${esc(b.n)} prehab</h2>${moveList(b.pre)}<p class="src">Source: ${esc(b.preSrc)}</p></section>`;
  }else if(trainSeg==="rehab"){
   const b=(partPicker(),BODY.find(x=>x.id===bodyPart)), r=b.rehab;
@@ -1254,13 +1288,29 @@ function vTraining(){
  return `<div class="view"><div><p class="eyebrow">Athletic training · Warm-up · Prehab · Rehab</p><h1 style="margin-top:6px">Training</h1></div>
   <div class="seg">${segs.map(([id,l])=>`<button data-trainseg="${id}" aria-pressed="${trainSeg===id}">${l}</button>`).join("")}</div><div class="stack">${body}</div></div>`;
 }
+/* Quick log: tap a meal, tap foods, tap how it felt, done */
+const QL_FOODS=[["Carbs",["Rice","Pasta","Bread or tortilla","Oats or cereal","Potatoes","Fruit","Bagel"]],["Protein",["Chicken","Beef","Fish","Eggs","Greek yogurt","Milk","Chocolate milk","Beans","Tofu","Protein shake","Turkey"]],["Veggies",["Veggies","Salad"]],["Snacks",["Bar","Pretzels or chips","Nuts or PB","Jerky","Sweets"]],["Drinks",["Water","Sports drink","Coffee","Soda or energy drink"]],["Out",["Fast food","Campus café","Vending"]]];
+const QL_OCC=["Breakfast","Lunch","Dinner","Snack","Pre-training","Post-training"];
+function qlDefaultOcc(){const h=new Date().getHours()+new Date().getMinutes()/60;return h<10.5?"Breakfast":h<14.5?"Lunch":h<17?"Snack":h<21?"Dinner":"Snack"}
+function recentMeals(){const out=[];for(let i=0;i<14&&out.length<5;i++){const d=isoShift(isoToday(),-i);(J.days[d]||[]).slice().reverse().forEach(x=>{if(x.what&&!out.includes(x.what)&&out.length<5)out.push(x.what)})}return out}
+function quickLog(){
+ const q=draft.ql||(draft.ql={occ:qlDefaultOcc(),foods:[],gut:""});
+ const rec=recentMeals();
+ return `<div class="card stack ql">
+  <div class="choice">${QL_OCC.map(o=>`<button data-qlocc="${o}" aria-pressed="${q.occ===o}">${o}</button>`).join("")}</div>
+  ${QL_FOODS.map(([g,L])=>`<div class="stack" style="gap:6px"><span class="eyebrow">${g}</span><div class="qlgrid">${L.map(f=>`<button data-qlfood="${esc(f)}" aria-pressed="${q.foods.includes(f)}">${esc(f)}</button>`).join("")}</div></div>`).join("")}
+  <div class="row" style="flex-wrap:wrap;gap:6px"><span class="eyebrow grow">Stomach</span>${[["Good","👍"],["Okay","😐"],["Upset","👎"]].map(([v,e])=>`<button class="qlface" data-qlgut="${v}" aria-pressed="${q.gut===v}" aria-label="${v}">${e}</button>`).join("")}</div>
+  <button class="btn block" data-qllog="1" ${q.foods.length?"":"disabled"}>${q.foods.length?`Log ${esc(q.occ.toLowerCase())}`:"Tap what you ate"}</button>
+  ${rec.length?`<div class="stack" style="gap:6px"><span class="eyebrow">Again</span><div class="choice">${rec.map(r=>`<button data-jrepeat="${esc(r)}">${esc(r.length>34?r.slice(0,32)+"…":r)}</button>`).join("")}</div></div>`:""}
+ </div>`;
+}
 let jDay=isoToday();
 function vJournal(){
  const list=(J.days[jDay]||[]).slice().sort((a,b)=>(a.time||"").localeCompare(b.time||""));
  const e=draft.jEdit;
  return `<div class="view"><div><p class="eyebrow">Food journal · on this phone</p><h1 style="margin-top:6px">Journal</h1></div>
   <div class="daynav"><button class="btn ghost sm" data-jday="-1" aria-label="Previous day">‹</button><b>${jDay===isoToday()?"Today":esc(fmtDate(jDay))}</b><button class="btn ghost sm" data-jday="1" aria-label="Next day" ${jDay>=isoToday()?"disabled":""}>›</button></div>
-  ${e?jForm(e):`<button class="btn block" data-jnew="1">Add entry</button>`}
+  ${e?jForm(e):quickLog()+`<button class="linkbtn" data-jnew="1" style="align-self:flex-start">Add with details or a photo</button>`}
   <div class="stack">${list.length?list.map(x=>`<button class="card entry" style="text-align:left;cursor:pointer" data-jopen="${x.id}">
     <div class="row"><span class="eyebrow grow">${esc(x.time||"")} · ${esc(x.occ)}</span>${x.gut?`<span class="chip ${x.gut==="Upset"?"stop":""}">Stomach: ${esc(x.gut)}</span>`:""}</div>
     <p>${esc(x.what)}</p>${x.photo?`<img src="${x.photo}" alt="Photo of ${esc(x.what)}">`:""}${x.energy?`<span class="stamp">Energy: ${esc(x.energy)}</span>`:""}${x.note?`<p class="muted small">${esc(x.note)}</p>`:""}</button>`).join(""):`<p class="muted">Nothing logged. What did you eat?</p>`}</div>
@@ -1290,7 +1340,7 @@ function vRD(){
   <div class="card stack"><p>Nutrition consults with ${esc(rdName())}${s.rdTitle?`, ${esc(s.rdTitle)}`:""}, are in person. <b>Book them through the athletic trainers, ${esc(ats)}.</b></p>
    ${s.bookingLink?`<a class="btn block" href="${esc(s.bookingLink)}" target="_blank" rel="noopener">Pick a time</a>`:""}
    <p class="stamp">Covers ${SESSIONS.slice(0,7).join(", ").toLowerCase()}.</p></div>
-  <section><h2>Ask for a consult</h2><p class="muted small">This writes the message to ${esc(ats)} with your name, sport and what you need. Send it, or show it to them at practice.</p>
+  <section><h2>Ask for a consult</h2><p class="muted small">Goes to ${esc(ats)}. Send it or show them at practice.</p>
   ${draft.rdSent?`<div class="card stack"><span class="chip ok" style="align-self:flex-start">Ready to send</span><div class="copybox" id="rd-copy">${esc(draft.rdSent)}</div>
     <div class="row" style="flex-wrap:wrap"><button class="btn" data-copy="rd-copy">Copy message</button>${s.atEmail?`<a class="btn ghost" href="mailto:${esc(s.atEmail)}?subject=${encodeURIComponent("Nutrition consult request: "+profile.name)}&body=${encodeURIComponent(draft.rdSent)}">Email</a>`:""}${s.atPhone?`<a class="btn ghost" href="sms:${esc(s.atPhone)}?&body=${encodeURIComponent(draft.rdSent)}">Text</a>`:""}<button class="btn ghost" data-reset="rdSent">New</button></div>
     <p class="stamp">If Email or Text doesn't open, copy the message and send it yourself.</p></div>`:
@@ -1326,7 +1376,7 @@ function vLearn(){
     <p class="src">Source: ${esc(g.src)}</p>`;
   }else{
    const list=SPORTS.filter(s=>!q||(sportLabel(s)+" "+GUIDES[s.id].demand+" "+GUIDES[s.id].tips.join(" ")).toLowerCase().includes(q));
-   body=`<p class="muted small">Guides for every Charger team: men's and women's.</p><div class="sportgrid">${list.map(s=>`<button class="sportbtn ${s.id===profile.sport?"mine":""}" data-sportguide="${s.id}"><span class="eyebrow">${esc(s.who)}</span><b>${esc(s.n)}</b><span class="muted small">${esc(SIMPLE[s.id][0])}</span>${s.id===profile.sport?`<span class="chip gold" style="align-self:flex-start">Your team</span>`:""}</button>`).join("")}</div>`;
+   body=`<div class="sportgrid">${list.map(s=>`<button class="sportbtn ${s.id===profile.sport?"mine":""}" data-sportguide="${s.id}"><span class="eyebrow">${esc(s.who)}</span><b>${esc(s.n)}</b><span class="muted small">${esc(SIMPLE[s.id][0])}</span>${s.id===profile.sport?`<span class="chip gold" style="align-self:flex-start">Your team</span>`:""}</button>`).join("")}</div>`;
   }
  }else{
   const list=SEXGUIDES[sexSeg].filter(f=>!q||(f.q+f.a.join(" ")).toLowerCase().includes(q));
@@ -1353,13 +1403,13 @@ function vMe(){
    <div class="row"><span class="grow muted">Eating style</span><b>${esc(profile.diet)}</b></div>
    <button class="btn ghost block" data-editprofile="1">Edit profile</button></div>
   <section><h2>Color scheme</h2><div class="card stack">
-   <p class="muted small">Nine schemes, all built from the official Cypress College palette.</p>
+   
    <div class="themes">${THEMES.map(([v,l,c])=>`<button class="theme" data-theme="${v}" aria-pressed="${prefs.theme===v}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join("")}</span>${l}</button>`).join("")}</div>
    <div class="choice">${[["0","Standard text"],["1","Larger text"]].map(([v,l])=>`<button data-large="${v}" aria-pressed="${String(prefs.large?1:0)===v}">${l}</button>`).join("")}</div></div></section>
-  ${boardState==="off"?"":`<section><h2>Team charge board</h2><div class="card stack"><p class="muted small">Your daily charge count and team are shared, with no name, to make your team's average. Nothing else leaves your phone.</p>
+  ${boardState==="off"?"":`<section><h2>Team charge board</h2><div class="card stack"><p class="muted small">Shares your daily charge and team, no name.</p>
    <div class="choice"><button data-board="1" aria-pressed="${!prefs.noBoard}">Count me in</button><button data-board="0" aria-pressed="${!!prefs.noBoard}">Don't share</button></div></div></section>`}
   <button class="btn ghost block" data-walkup="1">Replay my walk-up</button>
-  <section><h2>Your data</h2><div class="card stack"><p class="muted small">Your profile, journal, hydration and charge meter are saved on this phone only.</p>
+  <section><h2>Your data</h2><div class="card stack"><p class="muted small">Everything is saved on this phone only.</p>
    ${draft.wipeAsk?`<div class="row"><button class="btn grow" style="background:var(--stop);color:#fff" data-wipeyes="1">Erase everything</button><button class="btn ghost grow" data-wipeno="1">Keep it</button></div>`:`<button class="btn ghost block" data-wipe="1">Erase my data from this phone</button>`}</div></section>
   <p class="stamp">Content last updated ${esc(DATA.updated?fmtDate(DATA.updated):"")}. Not a substitute for individual medical care.</p></div>`;
 }
@@ -1468,6 +1518,12 @@ document.addEventListener("click",async ev=>{
  if(d.wipeyes){try{["profile","prefs","charge","journal","hydro"].forEach(k=>localStorage.removeItem("cy_"+k))}catch(e){}profile=null;J={days:{}};charge={};prefs={theme:"auto",large:0};draft={};tab="home";render();return}
  /* journal */
  if(d.jday){jDay=isoShift(jDay,+d.jday);if(jDay>isoToday())jDay=isoToday();draft.jEdit=null;render();return}
+ if(d.qlocc){draft.ql.occ=d.qlocc;render();return}
+ if(d.qlfood){const L=draft.ql.foods,i=L.indexOf(d.qlfood);i<0?L.push(d.qlfood):L.splice(i,1);render();return}
+ if(d.qlgut){draft.ql.gut=draft.ql.gut===d.qlgut?"":d.qlgut;render();return}
+ if(d.qllog||d.jrepeat){const q=draft.ql||{occ:qlDefaultOcc(),foods:[],gut:""};const n=new Date();const what=d.jrepeat||q.foods.join(", ");if(!what)return;
+  const list=J.days[jDay]||(J.days[jDay]=[]);list.push({id:Date.now().toString(36),time:String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0"),occ:d.jrepeat?qlDefaultOcc():q.occ,what,gut:d.jrepeat?"":q.gut,energy:"",note:"",photo:""});
+  if(!store.set("journal",J)){toast("Phone storage is full");return}draft.ql=null;render();toast("Logged.");return}
  if(d.jnew){const n=new Date();draft.jEdit={time:String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0"),occ:"",what:"",gut:"",energy:"",note:"",photo:""};draft.jDelAsk=false;render();return}
  if(d.jopen){draft.jEdit=clone((J.days[jDay]||[]).find(x=>x.id===d.jopen));draft.jDelAsk=false;render();window.scrollTo(0,0);return}
  if(d.jcancel){draft.jEdit=null;render();return}
