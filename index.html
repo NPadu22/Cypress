@@ -238,6 +238,17 @@ ol.rules li::before{content:counter(r);width:26px;height:26px;border-radius:7px;
 #bg text{font:800 44px var(--display);fill:var(--fg);opacity:.06}
 .app{position:relative;z-index:1}
 .hr{height:1px;background:var(--line);margin:4px 0}
+.a2hs{position:fixed;inset:0;z-index:90;background:rgba(0,12,31,.6);display:flex;align-items:flex-end;justify-content:center;padding:12px 12px calc(12px + env(safe-area-inset-bottom));animation:wuIn .25s ease both}
+.a2hs.out{animation:wuOut .3s ease forwards}
+.a2-sheet{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 18px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.a2-icon{width:72px;height:72px;border-radius:17px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.a2-steps{list-style:none;margin:4px 0;padding:0;width:100%;display:flex;flex-direction:column;gap:8px;text-align:left}
+.a2-steps li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.95rem}
+.a2-ic{width:40px;height:40px;border-radius:10px;background:var(--surface-2);display:grid;place-items:center}
+.a2i{width:24px;height:24px;fill:none;stroke:var(--gold-text);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.a2i circle{fill:var(--gold-text);stroke:none}
+.a2n{font:700 .8rem var(--body);color:var(--gold-text)}
+.a2tip{display:flex;align-items:center;gap:6px;color:var(--muted)}
 .qlgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .qlgrid button{min-height:46px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:600;font-size:.86rem;cursor:pointer;padding:6px 4px;line-height:1.15}
 .qlgrid button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
@@ -836,6 +847,7 @@ function vOnboard(){
  return `<div class="view" style="padding-top:12px">
   <div class="hero stack welcome"><img class="hero-logo" src="${LOGO}" alt="" aria-hidden="true"><p class="eyebrow">At the Clinic · Cypress Chargers</p><h1>${draft.editingProfile?"Edit profile":"Stay charged"}</h1>
    <p class="muted">Fuel like it matters. Because it does.</p></div>
+  ${isStandalone()||draft.editingProfile?"":`<p class="small a2tip"><span class="pdot"></span> After you sign up, add the app to your Home Screen. We'll show you how.</p>`}
   <form class="card stack" id="f-onboard">
    <div class="stack" style="gap:6px"><span class="eyebrow">I'm</span><div class="choice" data-pick="role">${[["athlete","An athlete"],["staff","Staff"]].map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${p.role===v}">${l}</button>`).join("")}</div></div>
    <label for="f-name">Your name<input id="f-name" required autocomplete="name" value="${esc(p.name)}" placeholder="First and last"></label>
@@ -1244,7 +1256,34 @@ function walkup(){
  try{el.querySelector(".wu-go").focus({preventScroll:true})}catch(e){}
  clearTimeout(walkup.t);walkup.t=setTimeout(()=>closeWalkup(),12000);
 }
-function closeWalkup(){const el=document.querySelector(".walkup");if(!el)return;el.classList.add("out");setTimeout(()=>el.remove(),450)}
+function closeWalkup(){const el=document.querySelector(".walkup");if(!el)return;el.classList.add("out");setTimeout(()=>{el.remove();setTimeout(()=>a2hs(),400)},450)}
+/* Add to Home Screen: shows at sign-up and every time the app is opened in a browser instead of from the Home Screen */
+let deferredInstall=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e});
+window.addEventListener("appinstalled",()=>{store.set("a2hs_done",1);closeA2hs()});
+const isStandalone=()=>{try{return matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){return false}};
+function canA2hs(){let top=true;try{top=window.self===window.top}catch(e){top=false}
+ return top&&!isStandalone()&&!/claude|anthropic/.test(location.hostname)&&location.protocol!=="file:"&&!store.get("a2hs_done",0)}
+function a2hs(force){
+ if(!profile||document.querySelector(".a2hs")||document.querySelector(".walkup"))return;
+ if(!force){if(!canA2hs())return;try{if(sessionStorage.getItem("cy_a2hs_later"))return}catch(e){}}
+ const ua=navigator.userAgent, ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1), crios=/crios|fxios|edgios/i.test(ua);
+ const share='<svg class="a2i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></svg>';
+ const plus='<svg class="a2i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>';
+ const dots='<svg class="a2i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>';
+ const addb='<b class="a2n">Add</b>';
+ const steps=ios?[[share,crios?"Tap <b>Share</b> in the address bar":"Tap <b>Share</b> in Safari (or <b>•••</b>, then <b>Share</b>)"],[plus,"Scroll down, tap <b>Add to Home Screen</b>"],[addb,"Tap <b>Add</b> in the top corner"]]
+  :[[dots,"Tap the <b>⋮ menu</b> in Chrome"],[plus,"Tap <b>Add to Home screen</b> or <b>Install app</b>"],[addb,"Tap <b>Add</b> or <b>Install</b>"]];
+ const inst=deferredInstall&&!ios;
+ const el=document.createElement("div");el.className="a2hs";el.setAttribute("role","dialog");el.setAttribute("aria-label","Add At the Clinic to your Home Screen");
+ el.innerHTML=`<div class="a2-sheet"><img class="a2-icon" src="icon-180.png" alt=""><h3>Put At the Clinic on your Home Screen</h3><p class="muted small">Opens like an app, full screen, with the Charger logo.</p>
+  ${inst?`<button class="btn block" data-a2install="1">Install the app</button>`:`<ol class="a2-steps">${steps.map(([ic,tx])=>`<li><span class="a2-ic">${ic}</span><span>${tx}</span></li>`).join("")}</ol>`}
+  <button class="btn block ${inst?"ghost":""}" data-a2later="1">Got it</button>
+  <button class="linkbtn" data-a2done="1">I already added it</button></div>`;
+ const img=el.querySelector(".a2-icon");img.addEventListener("error",()=>{img.src=LOGO},{once:true});
+ document.body.appendChild(el);
+}
+function closeA2hs(){const el=document.querySelector(".a2hs");if(el){el.classList.add("out");setTimeout(()=>el.remove(),300)}}
 function atNames(j){const n=(S().atName||"").split(/\s*(?:&|\band\b|,)\s*/).map(x=>x.trim().split(/\s+/)[0]).filter(Boolean);return n.length?n.join(j):"your athletic trainer"}
 function atCard(){const s=S();return `<div class="card stack"><p class="eyebrow">Cypress College · Athletic trainers</p><h3>${esc(s.atName||"Athletic Training Room")}</h3>
     ${s.atRoom?`<p class="muted">${esc(s.atRoom)}</p>`:""}
@@ -1408,6 +1447,7 @@ function vMe(){
    <div class="choice">${[["0","Standard text"],["1","Larger text"]].map(([v,l])=>`<button data-large="${v}" aria-pressed="${String(prefs.large?1:0)===v}">${l}</button>`).join("")}</div></div></section>
   ${boardState==="off"?"":`<section><h2>Team charge board</h2><div class="card stack"><p class="muted small">Shares your daily charge and team, no name.</p>
    <div class="choice"><button data-board="1" aria-pressed="${!prefs.noBoard}">Count me in</button><button data-board="0" aria-pressed="${!!prefs.noBoard}">Don't share</button></div></div></section>`}
+  ${isStandalone()?"":`<button class="btn ghost block" data-a2show="1">Add to Home Screen</button>`}
   <button class="btn ghost block" data-walkup="1">Replay my walk-up</button>
   <section><h2>Your data</h2><div class="card stack"><p class="muted small">Everything is saved on this phone only.</p>
    ${draft.wipeAsk?`<div class="row"><button class="btn grow" style="background:var(--stop);color:#fff" data-wipeyes="1">Erase everything</button><button class="btn ghost grow" data-wipeno="1">Keep it</button></div>`:`<button class="btn ghost block" data-wipe="1">Erase my data from this phone</button>`}</div></section>
@@ -1506,6 +1546,10 @@ document.addEventListener("click",async ev=>{
  if(d.copy){const el=document.getElementById(d.copy);try{await navigator.clipboard.writeText(el.textContent);toast("Copied")}catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Selected. Copy it from the menu")}return}
  if(tab==="eat"&&eatSeg==="plan"&&planClick(b))return;
  if(d.wuclose){closeWalkup();return}
+ if(d.a2later){try{sessionStorage.setItem("cy_a2hs_later","1")}catch(e){}closeA2hs();return}
+ if(d.a2done){store.set("a2hs_done",1);closeA2hs();toast("Nice. Open it from your Home Screen.");return}
+ if(d.a2install){if(deferredInstall){deferredInstall.prompt();deferredInstall.userChoice.then(r=>{if(r&&r.outcome==="accepted")store.set("a2hs_done",1)}).catch(()=>{});deferredInstall=null}closeA2hs();return}
+ if(d.a2show){a2hs(true);return}
  if(d.walkup){walkup();return}
  if(d.trainseg){trainSeg=d.trainseg;render();window.scrollTo(0,0);return}
  if(d.part){bodyPart=d.part;render();return}
@@ -1588,6 +1632,7 @@ document.addEventListener("submit",ev=>{
 });
 window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h)||h==="me"){tab=h;render()}});
 render();
+setTimeout(()=>a2hs(),1500);
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")&&!/claude|anthropic/.test(location.hostname)){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 </script>
 </body>
