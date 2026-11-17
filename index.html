@@ -653,8 +653,8 @@ RULES:
 - Plain text only. No markdown headings, no bold, no tables.
 - Never diagnose. Never give medication or supplement doses beyond what the content says.
 - Never suggest a food that contains the athlete's allergens. For allergies or medical diets, tell them to book an allergy review with ${rdName()}.
-- Emergencies (passing out, confusion, very hot body in the heat, head injury with worsening symptoms, chest pain, trouble breathing): tell them to call 911 now and tell their athletic trainer.
-- Injuries or pain: tell them to report it to their athletic trainer.
+- Emergencies (passing out, confusion, very hot body in the heat, head injury with worsening symptoms, chest pain, trouble breathing): tell them to call 911 now and tell their athletic trainer (${atNames(" or ")}).
+- Injuries or pain: tell them to report it to their athletic trainer, ${atNames(" or ")}.
 - If they mention skipping meals to lose weight, purging, binge eating, or feeling bad about food or their body: be kind, give no numbers or diet plans, and encourage them to talk privately with ${rdName()} and campus health or counseling services.
 - If they mention wanting to hurt themselves, tell them to call or text 988 (Suicide & Crisis Lifeline) right now, and to reach out to someone they trust.
 ATHLETE: ${sportLabel(sp)}${profile.position?", "+profile.position:""}. Eating style: ${profile.diet||"no restrictions"}. Allergies/medical diet: ${[...myAllergens(),profile.other].filter(Boolean).join(", ")||"none listed"}.
@@ -914,6 +914,7 @@ function partPicker(){
 }
 const moveList=list=>`<div class="card stack" style="gap:2px">${list.map(([n,h],i)=>`<div class="basic"><span class="bnum">${i+1}</span><div><b>${esc(n)}</b><p class="muted small">${esc(h)}</p></div></div>`).join("")}</div>`;
 let trainSeg="at";
+function atNames(j){const n=(S().atName||"").split(/\s*(?:&|\band\b|,)\s*/).map(x=>x.trim().split(/\s+/)[0]).filter(Boolean);return n.length?n.join(j):"your athletic trainer"}
 function atCard(){const s=S();return `<div class="card stack"><p class="eyebrow">Cypress College · Athletic trainers</p><h3>${esc(s.atName||"Athletic Training Room")}</h3>
     ${s.atRoom?`<p class="muted">${esc(s.atRoom)}</p>`:""}
     ${s.atPhone?`<div class="row"><span class="copybox grow" id="at-ph">${esc(s.atPhone)}</span><button class="btn ghost sm" data-copy="at-ph">Copy</button></div>`:""}
@@ -924,7 +925,7 @@ function vTraining(){
  const segs=[["at","Report an injury"],["warm","Warm-ups"],["prehab","Prehab"],["rehab","Rehab"],["red","Warning signs"]];
  let body="";
  if(trainSeg==="at"){
-  body=atCard()+`<section><h2>Report an injury</h2><p class="muted small">Report every injury. Even the small ones. This writes the message for you.</p>
+  body=atCard()+`<section><h2>Report an injury</h2><p class="muted small">Report every injury to ${esc(atNames(" or "))}. Even the small ones. This writes the message for you.</p>
    ${draft.atSent?`<div class="card stack"><span class="chip ok" style="align-self:flex-start">Ready to send</span><div class="copybox" id="at-copy">${esc(draft.atSent)}</div><div class="row" style="flex-wrap:wrap"><button class="btn" data-copy="at-copy">Copy message</button>${s.atEmail?`<a class="btn ghost" href="mailto:${esc(s.atEmail)}?subject=${encodeURIComponent("Injury report: "+profile.name)}&body=${encodeURIComponent(draft.atSent)}">Email</a>`:""}${s.atPhone?`<a class="btn ghost" href="sms:${esc(s.atPhone)}?&body=${encodeURIComponent(draft.atSent)}">Text</a>`:""}<button class="btn ghost" data-reset="atSent">New</button></div><p class="stamp">If Email or Text doesn't open, copy the message instead.</p></div>`:
    `<form class="card stack" id="f-at">
      <label for="at-where">What hurts?<input id="at-where" required placeholder="e.g. right ankle"></label>
@@ -939,18 +940,18 @@ function vTraining(){
    <section><h2>${esc(b.n)} warm-up</h2>${moveList(b.warm)}<p class="src">Source: Soligard et al., BMJ 2008 (FIFA 11+ warm-up)</p></section>`;
  }else if(trainSeg==="prehab"){
   const b=(partPicker(),BODY.find(x=>x.id===bodyPart));
-  body=`<p class="muted small">The best injury is the one that never happens. Do these 2–3 times a week. Your athletic trainer will set the plan that fits you. Stop if anything causes sharp pain.</p>${partPicker()}
+  body=`<p class="muted small">The best injury is the one that never happens. Do these 2–3 times a week. ${esc(atNames(" and "))} will set the plan that fits you. Stop if anything causes sharp pain.</p>${partPicker()}
    <section><h2>${esc(b.n)} prehab</h2>${moveList(b.pre)}<p class="src">Source: ${esc(b.preSrc)}</p></section>`;
  }else if(trainSeg==="rehab"){
   const b=(partPicker(),BODY.find(x=>x.id===bodyPart)), r=b.rehab;
-  body=`<div class="alertbox"><b>Rehab starts with your athletic trainer</b><p class="small">Hurt? Report it first. Don't start rehab on your own. Your AT decides when you move to the next stage and when you're cleared to play.</p><button class="linkbtn" style="align-self:flex-start" data-trainseg="at">Report an injury</button></div>${partPicker()}
+  body=`<div class="alertbox"><b>Rehab starts with ${esc(atNames(" or "))}</b><p class="small">Hurt? Report it to ${esc(atNames(" or "))} first. Don't start rehab on your own. They decide when you move to the next stage and when you're cleared to play.</p><button class="linkbtn" style="align-self:flex-start" data-trainseg="at">Report an injury</button></div>${partPicker()}
    <section><h2>${esc(b.n)}</h2><div class="card stack"><p class="eyebrow">Common issue · ${esc(r.issue)}</p>
     <div class="tl">${r.steps.map(s=>{const i=s.indexOf(":");return `<div class="tl-item"><span class="tl-dot"></span><div><b>${esc(s.slice(0,i))}</b><span class="muted">${esc((x=>x.charAt(0).toUpperCase()+x.slice(1))(s.slice(i+1).trim()))}</span></div></div>`}).join("")}</div>
     ${r.note?`<p class="small"><b>Note:</b> ${esc(r.note)}</p>`:""}<p class="src">Source: ${esc(r.src)}</p></div></section>
    <div class="goldbox"><b>Healing runs on food</b><p class="small">See what to eat while you recover.</p><button class="linkbtn" style="align-self:flex-start" data-injurylink="1">Injury nutrition</button></div>`;
  }else{
   body=`<div class="alertbox"><b>Call 911 now</b><ul class="clean small"><li>Passing out, confusion, a seizure or slurred speech during or after exercise (possible heat stroke). Start cooling right away. Cold-water immersion is best.</li><li>Head injury with a headache that gets worse, throwing up again and again, weakness or numbness, or blacking out.</li><li>Chest pain, fainting or trouble breathing during exercise.</li><li>Neck injury with numbness, tingling or weakness. Don't move the athlete.</li></ul></div>
-   <div class="goldbox"><b>Stop and see the athletic trainer today</b><ul class="clean small"><li>Any hit to the head followed by headache, dizziness, feeling foggy or bothered by light. When in doubt, sit out.</li><li>Pain that changes how you move, swelling, or you can't put weight on it.</li><li>Cramps, nausea, headache or dizziness in the heat.</li><li>Pain in one spot on a bone that gets worse with running or jumping (possible stress fracture).</li><li>Dark brown pee after a very hard workout (possible rhabdo).</li></ul></div>
+   <div class="goldbox"><b>Stop and see ${esc(atNames(" or "))} today</b><ul class="clean small"><li>Any hit to the head followed by headache, dizziness, feeling foggy or bothered by light. When in doubt, sit out.</li><li>Pain that changes how you move, swelling, or you can't put weight on it.</li><li>Cramps, nausea, headache or dizziness in the heat.</li><li>Pain in one spot on a bone that gets worse with running or jumping (possible stress fracture).</li><li>Dark brown pee after a very hard workout (possible rhabdo).</li></ul></div>
    <p class="src">Sources: Casa et al., NATA Position Statement on Exertional Heat Illnesses, J Athl Train 2015; Patricios et al., Consensus on Concussion in Sport, Br J Sports Med 2023; Andersen et al., NATA Position Statement on Emergency Planning, 2002</p>`;
  }
  return `<div class="view"><div><p class="eyebrow">Athletic training · Warm-up · Prehab · Rehab</p><h1 style="margin-top:6px">Training</h1></div>
