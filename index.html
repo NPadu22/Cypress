@@ -417,6 +417,10 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
  .pp-side p,.pp-side li{font-size:10.5pt;line-height:1.35;margin:0}.pp-side ul{margin:2pt 0;padding-left:14pt}
  .pp-src{font-size:8pt!important;color:#4F728F;margin-top:10pt!important}.pp-foot{font-size:9pt!important;margin-top:12pt!important;border-top:1px solid #B6B2A3;padding-top:6pt}
 }
+.rx-item{display:flex;gap:10px;align-items:flex-start}
+.rx-check{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:transparent;color:var(--on-gold,#003876);font-weight:700;cursor:pointer}
+.rx-check[aria-pressed="true"]{background:var(--gold);border-color:var(--gold)}
+.codebig{font:600 1.5rem/1 var(--mono);letter-spacing:.22em}
 .lk-plate{background:#FED41F;color:#003876;border-radius:6px;padding:8px 18px 10px;min-width:62%;text-align:center;display:flex;flex-direction:column;gap:2px;box-shadow:0 2px 0 #C9A400}
 .lk-first{font:600 .72rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;opacity:.85}
 .lk-last{font:600 1.9rem/1 var(--display);letter-spacing:.08em;word-break:break-word}
@@ -434,7 +438,7 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
 <div id="bg" aria-hidden="true"></div>
 <div class="app" id="app"></div>
 <nav class="tabs" id="tabs" aria-label="Main"></nav>
-<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to At the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":""}}</script>
+<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to At the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":"","annSheet":"","rxSheet":""}}</script>
 <script id="cy-main">
 "use strict";
 /* ============ data ============ */
@@ -802,6 +806,72 @@ function vGames(){
   ${form||`<button class="${L.length>1?"linkbtn":"btn block"}" data-gadd="1">${L.length?"+ Add a game":"Add a game"}</button>`}
   <p class="stamp">Alerts at pre-game meal (3½ h before) and top-off (45 min before).</p></div></section>`;
 }
+
+/* ===== Google Sheet: announcements and prescriptions (published as CSV; anyone with the link can read it).
+   "For" column picks who sees a row: blank/Everyone, Athletes, Staff, a team (Softball, Women's Soccer, wsoc),
+   a position (Pitcher), or a person's private Clinic code. Several allowed: "Softball, Baseball". ===== */
+let SHEET={ann:store.get("sheet_ann",null),rx:store.get("sheet_rx",null)};
+let RXDONE=store.get("rxdone",{});
+function parseCSV(text){const rows=[];let row=[],f="",q=false;
+ for(let i=0;i<text.length;i++){const c=text[i];
+  if(q){if(c==='"'){if(text[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c==='"')q=true;else if(c===","){row.push(f);f=""}else if(c==="\n"||c==="\r"){if(c==="\r"&&text[i+1]==="\n")i++;row.push(f);rows.push(row);row=[];f=""}else f+=c}
+ if(f!==""||row.length){row.push(f);rows.push(row)}return rows.filter(r=>r.some(x=>x.trim()!==""))}
+function sheetDate(v){v=(v||"").trim();if(!v)return "";let m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+ m=v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);if(m){const y=m[3].length===2?"20"+m[3]:m[3];return `${y}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+ const d=new Date(v);return isNaN(d)?"":d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function sheetTable(text){const R=parseCSV(text);if(R.length<2)return null;const H=R[0].map(h=>h.trim().toLowerCase());
+ const col=n=>H.findIndex(h=>h===n||h.startsWith(n));return {R:R.slice(1),col,g:(r,i)=>i<0?"":(r[i]||"").trim()}}
+function liveRow(when,hide,show){const today=isoToday();return show.toLowerCase()!=="no"&&!(hide&&hide<today)&&!(when&&when>today)}
+function annRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T,iD=col("date"),iF=col("for"),iT=col("tag"),iH=col("headline"),iX=col("details"),iE=col("hide"),iS=col("show");
+ if(iH<0)return null;
+ return R.map(r=>({when:sheetDate(g(r,iD)),who:g(r,iF),tag:g(r,iT),t:g(r,iH),d:g(r,iX),hide:sheetDate(g(r,iE)),show:g(r,iS)||"yes"})).filter(a=>a.t)}
+function rxRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T;
+ const iD=col("date"),iF=col("for"),iY=col("type"),iP=col("plan"),iI=col("item"),iQ=col("dose"),iW=col("when"),iC=col("cue"),iV=col("video"),iE=col("hide"),iS=col("show"),iB=col("from");
+ if(iP<0||iI<0)return null;const out=[],by={};
+ for(const r of R){const name=g(r,iP),item=g(r,iI);if(!name||!item)continue;const who=g(r,iF);
+  const id=(name+"~"+who).toLowerCase().replace(/[^a-z0-9~]+/g,"-");
+  if(!by[id]){by[id]={id,name,who,type:rxType(g(r,iY)),from:g(r,iB),when:sheetDate(g(r,iD)),hide:sheetDate(g(r,iE)),show:g(r,iS)||"yes",ex:[]};out.push(by[id])}
+  const v=g(r,iV);by[id].ex.push({n:item,dose:g(r,iQ),at:g(r,iW),cue:g(r,iC),video:/^https:\/\//i.test(v)?v:""})}
+ return out}
+function rxType(v){v=(v||"").toLowerCase();return /^(pt|phys)/.test(v)?"PT":/^(at|ath|train)/.test(v)?"AT":"Nutrition"}
+async function loadSheet(kind,url){if(!url)return;try{const r=await fetch(url+(url.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
+ const rows=(kind==="rx"?rxRows:annRows)(await r.text());if(!rows)return;const val={rows,fetched:new Date().toISOString()};
+ const changed=JSON.stringify((SHEET[kind]||{}).rows)!==JSON.stringify(rows);SHEET[kind]=val;store.set("sheet_"+kind,val);
+ if(changed&&profile&&!document.querySelector("form:focus-within"))render()}catch(e){}}
+function loadSheets(){loadSheet("ann",S().annSheet);loadSheet("rx",S().rxSheet)}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")loadSheets()});
+/* Private Clinic code: random, made on this phone, shown in the locker. Staff use it in the "For" column. */
+function clinicCode(){if(!profile)return "";if(!profile.code){const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let c="";const r=new Uint32Array(6);try{crypto.getRandomValues(r)}catch(e){for(let i=0;i<6;i++)r[i]=Math.random()*1e9}
+ for(let i=0;i<6;i++)c+=A[r[i]%A.length];profile.code=c;store.set("profile",profile)}return profile.code}
+function forTokens(who){return (who||"").toLowerCase().replace(/’/g,"'").split(/[,;\/&+]|\band\b/).map(x=>x.trim()).filter(Boolean)}
+const ALLWORDS=/^(everyone|all|all teams|everybody)$/;
+function sportWords(s){const n=s.n.toLowerCase(),g=s.who==="Men"?["men's","mens","men"]:["women's","womens","women"];return [s.id,...g.map(x=>x+" "+n)]}
+function tokenSports(tk){return SPORTS.filter(s=>sportWords(s).includes(tk)||s.n.toLowerCase()===tk)}
+function isCodeToken(tk){return /^[a-z0-9]{6}$/.test(tk)&&!tokenSports(tk).length&&!/^(staff|athletes?|coaches)$/.test(tk)}
+function forMe(who){const T=forTokens(who);if(!T.length||T.some(x=>ALLWORDS.test(x)))return true;
+ const staff=isStaff();if(T.includes("staff")&&staff)return true;if(T.some(x=>/^athletes?$/.test(x))&&!staff)return true;
+ const code=clinicCode().toLowerCase();if(code&&T.includes(code))return true;
+ if(T.some(x=>tokenSports(x).some(s=>s.id===profile.sport)))return true;
+ const pos=(profile.position||"").toLowerCase();if(pos&&T.includes(pos))return true;return false}
+function forLabel(who){const T=forTokens(who);if(!T.length||T.some(x=>ALLWORDS.test(x)))return "Everyone";
+ if(T.every(isCodeToken))return isStaff()&&!T.includes(clinicCode().toLowerCase())?"Code "+who.toUpperCase():"Just for you";return who}
+function syncAgo(t){const m=Math.round((Date.now()-new Date(t))/60000);return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":fmtDate(t.slice(0,10))}
+function sheetAnns(){return S().annSheet&&SHEET.ann?SHEET.ann.rows.filter(a=>liveRow(a.when,a.hide,a.show)&&(isStaff()||forMe(a.who))).sort((a,b)=>(b.when||"").localeCompare(a.when||"")):[]}
+function allAnns(){return [...sheetAnns(),...DATA.announcements]}
+function myRx(types){const L=S().rxSheet&&SHEET.rx?SHEET.rx.rows:[];return L.filter(p=>liveRow(p.when,p.hide,p.show)&&forMe(p.who)&&(!types||types.includes(p.type)))}
+function staffRx(){const L=S().rxSheet&&SHEET.rx?SHEET.rx.rows:[];return L.filter(p=>liveRow(p.when,p.hide,p.show))}
+function rxDone(id,i){return ((RXDONE[isoToday()]||{})[id]||[]).includes(i)}
+function rxCard(p,preview){const done=p.ex.filter((_,i)=>rxDone(p.id,i)).length,lab=forLabel(p.who);
+ return `<div class="card stack rx"><div class="row"><span class="chip ${p.type==="Nutrition"?"gold":"info"}">${p.type==="Nutrition"?"Nutrition":p.type==="PT"?"Physical therapy":"Athletic training"}</span><span class="grow"></span>${preview?"":`<span class="stamp">${done}/${p.ex.length} today</span>`}</div>
+  <div><b>${esc(p.name)}</b><p class="stamp">${esc([lab!=="Everyone"?lab:"",p.from?"From "+p.from:""].filter(Boolean).join(" · "))}</p></div>
+  <div class="stack" style="gap:6px">${p.ex.map((x,i)=>{const on=rxDone(p.id,i);return `<div class="rx-item">${preview?`<span class="mpn">${i+1}</span>`:`<button class="rx-check" data-rx="${esc(p.id)}" data-rxi="${i}" aria-pressed="${on}" aria-label="Done: ${esc(x.n)}">${on?"✓":""}</button>`}
+   <div class="grow"><b class="small">${esc(x.n)}</b>${x.dose||x.at?`<span class="stamp"> ${esc([x.dose,x.at].filter(Boolean).join(" · "))}</span>`:""}${x.cue?`<p class="muted small">${esc(x.cue)}</p>`:""}${x.video?`<a class="linkbtn small" href="${esc(x.video)}" target="_blank" rel="noopener">Watch demo ›</a>`:""}</div></div>`}).join("")}</div></div>`}
+function vMyPlan(){const L=myRx();if(!L.length)return "";return `<section><h2>Your plan</h2><div class="stack">${L.map(p=>rxCard(p)).join("")}</div></section>`}
+function vRxStaff(){const L=staffRx();
+ return `<section><h2>Prescriptions</h2><p class="muted small">Everything live on the Prescriptions tab, as athletes see it. Add rows in the Google Sheet; changes show in about 5 minutes.</p>
+  ${L.length?`<div class="stack">${L.map(p=>rxCard(p,true)).join("")}</div>`:`<div class="card"><p class="muted small">${S().rxSheet?"No prescriptions live right now.":"The Google Sheet isn't connected yet."}</p></div>`}</section>`}
+loadSheets();
 setInterval(()=>{const a=document.activeElement;if(tab==="home"&&profile&&!(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))){const c=charge[isoToday()];if(c&&c.type==="game"&&c.gameTime)render()}},30000);
 
 /* ============ team charge board (shared db: team + daily count only, no names) ============ */
@@ -1053,7 +1123,7 @@ function vHome(){
  const c=charge[today]||{type:"practice",done:[]};
  const plan=planFor(c.type,sp?.kind);
  const n=c.done.length, pct=Math.round(n/5*100);
- const ann=DATA.announcements.slice(0,3);
+ const ann=allAnns().slice(0,3);
  return `<div class="view">
   <div class="hero stack">
    <p class="eyebrow">${esc(fmtDate(today))} · ${esc(isStaff()?(profile.title||"Staff")+" · "+teamLabel():sportLabel(sp))}</p>
@@ -1063,7 +1133,8 @@ function vHome(){
    
   </div>
   ${c.type==="game"?vCountdown(c):""}
-  ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann"><b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
+  ${vMyPlan()}
+  ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.ann&&S().annSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.ann.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who)!=="Everyone")?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)!=="Everyone"?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   <section><h2>What's on deck?</h2>
    <div class="seg" data-daytype="1">${DAYTYPES.map(([id,l])=>`<button data-dt="${id}" aria-pressed="${c.type===id}">${l}</button>`).join("")}</div>
    <div class="card stack"><p><b>${esc(plan.plate)}</b></p>
@@ -1483,9 +1554,14 @@ function atCard(){const s=S();return `<div class="card stack"><p class="eyebrow"
     ${!s.atPhone&&!s.atEmail?`<p class="muted small">Contact info and training-room hours are coming soon. Until then, find your athletic trainer at practice.</p>`:!s.atRoom?`<p class="stamp">Training-room hours coming soon.</p>`:""}</div>`}
 function vTraining(){
  const sp=sportById(profile.sport), s=S();
- const segs=[["at","Report an injury"],["warm","Warm-ups"],["prehab","Prehab"],["rehab","Rehab"],["red","Warning signs"]];
+ const mine=myRx(["AT","PT"]);
+ const segs=[...(isStaff()?[["rx","Prescriptions"]]:mine.length?[["rx","My plan"]]:[]),["at","Report an injury"],["warm","Warm-ups"],["prehab","Prehab"],["rehab","Rehab"],["red","Warning signs"]];
+ if(trainSeg==="rx"&&!segs.some(x=>x[0]==="rx"))trainSeg="at";
+ if(!draft.rxSeen&&mine.length){trainSeg="rx";draft.rxSeen=1}
  let body="";
- if(trainSeg==="at"){
+ if(trainSeg==="rx"){
+  body=isStaff()?vRxStaff():`<section><h2>From your athletic trainers</h2><div class="stack">${mine.map(p=>rxCard(p)).join("")}</div><p class="stamp">Pain gets worse or something feels off? Stop and tell ${esc(atNames(" or "))}.</p></section>`;
+ }else if(trainSeg==="at"){
   body=atCard()+`<section><h2>Report an injury</h2><p class="muted small">Every injury, even small ones.</p>
    ${draft.atSent?`<div class="card stack"><span class="chip ok" style="align-self:flex-start">Ready to send</span><div class="copybox" id="at-copy">${esc(draft.atSent)}</div><div class="row" style="flex-wrap:wrap">${s.atEmail?`<a class="btn" href="mailto:${esc(s.atEmail)}?subject=${encodeURIComponent("Injury report: "+profile.name)}&body=${encodeURIComponent(draft.atSent)}">Email</a>`:""}<button class="btn ghost" data-copy="at-copy">Copy</button>${s.atPhone?`<a class="btn ghost" href="sms:${esc(s.atPhone)}?&body=${encodeURIComponent(draft.atSent)}">Text</a>`:""}<button class="btn ghost" data-reset="atSent">New</button></div><p class="stamp">If Email or Text doesn't open, copy the message instead.</p></div>`:
    `<form class="card stack" id="f-at">
@@ -1642,6 +1718,12 @@ function vMe(){
    <div class="row" style="align-items:flex-start"><span class="grow muted">Allergies</span><div class="tags" style="justify-content:flex-end">${[...myAllergens(),profile.other].filter(Boolean).map(a=>`<span class="chip stop">${esc(a)}</span>`).join("")||"<b>None</b>"}</div></div>
    <div class="row"><span class="grow muted">Eating style</span><b>${esc(profile.diet)}</b></div>
    <button class="btn ghost block" data-editprofile="1">Edit profile</button></div>
+  <section><h2>Your Clinic code</h2><div class="card stack">
+   ${draft.codeEdit?`<form class="stack" id="f-code" style="gap:8px"><label for="code-in">Clinic code<input id="code-in" value="${esc(clinicCode())}" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false" style="font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase"></label><p class="stamp">Got a new phone? Type your old code so your plan follows you.</p><div class="row"><button class="btn grow" type="submit">Save</button><button type="button" class="btn ghost" data-codecancel="1">Cancel</button></div></form>`:
+   `<div class="row"><b class="grow codebig">${esc(clinicCode())}</b><button class="linkbtn small" data-codeedit="1">Change</button></div>
+   <p class="muted small">Give this to ${isStaff()?"Nick":esc(atNames(" or "))+" or Nick"} so they can send a plan or a message just for you. Keep it private.</p>
+   ${S().atEmail?`<a class="btn block" href="mailto:${esc(S().atEmail)}?subject=${encodeURIComponent("My Clinic code: "+profile.name)}&body=${encodeURIComponent("Hi "+atNames(" and ")+",\n\nMy At the Clinic code is "+clinicCode()+".\n\n"+profile.name+(isStaff()?"":"\n"+teamLabel()))}">Send my code to ${esc(atNames(" & "))}</a>`:""}`}
+  </div></section>
   <section><h2>Color scheme</h2><div class="card stack">
    
    <div class="themes">${THEMES.map(([v,l,c])=>`<button class="theme" data-theme="${v}" aria-pressed="${prefs.theme===v}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join("")}</span>${l}</button>`).join("")}</div>
@@ -1731,6 +1813,10 @@ document.addEventListener("click",async ev=>{
   render();return;
  }
  if(d.cancelprofile){draft.editingProfile=false;draft.p=null;render();return}
+ if(d.codeedit){draft.codeEdit=true;render();return}
+ if(d.codecancel){draft.codeEdit=false;render();return}
+ if(d.rx!==undefined){const iso=isoToday(),day=RXDONE[iso]||(RXDONE[iso]={}),L=day[d.rx]||(day[d.rx]=[]),i=+d.rxi,k=L.indexOf(i);k<0?L.push(i):L.splice(k,1);
+  for(const x of Object.keys(RXDONE))if(new Date(iso)-new Date(x)>14*864e5)delete RXDONE[x];store.set("rxdone",RXDONE);render();return}
  if(d.editprofile){draft.editingProfile=true;draft.p=null;render();return}
  if(d.ack){profile.ack=true;store.set("profile",profile);render();return}
  if(d.ackgo){profile.ack=true;store.set("profile",profile);draft.session="Onboarding & allergy review";go("rd");return}
@@ -1843,6 +1929,7 @@ document.addEventListener("submit",ev=>{
   draft.atSent=`Injury report\n\nName: ${profile.name}\n${isStaff()?"Role: "+(profile.title||"Staff")+"\nTeam: "+teamLabel():"Sport: "+sportLabel(sp)}${profile.position?` (${profile.position})`:""}\nWhat hurts: ${document.getElementById("at-where").value.trim()}\nWhen/how: ${document.getElementById("at-when").value.trim()||"-"}\nPain (0-10): ${draft.pain||"-"}\nOther: ${document.getElementById("at-note").value.trim()||"-"}`;
   render();return;
  }
+ if(f.id==="f-code"){const v=document.getElementById("code-in").value.toUpperCase().replace(/[^A-Z0-9]/g,"");if(v.length!==6){toast("Codes are 6 letters or numbers.");return}profile.code=v;store.set("profile",profile);draft.codeEdit=false;render();toast("Code saved.");return}
  if(f.id==="f-game"){const date=document.getElementById("g-date").value,time=document.getElementById("g-time").value,opp=document.getElementById("g-opp").value.trim();if(!date||!time)return;
   GAMES.push({date,time,opp,away:!!draft.gAway});store.set("games",GAMES);draft.addGame=false;
   if(date===isoToday()){const c=charge[date]||(charge[date]={type:"game",done:[]});c.type="game";c.gameTime=time;store.set("charge",charge)}
