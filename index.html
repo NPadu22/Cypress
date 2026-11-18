@@ -387,6 +387,36 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
 .locker::before{left:0}.locker::after{right:0}
 .lk-vents{width:62%;height:44px;background:repeating-linear-gradient(180deg,#00234C 0 5px,transparent 5px 11px);border-radius:3px;margin-top:4px}
 .lk-num{font:600 4.2rem/.9 var(--display);color:transparent;-webkit-text-stroke:2px #FED41F;letter-spacing:.02em;margin:-2px 0 -4px}
+
+/* team talk slides */
+.teamtalk{position:fixed;inset:0;z-index:85;background:#003876;color:#fff;display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 28px max(24px,env(safe-area-inset-bottom));animation:wuIn .25s ease both}
+.tt-bg{position:absolute;inset:0;display:flex;justify-content:center;opacity:.3}
+.tt-bg svg{width:100%;max-width:900px;height:100%}
+.tt-bg .l{fill:none;stroke:#fff;stroke-width:2;opacity:.12}.tt-bg .g{fill:none;stroke:#FED41F;stroke-width:2.5;opacity:.3}.tt-bg .gf{fill:#FED41F;opacity:.3}.tt-bg .f{fill:#fff;opacity:.05}.tt-bg text{display:none}
+.tt-slide{position:relative;max-width:820px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px}
+.tt-k{font:600 .9rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#FED41F}
+.tt-h{font:500 clamp(2rem,7vw,4.4rem)/1.05 var(--display);color:#fff;text-wrap:balance}
+.tt-s{font:500 1.05rem/1.3 var(--body);opacity:.8}
+.tt-plate .plate{width:min(52vw,260px);max-width:none}.tt-plate .plate path{stroke:#003876}
+.tt-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:left}
+.tt-cols div{background:rgba(0,27,61,.7);border-top:4px solid #FED41F;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.tt-cols b{font:600 1.2rem var(--display);color:#FED41F}.tt-cols span{font-size:1rem;line-height:1.35}
+@media (max-width:560px){.tt-cols{grid-template-columns:1fr}}
+.tt-nav{position:absolute;left:0;right:0;bottom:max(18px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:18px}
+.tt-b{width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:1.6rem;cursor:pointer}.tt-b[disabled]{opacity:.3}
+.tt-dots{display:flex;gap:6px}.tt-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35)}.tt-dots i.on{background:#FED41F}
+/* printable one-pager */
+#printarea{display:none}
+@media print{
+ @page{size:letter;margin:.45in}
+ body>*:not(#printarea){display:none!important}
+ #printarea{display:block!important;color:#003876;font-family:"Trebuchet MS",Arial,sans-serif}
+ .pp{display:grid;grid-template-columns:3.6in 1fr;gap:.3in;align-items:start}
+ .pp-poster .poster{border-radius:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .pp-side h2{font:600 20pt Futura,Jost,sans-serif;margin:0 0 6pt}.pp-side h3{font:600 11pt Futura,Jost,sans-serif;margin:10pt 0 2pt;text-transform:uppercase;letter-spacing:.06em}
+ .pp-side p,.pp-side li{font-size:10.5pt;line-height:1.35;margin:0}.pp-side ul{margin:2pt 0;padding-left:14pt}
+ .pp-src{font-size:8pt!important;color:#4F728F;margin-top:10pt!important}.pp-foot{font-size:9pt!important;margin-top:12pt!important;border-top:1px solid #B6B2A3;padding-top:6pt}
+}
 .lk-plate{background:#FED41F;color:#003876;border-radius:6px;padding:8px 18px 10px;min-width:62%;text-align:center;display:flex;flex-direction:column;gap:2px;box-shadow:0 2px 0 #C9A400}
 .lk-first{font:600 .72rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;opacity:.85}
 .lk-last{font:600 1.9rem/1 var(--display);letter-spacing:.08em;word-break:break-word}
@@ -404,12 +434,12 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
 <div id="bg" aria-hidden="true"></div>
 <div class="app" id="app"></div>
 <nav class="tabs" id="tabs" aria-label="Main"></nav>
-<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to At the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":""}}</script>
+<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to At the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":""}}</script>
 <script id="cy-main">
 "use strict";
 /* ============ data ============ */
 let DATA; try{DATA=JSON.parse(document.getElementById("cy-data").textContent)}catch(e){DATA={}}
-DATA=Object.assign({updated:"",announcements:[],places:[],settings:{}},DATA);
+DATA=Object.assign({updated:"",announcements:[],places:[],schedules:{},settings:{}},DATA);
 const S=()=>DATA.settings;
 const ALLERGENS=["Dairy","Egg","Fish","Shellfish","Tree nut","Peanut","Wheat/Gluten","Soy","Sesame"];
 const DIETS=["No restrictions","Vegetarian","Vegan","Pescatarian","Halal","Kosher","Other"];
@@ -510,6 +540,30 @@ function posterHTML(id){
    <div class="p-foot"><span>At the Clinic · Cypress College Athletics</span><img src="${LOGO}" alt="Cypress Chargers"></div>
   </div></div>`;
 }
+function teamTalk(id){
+ const s=sportById(id),g=GUIDES[id];if(!s||!g)return;
+ const slides=[`<p class="tt-k">${esc(sportLabel(s))}</p><h1 class="tt-h">${esc(POSTER_TITLE[id])}</h1><p class="tt-s">Team nutrition talk · At the Clinic</p>`,
+  ...SIMPLE[id].map((r,i)=>`<p class="tt-k">Rule ${i+1} of 3</p><h1 class="tt-h">${esc(r)}</h1>`),
+  `<p class="tt-k">Game-day plate</p><div class="tt-plate">${plateSVG([50,25,25])}</div><p class="tt-s">½ carbs · ¼ protein · ¼ fruits &amp; veggies</p>`,
+  `<p class="tt-k">Game day</p><div class="tt-cols"><div><b>Before</b><span>${esc(firstSentence(g.game))}</span></div><div><b>During</b><span>${esc(firstSentence(g.during))}</span></div><div><b>After</b><span>Carbs + protein within an hour.</span></div></div>`,
+  `<p class="tt-k">Questions?</p><h1 class="tt-h">Book a consult with ${esc(S().rdName||"the dietitian")}</h1><p class="tt-s">Through ${esc(atNames(" or "))} · RD tab in the app</p>`];
+ let i=0;const el=document.createElement("div");el.className="teamtalk";el.setAttribute("role","dialog");el.setAttribute("aria-label","Team talk slides");
+ const draw=()=>{el.innerHTML=`<div class="tt-bg">${bgSVG(id)}</div><div class="tt-slide">${slides[i]}</div><div class="tt-nav"><button class="tt-b" data-ttprev="1" aria-label="Previous" ${i?"":"disabled"}>‹</button><span class="tt-dots">${slides.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</span><button class="tt-b" data-ttnext="1" aria-label="Next" ${i<slides.length-1?"":"disabled"}>›</button></div><button class="wu-skip" data-ttclose="1">Close</button>`};
+ el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b){if(i<slides.length-1){i++;draw()}return}if(b.dataset.ttnext&&i<slides.length-1){i++;draw()}else if(b.dataset.ttprev&&i>0){i--;draw()}else if(b.dataset.ttclose){el.remove();document.removeEventListener("keydown",key)}e.stopPropagation()});
+ const key=e=>{if(e.key==="ArrowRight"&&i<slides.length-1){i++;draw()}if(e.key==="ArrowLeft"&&i>0){i--;draw()}if(e.key==="Escape"){el.remove();document.removeEventListener("keydown",key)}};
+ document.addEventListener("keydown",key);draw();document.body.appendChild(el);
+ try{el.requestFullscreen&&el.requestFullscreen().catch(()=>{})}catch(e){}
+}
+function printOnePager(id){
+ const s=sportById(id),g=GUIDES[id];if(!s||!g)return;
+ let pa=document.getElementById("printarea");if(!pa){pa=document.createElement("div");pa.id="printarea";document.body.appendChild(pa)}
+ pa.innerHTML=`<div class="pp"><div class="pp-poster">${posterHTML(id)}</div><div class="pp-side"><h2>${esc(sportLabel(s))}</h2><p>${esc(g.demand)}</p>
+  <h3>How much carbs</h3><p>${esc(g.carbs)}</p><h3>Game day</h3><p>${esc(g.game)}</p><h3>During play</h3><p>${esc(g.during)}</p>
+  <h3>Charger tips</h3><ul>${g.tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+  <p class="pp-src">Source: ${esc(g.src)}</p><p class="pp-foot">At the Clinic · Book a consult with ${esc(S().rdName||"the dietitian")} through ${esc(atNames(" or "))}</p></div></div>`;
+ setTimeout(()=>{try{window.print()}catch(e){toast("Printing isn't available here. Open the app in Safari.")}},50);
+}
+const canPrint=()=>{try{return window.self===window.top&&!/claude|anthropic/.test(location.hostname)}catch(e){return false}};
 function posterCard(id){return `<button class="card stack postercard" data-poster="${id}" style="text-align:left;cursor:pointer"><span class="eyebrow">Your poster</span><div class="pthumb">${posterHTML(id)}</div><span class="linkbtn">View full size</span></button>`}
 function simpleCard(id){return `<div class="card stack"><p class="eyebrow">Your 3 rules</p><ol class="rules">${SIMPLE[id].map(r=>`<li>${esc(r)}</li>`).join("")}</ol></div>`}
 function vBasics(){
@@ -625,7 +679,7 @@ let canEdit=false, artifactApi=null, ED=null, edSeg="ann";
 
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rdName=()=>S().rdName||"your dietitian";
-const fillRd=s=>s.replace(/\{rd\}/g,esc(rdName()));
+const fillRd=s=>s.replace(/\{rd\}/g,esc(S().rdName||"the dietitian"));
 const isoToday=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const isoShift=(iso,n)=>{const d=new Date(iso+"T12:00:00");d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const fmtDate=iso=>{try{return new Date(iso+"T12:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}catch(e){return iso}};
@@ -713,9 +767,40 @@ function vCountdown(c){
  const toKick=T.getTime()-now;
  return `<section>${head}<div class="card stack gameclock">
   <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">${toKick>0?esc(kw)+" in":"Game on"}</p><div class="pct">${toKick>0?fmtLeft(toKick):"GO"}</div></div><button class="btn ghost sm" data-gclear="1">Change time</button></div>
+  <button class="btn block" data-gcaltoday="1">Add alerts to my calendar</button>
   ${next?`<div class="goldbox"><b>Next: ${esc(next.t)} at ${fmtClock(next.at)}</b><p class="small">${esc(next.d)}</p></div>`:`<p class="muted small">All done. Get your recovery meal in.</p>`}
   <div class="tl">${steps.map(s=>{const done=s.at.getTime()<=now;return `<div class="tl-item ${done?"done":""}"><span class="tl-dot"></span><div><b>${fmtClock(s.at)} · ${esc(s.t)}</b><span class="muted small">${esc(s.d)}</span></div></div>`}).join("")}</div>
   <p class="src">Source: ACSM/AND/DC Joint Position Statement, 2016; ISSN Position Stand: Nutrient Timing, 2017</p></div></section>`;
+}
+/* Games: athletes add their own (or teams get schedules in cy-data "schedules"); each can go to the phone calendar with alerts. */
+let GAMES=store.get("games",[]);
+function teamSchedule(){const L=(DATA.schedules&&DATA.schedules[profile.sport])||[];return L.map(g=>({date:g.d,time:g.t||"",opp:g.opp||"",away:!!g.away,loc:g.loc||"",src:"team"}))}
+function upcomingGames(){const today=isoToday();const all=[...teamSchedule(),...GAMES.map(g=>({...g,src:"mine"}))].filter(g=>g.date>=today);
+ const seen=new Set();return all.filter(g=>{const k=g.date+g.time;if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))}
+function icsEsc(s){return String(s||"").replace(/[\\;,]/g,m=>"\\"+m).replace(/\n/g,"\\n")}
+function icsFor(games){const sp=sportById(profile.sport),len=(GAMELEN[sp?.kind]||120),kw=kickWord(sp);
+ const pad=n=>String(n).padStart(2,"0"),stamp=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+ const loc=d=>{const [y,m,dd]=d.date.split("-");const [h,mi]=(d.time||"15:00").split(":");return {y,m,dd,h,mi}};
+ const ev=games.map((g,i)=>{const s=loc(g);const st=new Date(+s.y,+s.m-1,+s.dd,+s.h,+s.mi);const en=new Date(st.getTime()+len*6e4);
+  const f=x=>x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+"T"+pad(x.getHours())+pad(x.getMinutes())+"00";
+  const title=(sportLabel(sp)||"Game")+(g.opp?(g.away?" at ":" vs ")+g.opp:"");
+  return ["BEGIN:VEVENT","UID:clinic-"+g.date+"-"+(g.time||"").replace(":","")+"-"+i+"@npadu22.github.io","DTSTAMP:"+stamp,"DTSTART:"+f(st),"DTEND:"+f(en),"SUMMARY:"+icsEsc(title),
+   g.loc?"LOCATION:"+icsEsc(g.loc):"","DESCRIPTION:"+icsEsc("At the Clinic fueling plan: pre-game meal 3-4 hours before (rice or pasta, lean protein). Top-off snack 30-60 min before. Recovery: carbs + protein within an hour after."),
+   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Pre-game meal now: rice or pasta + lean protein","TRIGGER:-PT210M","END:VALARM",
+   "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Top-off snack: banana, pretzels or applesauce","TRIGGER:-PT45M","END:VALARM","END:VEVENT"].filter(Boolean).join("\r\n")});
+ return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//At the Clinic//Cypress Chargers//EN","CALSCALE:GREGORIAN","X-WR-CALNAME:Chargers games · At the Clinic",...ev,"END:VCALENDAR"].join("\r\n")}
+function downloadICS(games,name){const blob=new Blob([icsFor(games)],{type:"text/calendar"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name||"chargers-game.ics";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1500);toast("Opening your calendar…")}
+function gameLabel(g){const d=new Date(g.date+"T12:00:00");return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})+(g.time?" · "+fmtClock(new Date(g.date+"T"+g.time)):"")}
+function vGames(){
+ const L=upcomingGames(),kw=kickWord(sportById(profile.sport));
+ const form=draft.addGame?`<form class="stack" id="f-game" style="gap:8px"><div class="row"><label class="grow" for="g-date">Date<input id="g-date" type="date" required min="${isoToday()}"></label><label class="grow" for="g-time">${esc(kw)}<input id="g-time" type="time" required></label></div>
+   <label for="g-opp">Opponent<input id="g-opp" placeholder="Optional"></label><div class="choice"><button type="button" data-gaway="0" aria-pressed="${!draft.gAway}">Home</button><button type="button" data-gaway="1" aria-pressed="${!!draft.gAway}">Away</button></div>
+   <div class="row"><button class="btn grow" type="submit">Save game</button><button type="button" class="btn ghost" data-gcancel="1">Cancel</button></div></form>`:"";
+ return `<section><h2>Games</h2><div class="card stack">
+  ${L.length?L.slice(0,4).map((g,i)=>`<div class="row" style="padding:6px 0;border-bottom:1px solid var(--line)"><div class="grow"><b class="small">${esc(gameLabel(g))}</b>${g.opp?`<p class="muted small">${g.away?"at ":"vs "}${esc(g.opp)}</p>`:""}</div><button class="btn ghost sm" data-gcal="${i}" aria-label="Add to calendar">+ Calendar</button>${g.src==="mine"?`<button class="linkbtn small" data-gdel="${esc(g.date+"|"+g.time)}" aria-label="Remove">✕</button>`:""}</div>`).join(""):`<p class="muted small">No games yet. Add one to get meal and top-off alerts.</p>`}
+  ${L.length>1?`<button class="btn block" data-gcalall="1">Add all to my calendar</button>`:""}
+  ${form||`<button class="${L.length>1?"linkbtn":"btn block"}" data-gadd="1">${L.length?"+ Add a game":"Add a game"}</button>`}
+  <p class="stamp">Alerts at pre-game meal (3½ h before) and top-off (45 min before).</p></div></section>`;
 }
 setInterval(()=>{const a=document.activeElement;if(tab==="home"&&profile&&!(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))){const c=charge[isoToday()];if(c&&c.type==="game"&&c.gameTime)render()}},30000);
 
@@ -844,10 +929,10 @@ async function askAI(q){
 }
 function vAsk(){
  if(aiState==="loading")return `<div class="card"><p class="muted small">Getting the assistant ready…</p></div>`;
- if(aiState==="off")return `<div class="card stack"><h3>Ask the RD</h3><p class="muted small">The AI assistant isn't available here. Book a consult with ${esc(rdName())} through ${esc(atNames(" or "))} instead.</p><button class="btn block" data-go="rd">Ask ${esc(rdName())}</button></div>`;
+ if(aiState==="off")return `<div class="card stack"><h3>Ask the RD</h3><p class="muted small">The AI assistant isn't available here. Book a consult with ${esc(S().rdName||"the dietitian")} through ${esc(atNames(" or "))} instead.</p><button class="btn block" data-go="rd">Ask ${esc(S().rdName||"the dietitian")}</button></div>`;
  const chat=draft.chat||[];
  const starters=["What should I eat before a 3 pm game?","Is creatine safe?","Cheap groceries for the week?","I'm hurt. What should I eat?"];
- return `<div class="card stack"><p class="eyebrow">Ask the RD · AI</p><p class="small">Answers come only from ${esc(rdName())}'s approved guides in this app. AI can make mistakes. For anything personal or medical, book a session.</p></div>
+ return `<div class="card stack"><p class="eyebrow">Ask the RD · AI</p><p class="small">Answers come only from ${esc(S().rdName||"the dietitian")}'s approved guides in this app. AI can make mistakes. For anything personal or medical, book a session.</p></div>
   <div class="stack" id="ai-chat">${chat.map((m,i)=>`<div class="bubble ${m.role}" ${i===chat.length-1&&m.role==="assistant"&&aiBusy?'id="ai-live"':""}>${esc(m.content||(aiBusy?"Thinking…":""))}</div>`).join("")}</div>
   ${chat.length?"":`<div class="choice">${starters.map(s=>`<button data-aistart="${esc(s)}">${esc(s)}</button>`).join("")}</div>`}
   <form class="row" id="f-ai" style="align-items:flex-end"><label class="grow" for="ai-q" style="gap:0"><span class="sr">Your question</span><textarea id="ai-q" rows="2" style="min-height:52px" placeholder="Ask a fueling question" ${aiBusy?"disabled":""}></textarea></label><button class="btn" type="submit" ${aiBusy?"disabled":""}>Ask</button></form>
@@ -954,12 +1039,14 @@ function vStop(){
  return `<div class="view"><div class="stopbox">
   <p class="eyebrow">Before you use the food guides</p><h3>Book a quick allergy review</h3>
   <p>You listed ${esc([...myAllergens(),profile.other].filter(Boolean).join(", "))}. Restaurant and grocery tags here cover the nine major allergens only, and kitchens carry cross-contact risk.</p>
-  <p>Meet with ${esc(rdName())} so we can build a safe eating plan with you.</p>
+  <p>Meet with ${esc(S().rdName||"the dietitian")} so we can build a safe eating plan with you.</p>
   ${S().bookingLink?`<a class="btn block" href="${esc(S().bookingLink)}" target="_blank" rel="noopener">Book an allergy review</a>`:`<button class="btn block" data-ackgo="rd">Book an allergy review through ${esc(atNames(" or "))}</button>`}
   <button class="btn ghost block" data-ack="1">I've already met with the dietitian</button></div></div>`;
 }
 
+function autoGameDay(){const t=isoToday(),g=upcomingGames().find(x=>x.date===t);if(g&&!(charge[t]&&charge[t].manual)){const c=charge[t]||(charge[t]={type:"game",done:[]});if(c.type!=="game"||!c.gameTime){c.type="game";c.gameTime=c.gameTime||g.time;store.set("charge",charge)}}}
 function vHome(){
+ if(!isStaff())autoGameDay();
  const first=(profile.name||"").trim().split(" ")[0];
  const sp=sportById(profile.sport);
  const today=isoToday();
@@ -983,6 +1070,7 @@ function vHome(){
     <div class="stack" style="gap:6px">${plan.m.map(([w,d],i)=>`<details class="mdet"><summary><span><span class="mpn">${i+1}</span>${esc(w)}</span></summary><div class="ans"><p class="small">${esc(d)}</p></div></details>`).join("")}</div>
     <p class="src">USOPC/UCCS Athlete's Plate; ACSM/AND/DC 2016</p></div>
   </section>
+  ${isStaff()?"":vGames()}
   ${vHydro()}
   ${vBoard()}
  </div>`;
@@ -1121,7 +1209,10 @@ function savePlan(){store.set("planpref",PLANPREF)}
 function planWeek(){const t=isoToday();return [...Array(7)].map((_,i)=>isoShift(t,i))}
 /* Day type follows the plan if set, otherwise today's "What's on deck" pick on Home */
 function planType(iso){iso=iso||isoToday();if(PLANPREF.days[iso])return PLANPREF.days[iso];const c=charge[iso];const m={game:"match",double:"double",rest:"rest"};return (c&&m[c.type])||"practice"}
-function mealOptions(bank){const al=myAllergens(),veg=PLANPREF.veg||["Vegetarian","Vegan"].includes(profile.diet);return (MEALBANK[bank]||[]).filter(x=>!x.a.some(a=>al.includes(a))&&(!veg||x.v))}
+/* Budget week: favor meals built only from low-cost staples (store brand, bulk, frozen and canned). */
+const BUDGET=new Set(["banana","apple","orange","fruit","veg","onion","broccoli","greenbeans","potatoes","slaw","eggs","chicken","turkeyground","tuna","tofu","oats","bread","tortflour","tortcorn","rice","pasta","bagels","pretzels","crackers","milk","yogurt","chocmilk","pb","honey","salsa","beans","lentils","tomato","soysauce","curry","spice","applesauce","oil","cheese"]);
+function mealOptions(bank){const al=myAllergens(),veg=PLANPREF.veg||["Vegetarian","Vegan"].includes(profile.diet);let L=(MEALBANK[bank]||[]).filter(x=>!x.a.some(a=>al.includes(a))&&(!veg||x.v));
+ if(PLANPREF.budget&&L.length){const cost=x=>(x.g||[]).filter(k=>!BUDGET.has(k)).length;const min=Math.min(...L.map(cost));L=L.filter(x=>cost(x)===min)}return L}
 /* Picks rotate by slot and change every two days, so dinners double as next-day leftovers and the grocery list stays short. Swap moves one slot on one day. */
 function pickFor(type,i,bank,iso){iso=iso||isoToday();const L=mealOptions(bank);if(!L.length)return null;
   const k=iso+":"+type+":"+PLANPREF.pt+":"+i, day=Math.round(new Date(iso+"T12:00:00")/864e5);
@@ -1169,7 +1260,9 @@ function planHTML(){
   const veg=["Vegetarian","Vegan"].includes(profile.diet);
   const head=`${strip}<div class="card stack"><span class="eyebrow">${esc(dayName)} is a…</span><div class="choice" data-planday="1">${MP_DAYTYPES.map(([k,l])=>`<button type="button" data-v="${k}" aria-pressed="${type===k}">${l}</button>`).join("")}</div>
     ${type==="practice"?`<span class="eyebrow" style="margin-top:4px">Practice time</span><div class="choice" data-planpt="1">${PRACTICE_TIMES.map(([k,l])=>`<button type="button" data-v="${k}" aria-pressed="${PLANPREF.pt===k}">${l}</button>`).join("")}</div>`:""}
-    ${veg?`<p class="stamp">Showing vegetarian options (from your eating style).</p>`:`<div class="choice" data-planveg="1"><button type="button" data-v="1" aria-pressed="${!!PLANPREF.veg}">Vegetarian</button></div>`}
+    <div class="choice">${veg?"":`<button type="button" data-planvegbtn="1" aria-pressed="${!!PLANPREF.veg}">Vegetarian</button>`}<button type="button" data-planbudget="1" aria-pressed="${!!PLANPREF.budget}">Budget week</button></div>
+    ${veg?`<p class="stamp">Showing vegetarian options (from your eating style).</p>`:""}
+    ${PLANPREF.budget?`<details class="mdet"><summary>Budget tips</summary><div class="ans"><ul class="clean small"><li>Store brands and bulk rice, oats, beans and pasta cost the least.</li><li>Frozen fruit and veggies are as nutritious as fresh and don't spoil.</li><li>Split Costco or Sam's packs with a teammate.</li><li>Free groceries: Cypress College Food Pantry (Eat › Groceries).</li></ul></div></details>`:""}
     ${myAllergens().length?`<p class="stamp">Hiding options with ${esc(myAllergens().join(", "))}.${profile.other?` Check every option against ${esc(profile.other)} yourself.`:""}</p>`:profile.other?`<p class="stamp">Check every option against ${esc(profile.other)} yourself.</p>`:""}</div>`;
   const grocery=`<button class="btn block ${showGrocery?"ghost":""}" data-grocery="1">${showGrocery?"Hide grocery list":"Build my grocery list for the week"}</button>${showGrocery?groceryHTML():""}
    <button class="btn ghost block" data-prep="1">${showPrep?"Hide prep plan":"Show my prep plan (batch-cook)"}</button>${showPrep?prepHTML():""}`;
@@ -1178,7 +1271,7 @@ function planHTML(){
      if(x.bank==="during")return `<div class="mp-step"><span class="mp-when">${clock(x.t)}</span><div><span class="eyebrow">${esc(x.n)}</span><p class="small">${BANKNOTE.during}</p></div></div>`;
      const pick=pickFor(type,i,x.bank,iso),done=pick&&isToday&&(J.days[iso]||[]).some(e=>e.what===pick.n),n=mealOptions(x.bank).length;
      return `<div class="mp-step"><span class="mp-when">${clock(x.t)}</span><div class="stack" style="gap:4px"><span class="eyebrow">${esc(x.n)}${x.plate?` · ${MP_PLATE[x.plate]}`:""}</span>
-      ${pick?`<b>${esc(pick.n)}</b>`:`<b>No option fits your allergies here</b><p class="small">Ask ${esc(rdName())} for a swap.</p>`}
+      ${pick?`<b>${esc(pick.n)}</b>`:`<b>No option fits your allergies here</b><p class="small">Ask ${esc(S().rdName||"the dietitian")} for a swap.</p>`}
       ${pick&&pick.r?`<details class="mdet"><summary>How to make it</summary><div class="ans"><p class="small">${esc(pick.r)}</p>${pick.g&&pick.g.length?`<p class="stamp">You'll need: ${esc(pick.g.map(k=>(ING[k]||[k])[0].toLowerCase()).join(", "))}</p>`:""}</div></details>`:""}
       ${pick?`<div class="row" style="gap:8px;flex-wrap:wrap">${n>1?`<button class="btn ghost sm" data-planswap="${iso}:${type}:${PLANPREF.pt}:${i}">Swap</button>`:""}${isToday?`<button class="btn sm ${done?"ghost":""}" data-planlog="${i}">${done?"Logged ✓":"Log it"}</button>`:""}</div>`:""}</div></div>`}).join("")}
   </div></section>
@@ -1190,7 +1283,8 @@ function planClick(b){
   if(ds.planpick){planDate=ds.planpick;render();return true}
   if(b.closest("[data-planday]")&&ds.v){PLANPREF.days[iso]=ds.v;savePlan();render();return true}
   if(b.closest("[data-planpt]")&&ds.v){PLANPREF.pt=ds.v;savePlan();render();return true}
-  if(b.closest("[data-planveg]")){PLANPREF.veg=!PLANPREF.veg;savePlan();render();return true}
+  if(ds.planvegbtn){PLANPREF.veg=!PLANPREF.veg;savePlan();render();return true}
+  if(ds.planbudget){PLANPREF.budget=!PLANPREF.budget;savePlan();render();return true}
   if(ds.planswap){PLANPREF.sel[ds.planswap]=(PLANPREF.sel[ds.planswap]||0)+1;savePlan();render();return true}
   if(ds.grocery){showGrocery=!showGrocery;render();if(showGrocery)setTimeout(()=>{const g=document.getElementById("grocery");if(g)g.scrollIntoView({behavior:"smooth",block:"start"})},50);return true}
   if(ds.groc){const wk=planWeek()[0],L=PLANPREF.got[wk]||[];PLANPREF.got={[wk]:L.includes(ds.groc)?L.filter(x=>x!==ds.groc):[...L,ds.groc]};savePlan();b.setAttribute("aria-pressed",PLANPREF.got[wk].includes(ds.groc));return true}
@@ -1214,6 +1308,20 @@ const STASH=[
  {g:"Hydration",items:[["Empty water bottle",[]],["Electrolyte packets",[]]]},
  {g:"Handy extras",items:[["Spoon and napkins",[]],["Zip bags",[]],["Wet wipes",[]]]}
 ];
+const TRAVEL=[
+ {n:"Long Beach City College",c:"Long Beach",min:15,food:"Shopping centers along Carson St and Lakewood Blvd, including Long Beach Towne Center."},
+ {n:"Cerritos College",c:"Norwalk",min:15,food:"Plazas on Alondra Blvd and Studebaker Rd; Los Cerritos Center is a short drive."},
+ {n:"Fullerton College",c:"Fullerton",min:20,food:"Downtown Fullerton is next to campus (Harbor Blvd & Chapman Ave): sandwiches, Mexican and bowls."},
+ {n:"Golden West College",c:"Huntington Beach",min:20,food:"Bella Terra center across Edinger Ave has burrito, bowl and salad chains."},
+ {n:"Orange Coast College",c:"Costa Mesa",min:25,food:"Harbor Blvd and the centers near the 405 have most chains."},
+ {n:"Santa Ana College",c:"Santa Ana",min:25,food:"Bristol St and 17th St: Mexican spots and chains."},
+ {n:"Santiago Canyon College",c:"Orange",min:25,food:"Chapman Ave toward Old Towne Orange."},
+ {n:"Irvine Valley College",c:"Irvine",min:35,food:"Irvine Spectrum and the centers off the 5 and 405."},
+ {n:"Mt. San Antonio College",c:"Walnut",min:35,food:"Plazas on Grand Ave and Valley Blvd, with lots of Asian restaurants."},
+ {n:"Saddleback College",c:"Mission Viejo",min:45,food:"The Shops at Mission Viejo and Crown Valley Pkwy."},
+ {n:"Riverside City College",c:"Riverside",min:50,food:"Downtown Riverside around Mission Inn Ave and University Ave."}
+];
+function travelHTML(){return `<section><h2>Away games</h2><p class="stamp">Drive times from Cypress are rough, without traffic. Eat your pre-game meal before you leave.</p><div class="stack" style="gap:8px">${TRAVEL.map(x=>`<details class="fold"><summary><span class="fsum"><b>${esc(x.n)}</b><span class="stamp">${esc(x.c)} · about ${x.min} min</span></span></summary><div class="ans"><p class="small"><b>Food near campus:</b> ${esc(x.food)}</p><p class="small"><b>Plan:</b> ${x.min>=40?"Pack a meal for the bus and a recovery snack for the ride home.":"Eat 3–4 hours before you leave; bring a top-off snack and a recovery snack."}</p></div></details>`).join("")}</div></section>`}
 const STASH_COMBOS=[["Tuna pouch + crackers + applesauce","Good after practice"],["Nut or seed butter packet + rice cakes + milk box","Recovery that never needs a fridge"],["Jerky + pretzels + dried fruit","Long day between classes"],["Oatmeal cup + soy or dairy milk box","Breakfast when there's no time"]];
 function vCampus(){
  const tagRow=a=>a.length?`<div class="tags">${a.map(x=>`<span class="chip ${myAllergens().includes(x)?"stop":""}">${esc(x)}</span>`).join("")}</div>`:"";
@@ -1246,9 +1354,9 @@ function vEat(){
  }else if(eatSeg==="campus"){
   body=vCampus()+`<section><h2>Near campus</h2>${places("Near campus")}</section>`;
  }else if(eatSeg==="out"){
-  body=areaPicker()+(A?areaListHTML(A,"Near you: "+A.short):profile.area==="other"?`<p class="muted small">Your area isn't listed yet. Tell ${esc(rdName())} where you live so we can add it.</p>`:"")+`<section><h2>Chains</h2>${places("Chain")}</section><p class="stamp">Tags show common allergens in each order. Always check the restaurant's allergen guide.</p>`;
+  body=areaPicker()+(A?areaListHTML(A,"Near you: "+A.short):profile.area==="other"?`<p class="muted small">Your area isn't listed yet. Tell ${esc(S().rdName||"the dietitian")} where you live so we can add it.</p>`:"")+`<section><h2>Chains</h2>${places("Chain")}</section><p class="stamp">Tags show common allergens in each order. Always check the restaurant's allergen guide.</p>`;
  }else if(eatSeg==="pack"){
-  body=vStash()+`<section><h2>Build your bag</h2>${vBag()}</section><section><h2>Road trips</h2><div class="stack" style="gap:8px">${ROAD.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
+  body=vStash()+`<section><h2>Build your bag</h2>${vBag()}</section>${travelHTML()}<section><h2>Road trips</h2><div class="stack" style="gap:8px">${ROAD.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }else{
   body=`<section><h2>Free groceries</h2>${`<div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
     <p class="small">Free for enrolled Cypress students. By appointment.</p>
@@ -1436,7 +1544,7 @@ function vJournal(){
   <div class="stack">${list.length?list.map(x=>`<button class="card entry" style="text-align:left;cursor:pointer" data-jopen="${x.id}">
     <div class="row"><span class="eyebrow grow">${esc(x.time||"")} · ${esc(x.occ)}</span>${x.gut?`<span class="chip ${x.gut==="Upset"?"stop":""}">Stomach: ${esc(x.gut)}</span>`:""}</div>
     <p>${esc(x.what)}</p>${x.photo?`<img src="${x.photo}" alt="Photo of ${esc(x.what)}">`:""}${x.energy?`<span class="stamp">Energy: ${esc(x.energy)}</span>`:""}${x.note?`<p class="muted small">${esc(x.note)}</p>`:""}</button>`).join(""):`<p class="muted">Nothing logged. What did you eat?</p>`}</div>
-  ${list.length?`<button class="btn ghost block" data-jshare="1">Copy this day to send to ${esc(rdName())}</button><div id="jshare"></div>`:""}
+  ${list.length?`<button class="btn ghost block" data-jshare="1">Copy this day to send to ${esc(S().rdName||"the dietitian")}</button><div id="jshare"></div>`:""}
  </div>`;
 }
 function jForm(e){
@@ -1459,7 +1567,7 @@ const SESSIONS=["Onboarding & allergy review","Sports performance","Fueling on a
 function vRD(){
  const s=S(), ats=atNames(" or ");
  return `<div class="view"><div><p class="eyebrow">${esc(s.place||"In person")} · ${esc(s.rdName||"")}</p><h1 style="margin-top:6px">Book a consult</h1></div>
-  <div class="card stack"><p>Nutrition consults with ${esc(rdName())}${s.rdTitle?`, ${esc(s.rdTitle)}`:""}, are in person. <b>Book them through the athletic trainers, ${esc(ats)}.</b></p>
+  <div class="card stack"><p>Nutrition consults with ${esc(S().rdName||"the dietitian")}${s.rdTitle?`, ${esc(s.rdTitle)}`:""}, are in person. <b>Book them through the athletic trainers, ${esc(ats)}.</b></p>
    ${s.bookingLink?`<a class="btn block" href="${esc(s.bookingLink)}" target="_blank" rel="noopener">Pick a time</a>`:""}
    <p class="stamp">Covers ${SESSIONS.slice(0,7).join(", ").toLowerCase()}.</p></div>
   <section><h2>Ask for a consult</h2><p class="muted small">Goes to ${esc(ats)}. Send it or show them at practice.</p>
@@ -1490,7 +1598,9 @@ function vLearn(){
    const s=sportById(draft.guide), g=GUIDES[draft.guide];
    body=`<button class="linkbtn" data-guideback="1" style="align-self:flex-start">‹ All sports</button>
     <div class="hero stack"><p class="eyebrow">${esc(s.who)} · sport guide</p><h1>${esc(s.n)}</h1><p class="muted">${esc(g.demand)}</p></div>
-    ${simpleCard(draft.guide)}${draft.guide===profile.sport||isStaff()?posterCard(draft.guide):""}<details><summary>More detail</summary><div class="ans"><div><p class="eyebrow">How much carbs</p><p>${esc(g.carbs)}</p></div><div class="hr"></div>
+    ${simpleCard(draft.guide)}${draft.guide===profile.sport||isStaff()?posterCard(draft.guide):""}
+    <div class="row" style="gap:8px"><button class="btn grow" data-teamtalk="${draft.guide}">Team talk slides</button>${canPrint()?`<button class="btn ghost grow" data-print="${draft.guide}">Print one-pager</button>`:""}</div>
+    <details><summary>More detail</summary><div class="ans"><div><p class="eyebrow">How much carbs</p><p>${esc(g.carbs)}</p></div><div class="hr"></div>
      <div><p class="eyebrow">Game day</p><p>${esc(g.game)}</p></div><div class="hr"></div>
      <div><p class="eyebrow">During play</p><p>${esc(g.during)}</p></div><div class="hr"></div>
      <div><p class="eyebrow">Charger tips</p><ul class="clean small">${g.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>
@@ -1509,7 +1619,7 @@ function vLearn(){
   ${["ask","basics","injury"].includes(learnSeg)?"":`<input id="q" type="search" placeholder="Search: protein, heat, iron, creatine…" value="${esc(draft.q||"")}" aria-label="Search">`}
   <div class="seg">${[["basics","Basics"],["sports","By sport"],...(aiState==="off"?[]:[["ask","Ask the RD"]]),["answers","Quick answers"],["injury","Injury nutrition"],["sex","Women & men"]].map(([id,l])=>`<button data-learnseg="${id}" aria-pressed="${learnSeg===id}">${l}</button>`).join("")}</div>
   <div class="stack" id="learnbody">${body}</div>
-  <div class="card stack"><h3>Still stuck?</h3><p class="muted">Book a consult with ${esc(rdName())} through ${esc(atNames(" or "))}. Good questions end up here for every Charger.</p><button class="btn block" data-go="rd">Book a consult</button></div></div>`;
+  <div class="card stack"><h3>Still stuck?</h3><p class="muted">Book a consult with ${esc(S().rdName||"the dietitian")} through ${esc(atNames(" or "))}. Good questions end up here for every Charger.</p><button class="btn block" data-go="rd">Book a consult</button></div></div>`;
 }
 
 function vMe(){
@@ -1629,6 +1739,13 @@ document.addEventListener("click",async ev=>{
  if(d.btl!==undefined){const h=hydroDay();const i=+d.btl;h.n=(i<h.n)?i:i+1;store.set("hydro",H);render();const need=Math.ceil(hydroGoal(h)/BOTTLE);if(h.n===need)toast("Goal hit. Stay on it.");return}
  if(d.hhrs!==undefined){hydroDay().hrs=+d.hhrs;store.set("hydro",H);render();return}
  if(d.hcond){hydroDay().cond=d.hcond;store.set("hydro",H);render();return}
+ if(d.gadd){draft.addGame=true;draft.gAway=false;render();return}
+ if(d.gcancel){draft.addGame=false;render();return}
+ if(d.gaway!==undefined){draft.gAway=d.gaway==="1";b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));return}
+ if(d.gcal!==undefined){const g=upcomingGames()[+d.gcal];if(g)downloadICS([g],"chargers-"+g.date+".ics");return}
+ if(d.gcalall){downloadICS(upcomingGames(),"chargers-games.ics");return}
+ if(d.gcaltoday){const c=charge[isoToday()];if(c&&c.gameTime)downloadICS([{date:isoToday(),time:c.gameTime,opp:"",away:false}],"chargers-today.ics");return}
+ if(d.gdel){const [dd,tt]=d.gdel.split("|");GAMES=GAMES.filter(g=>!(g.date===dd&&g.time===tt));store.set("games",GAMES);render();return}
  if(d.gclear){const c=charge[isoToday()];if(c){delete c.gameTime;store.set("charge",charge)}render();return}
  if(d.board!==undefined){prefs.noBoard=d.board==="0";store.set("prefs",prefs);pushCharge();render();return}
  if(d.bagocc){bag.occ=d.bagocc;render();return}
@@ -1638,7 +1755,7 @@ document.addEventListener("click",async ev=>{
  if(d.closelb){b.closest(".lightbox").remove();return}
  if(d.aistart){askAI(d.aistart);return}
  if(d.aiclear){draft.chat=[];render();return}
- if(d.dt){const t=isoToday();const c=charge[t]||(charge[t]={type:"practice",done:[]});if(c.type!==d.dt){c.type=d.dt;c.done=[]}store.set("charge",charge);pushCharge();render();return}
+ if(d.dt){const t=isoToday();const c=charge[t]||(charge[t]={type:"practice",done:[]});c.manual=true;if(c.type!==d.dt){c.type=d.dt;c.done=[]}store.set("charge",charge);pushCharge();render();return}
  if(d.setrehab){const t=isoToday();charge[t]={type:"rehab",done:[]};store.set("charge",charge);toast("Today is set to Rehab day");go("home");return}
  if(d.sportguide){learnSeg="sports";draft.guide=d.sportguide;tab="learn";render();window.scrollTo(0,0);return}
  if(d.guideback){draft.guide=null;render();return}
@@ -1647,6 +1764,8 @@ document.addEventListener("click",async ev=>{
  if(d.sexseg){sexSeg=d.sexseg;render();return}
  if(d.copy){const el=document.getElementById(d.copy);try{await navigator.clipboard.writeText(el.textContent);toast("Copied")}catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Selected. Copy it from the menu")}return}
  if(tab==="eat"&&eatSeg==="plan"&&planClick(b))return;
+ if(d.teamtalk){teamTalk(d.teamtalk);return}
+ if(d.print){printOnePager(d.print);return}
  if(d.wuclose){closeWalkup();return}
  if(d.a2later){try{sessionStorage.setItem("cy_a2hs_later","1")}catch(e){}closeA2hs();return}
  if(d.a2done){store.set("a2hs_done",1);closeA2hs();toast("Nice. Open it from your Home Screen.");return}
@@ -1724,6 +1843,10 @@ document.addEventListener("submit",ev=>{
   draft.atSent=`Injury report\n\nName: ${profile.name}\n${isStaff()?"Role: "+(profile.title||"Staff")+"\nTeam: "+teamLabel():"Sport: "+sportLabel(sp)}${profile.position?` (${profile.position})`:""}\nWhat hurts: ${document.getElementById("at-where").value.trim()}\nWhen/how: ${document.getElementById("at-when").value.trim()||"-"}\nPain (0-10): ${draft.pain||"-"}\nOther: ${document.getElementById("at-note").value.trim()||"-"}`;
   render();return;
  }
+ if(f.id==="f-game"){const date=document.getElementById("g-date").value,time=document.getElementById("g-time").value,opp=document.getElementById("g-opp").value.trim();if(!date||!time)return;
+  GAMES.push({date,time,opp,away:!!draft.gAway});store.set("games",GAMES);draft.addGame=false;
+  if(date===isoToday()){const c=charge[date]||(charge[date]={type:"game",done:[]});c.type="game";c.gameTime=time;store.set("charge",charge)}
+  render();toast("Saved. Tap + Calendar for alerts.");return}
  if(f.id==="f-ai"){const q=document.getElementById("ai-q").value.trim();if(q)askAI(q);return}
  if(f.id==="f-j"){
   readJForm();const e=draft.jEdit;if(!e.what.trim()){toast("Add what you ate");return}

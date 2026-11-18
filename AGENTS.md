@@ -8,7 +8,9 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 
 ## Files
 
-- `index.html`: the whole app. Editable content lives in `<script type="application/json" id="cy-data">` (announcements, restaurants, settings such as dietitian and athletic-trainer contacts).
+- `index.html`: the whole app. Editable content lives in `<script type="application/json" id="cy-data">` (announcements, restaurants, team `schedules`, settings such as dietitian and athletic-trainer contacts).
+- Team schedules: `"schedules":{"wvb":[{"d":"2027-01-20","t":"18:00","opp":"Fullerton","away":true,"loc":""}]}` keyed by sport id. They show in Home › Games, set Game day automatically and export to the phone calendar (.ics with alerts 3½ h and 45 min before). Athletes can also add their own games.
+- Away-game travel list: `TRAVEL` in `index.html`. Drive times are rough, without traffic.
 - `manifest.webmanifest`, `icon-*.png`, `splash-*.png`, `logo.png`: home-screen install. The logo is the Cypress Chargers athletics mark.
 - `sw.js`: network-first pages, cached assets.
 - `widget.js`: iOS home-screen widget for the Scriptable app (small = today's tip, medium = sport rule of the day). It reads `widget.json`.

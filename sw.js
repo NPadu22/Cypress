@@ -1,7 +1,7 @@
 /* At the Clinic: offline support and fast updates.
    Pages: network first, so athletes get the newest version whenever they're online.
    Images, icons and fonts: served from cache, refreshed in the background. */
-const CACHE = "attheclinic-v9";
+const CACHE = "attheclinic-v10";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "logo.png"];
 
 self.addEventListener("install", e => {
