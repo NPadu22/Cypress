@@ -11,6 +11,8 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 - `index.html`: the whole app. Editable content lives in `<script type="application/json" id="cy-data">` (announcements, restaurants, settings such as dietitian and athletic-trainer contacts).
 - `manifest.webmanifest`, `icon-*.png`, `splash-*.png`, `logo.png`: home-screen install. The logo is the Cypress Chargers athletics mark.
 - `sw.js`: network-first pages, cached assets.
+- `widget.js`: iOS home-screen widget for the Scriptable app (small = today's tip, medium = sport rule of the day). It reads `widget.json`.
+- `widget.json`: the widget's feed, generated from `index.html`. **Run `node tools/build-widget.mjs` after changing Basics tips, sport rules (SIMPLE), sports or announcements**, and commit the result.
 
 ## Rules
 
@@ -19,10 +21,12 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 - **Sources:** every education answer cites a real, verifiable source (position stand, consensus statement or peer-reviewed study). Never invent citations.
 - **Supplements:** Cypress athletes are not drug-tested. Keep to general third-party certification (NSF Certified for Sport or Informed Sport) and "check with the RD first".
 - **Athletic training:** rehab content gives stages only, no sets or reps, and always routes athletes to the athletic trainers (Rachael Kirkpatrick and Nicolette Marinello) first. Keep the 911 warning signs.
-- **Brand (Cypress College Identity Guide, 2018):** Premier Gold `#FED41F` and Charger Blue `#003876` are the base. Accents only from the guide's palette. Never combine Charger Blue with Modern Gold `#FBB040`, or Premier Gold with Nature Green as main colors. Max four colors per scheme. Fonts: Calisto MT (display) and Trebuchet MS (text), with Sorts Mill Goudy and Fira Sans as web fallbacks. Don't recolor, stretch or redraw the horse-head mark; keep it on its white tile. The mark's use with other words or new layouts needs Campus Communications approval.
+- **Brand (Cypress College Identity Guide, 2018):** Premier Gold `#FED41F` and Charger Blue `#003876` are the base. Accents only from the guide's palette. Never combine Charger Blue with Modern Gold `#FBB040`, or Premier Gold with Nature Green as main colors. Max four colors per scheme. Look: mid-century modern (default Mid-Century cream scheme; flat borderless cards, pills, round markers). Fonts: Futura for display (a Cypress alternate family; Jost web fallback) and Trebuchet MS for text (Fira Sans fallback). Don't recolor, stretch or redraw the horse-head mark (`logo.png`, transparent with its white keyline). The mark's use with other words or new layouts needs Campus Communications approval.
 - **Privacy:** athlete data stays in the browser. Never send it anywhere or store it in this repo.
 - The Claude-only features (`window.claude`: team board, Ask the RD, Edit tab) hide themselves on GitHub Pages. Leave them in place or remove them cleanly.
 - Must work at about 390 px wide in every color scheme, with no horizontal scrolling. Respect `prefers-reduced-motion`.
+
+- **Story:** the app is a place. Tabs are rooms of the Clinic (Lobby/Home, The Kitchen, The Training Room, The Logbook, The Front Desk, The Film Room) and the profile is a Charger locker. Each day is a numbered "Dispatch" (day of the year), shared with the widget. Keep new copy short.
 
 ## Before you finish a change
 
