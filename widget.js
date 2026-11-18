@@ -18,7 +18,6 @@ async function getLogo() {
 }
 const F = (name, size) => new Font(name, size);
 const now = new Date();
-const dayNo = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);           // "Dispatch No." = day of the year
 const dayIdx = Math.floor((now.getTime() - now.getTimezoneOffset() * 6e4) / 864e5);
 const dateStr = now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }).toUpperCase();
 
@@ -62,7 +61,7 @@ async function build() {
   if (fam === "small") {
     w.backgroundImage = background(170, 170, logo, 0);
     w.addSpacer(8);
-    addLine(w, "DISPATCH Nº " + dayNo, F("Futura-Medium", 9), GOLD, 1);
+    addLine(w, dateStr, F("Futura-Medium", 9), GOLD, 1);
     w.addSpacer(6);
     const rule = sport && sport.rules.length ? sport.rules[dayIdx % sport.rules.length] : null;
     if (rule) { addLine(w, sport.call.toUpperCase(), F("Futura-Medium", 8), new Color("#FFFFFF", 0.7), 1); w.addSpacer(2); addLine(w, rule, F("Futura-Bold", 15), WHITE, 4); }
@@ -77,8 +76,7 @@ async function build() {
     if (logo) { const li = L.addImage(logo); li.imageSize = new Size(40, 27); }
     L.addSpacer(6);
     addLine(L, "THE CLINIC", F("Futura-Bold", 11), WHITE, 1);
-    addLine(L, "DISPATCH Nº " + dayNo, F("Futura-Medium", 8), GOLD, 1);
-    addLine(L, dateStr, F("Futura-Medium", 8), new Color("#FFFFFF", 0.7), 1);
+    addLine(L, dateStr, F("Futura-Medium", 8), GOLD, 1);
     L.addSpacer();
     row.addSpacer(26);
     const R = row.addStack(); R.layoutVertically();

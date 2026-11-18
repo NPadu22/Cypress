@@ -626,7 +626,6 @@ let canEdit=false, artifactApi=null, ED=null, edSeg="ann";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rdName=()=>S().rdName||"your dietitian";
 const fillRd=s=>s.replace(/\{rd\}/g,esc(rdName()));
-const dispatchNo=()=>{const n=new Date();return Math.floor((n-new Date(n.getFullYear(),0,0))/864e5)};
 const isoToday=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const isoShift=(iso,n)=>{const d=new Date(iso+"T12:00:00");d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const fmtDate=iso=>{try{return new Date(iso+"T12:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}catch(e){return iso}};
@@ -970,7 +969,7 @@ function vHome(){
  const ann=DATA.announcements.slice(0,3);
  return `<div class="view">
   <div class="hero stack">
-   <p class="eyebrow">Dispatch Nº ${dispatchNo()} · ${esc(fmtDate(today))}</p>
+   <p class="eyebrow">${esc(fmtDate(today))} · ${esc(isStaff()?(profile.title||"Staff")+" · "+teamLabel():sportLabel(sp))}</p>
    <h1>Hey ${esc(first)}</h1>
    <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">Today's charge</p><div class="pct">${pct}<small>%</small></div></div><span class="chip gold">${n}/5 fueled</span></div>
    <div class="meterwrap"><div class="meter ${n===5?"full":""}" role="group" aria-label="Today's fueling moments">${plan.m.map(([w],i)=>`<button class="cell" data-cell="${i}" aria-pressed="${c.done.includes(i)}" aria-label="${esc(w)}"><span>${esc(w)}</span></button>`).join("")}</div></div>
@@ -1262,7 +1261,7 @@ function vEat(){
    <p class="small"><b>Short on food?</b> Tell us. It's confidential.</p>`}</section>`+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+`<section><h2>Store lists</h2><div class="stack" style="gap:8px">`+GROCERY.map(s=>`<details class="fold"><summary><span class="fsum"><b>${esc(s.n)}</b><span class="stamp">${esc(s.where)}</span></span></summary><div class="ans"><p class="stamp">${esc(s.tip)}</p><ul class="clean small">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div></details>`).join("")+`</div></section>`+
    `<section><h2>Quick recipes</h2><div class="stack" style="gap:8px">${RECIPES.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b><span class="stamp">${esc(r.t)}</span></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }
- return `<div class="view"><div><p class="eyebrow">The Kitchen</p><h1 style="margin-top:6px">Eat</h1></div>
+ return `<div class="view"><div><p class="eyebrow">No dining hall. No excuses.</p><h1 style="margin-top:6px">Eat</h1></div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
   ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> = your allergens</p>`:""}
   <div class="stack">${body}</div></div>`;
@@ -1408,7 +1407,7 @@ function vTraining(){
    <div class="goldbox"><b>Stop and see ${esc(atNames(" or "))} today</b><ul class="clean small"><li>Any hit to the head followed by headache, dizziness, feeling foggy or bothered by light. When in doubt, sit out.</li><li>Pain that changes how you move, swelling, or you can't put weight on it.</li><li>Cramps, nausea, headache or dizziness in the heat.</li><li>Pain in one spot on a bone that gets worse with running or jumping (possible stress fracture).</li><li>Dark brown pee after a very hard workout (possible rhabdo).</li></ul></div>
    <p class="src">Sources: Casa et al., NATA Position Statement on Exertional Heat Illnesses, J Athl Train 2015; Patricios et al., Consensus on Concussion in Sport, Br J Sports Med 2023; Andersen et al., NATA Position Statement on Emergency Planning, 2002</p>`;
  }
- return `<div class="view"><div><p class="eyebrow">The Training Room</p><h1 style="margin-top:6px">Training</h1></div>
+ return `<div class="view"><div><p class="eyebrow">Athletic training · Warm-up · Prehab · Rehab</p><h1 style="margin-top:6px">Training</h1></div>
   <div class="seg">${segs.map(([id,l])=>`<button data-trainseg="${id}" aria-pressed="${trainSeg===id}">${l}</button>`).join("")}</div><div class="stack">${body}</div></div>`;
 }
 /* Quick log: tap a meal, tap foods, tap how it felt, done */
@@ -1431,7 +1430,7 @@ let jDay=isoToday();
 function vJournal(){
  const list=(J.days[jDay]||[]).slice().sort((a,b)=>(a.time||"").localeCompare(b.time||""));
  const e=draft.jEdit;
- return `<div class="view"><div><p class="eyebrow">The Logbook</p><h1 style="margin-top:6px">Journal</h1></div>
+ return `<div class="view"><div><p class="eyebrow">Food journal · on this phone</p><h1 style="margin-top:6px">Journal</h1></div>
   <div class="daynav"><button class="btn ghost sm" data-jday="-1" aria-label="Previous day">‹</button><b>${jDay===isoToday()?"Today":esc(fmtDate(jDay))}</b><button class="btn ghost sm" data-jday="1" aria-label="Next day" ${jDay>=isoToday()?"disabled":""}>›</button></div>
   ${e?jForm(e):quickLog()+`<button class="linkbtn" data-jnew="1" style="align-self:flex-start">Add with details or a photo</button>`}
   <div class="stack">${list.length?list.map(x=>`<button class="card entry" style="text-align:left;cursor:pointer" data-jopen="${x.id}">
@@ -1459,7 +1458,7 @@ function jForm(e){
 const SESSIONS=["Onboarding & allergy review","Sports performance","Fueling on a budget","Injury & rehab nutrition","Lab review","Body composition","Supplement check","Food access (confidential)"];
 function vRD(){
  const s=S(), ats=atNames(" or ");
- return `<div class="view"><div><p class="eyebrow">The Front Desk</p><h1 style="margin-top:6px">Book a consult</h1></div>
+ return `<div class="view"><div><p class="eyebrow">${esc(s.place||"In person")} · ${esc(s.rdName||"")}</p><h1 style="margin-top:6px">Book a consult</h1></div>
   <div class="card stack"><p>Nutrition consults with ${esc(rdName())}${s.rdTitle?`, ${esc(s.rdTitle)}`:""}, are in person. <b>Book them through the athletic trainers, ${esc(ats)}.</b></p>
    ${s.bookingLink?`<a class="btn block" href="${esc(s.bookingLink)}" target="_blank" rel="noopener">Pick a time</a>`:""}
    <p class="stamp">Covers ${SESSIONS.slice(0,7).join(", ").toLowerCase()}.</p></div>
@@ -1506,7 +1505,7 @@ function vLearn(){
    <p class="muted small">General guides for ${sexSeg==="women"?"female":"male"} athletes in every sport. Most fueling basics are the same for everyone; these are the differences worth knowing.</p>
    ${list.map(f=>`<details><summary>${esc(f.q)}</summary><div class="ans">${f.a.map(p=>`<p>${esc(p)}</p>`).join("")}<p class="src">Source: ${esc(f.s)}</p></div></details>`).join("")||`<p class="muted">No matches.</p>`}`;
  }
- return `<div class="view"><div><p class="eyebrow">The Film Room</p><h1 style="margin-top:6px">Learn</h1></div>
+ return `<div class="view"><div><p class="eyebrow">Straight answers · every one sourced</p><h1 style="margin-top:6px">Learn</h1></div>
   ${["ask","basics","injury"].includes(learnSeg)?"":`<input id="q" type="search" placeholder="Search: protein, heat, iron, creatine…" value="${esc(draft.q||"")}" aria-label="Search">`}
   <div class="seg">${[["basics","Basics"],["sports","By sport"],...(aiState==="off"?[]:[["ask","Ask the RD"]]),["answers","Quick answers"],["injury","Injury nutrition"],["sex","Women & men"]].map(([id,l])=>`<button data-learnseg="${id}" aria-pressed="${learnSeg===id}">${l}</button>`).join("")}</div>
   <div class="stack" id="learnbody">${body}</div>
@@ -1539,7 +1538,7 @@ function vMe(){
    <div class="choice">${[["0","Standard text"],["1","Larger text"]].map(([v,l])=>`<button data-large="${v}" aria-pressed="${String(prefs.large?1:0)===v}">${l}</button>`).join("")}</div></div></section>
   ${boardState==="off"?"":`<section><h2>Team charge board</h2><div class="card stack"><p class="muted small">Shares your daily charge and team, no name.</p>
    <div class="choice"><button data-board="1" aria-pressed="${!prefs.noBoard}">Count me in</button><button data-board="0" aria-pressed="${!!prefs.noBoard}">Don't share</button></div></div></section>`}
-  <details class="fold"><summary><span class="fsum"><b>Add the iPhone widget</b><span class="stamp">Square or rectangle · today's dispatch</span></span></summary><div class="ans">
+  <details class="fold"><summary><span class="fsum"><b>Add the iPhone widget</b><span class="stamp">Square or rectangle · today's tip</span></span></summary><div class="ans">
    <ol class="a2-steps">
     <li><span class="a2-ic"><b class="a2n">1</b></span><span>Get <b>Scriptable</b> (free) from the App Store</span></li>
     <li><span class="a2-ic"><b class="a2n">2</b></span><span>Tap <b>Copy widget script</b> below</span></li>

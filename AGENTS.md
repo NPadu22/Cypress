@@ -26,7 +26,7 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 - The Claude-only features (`window.claude`: team board, Ask the RD, Edit tab) hide themselves on GitHub Pages. Leave them in place or remove them cleanly.
 - Must work at about 390 px wide in every color scheme, with no horizontal scrolling. Respect `prefers-reduced-motion`.
 
-- **Story:** the app is a place. Tabs are rooms of the Clinic (Lobby/Home, The Kitchen, The Training Room, The Logbook, The Front Desk, The Film Room) and the profile is a Charger locker. Each day is a numbered "Dispatch" (day of the year), shared with the widget. Keep new copy short.
+- **Story:** the profile is a Charger locker. Keep new copy short.
 
 ## Before you finish a change
 
