@@ -841,14 +841,16 @@ async function loadSheet(kind,url){if(!url)return;try{const r=await fetch(url+(u
  if(changed&&profile&&!document.querySelector("form:focus-within"))render()}catch(e){}}
 function loadSheets(){loadSheet("ann",S().annSheet);loadSheet("rx",S().rxSheet)}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")loadSheets()});
-/* Private Clinic code: random, made on this phone, shown in the locker. Staff use it in the "For" column. */
-function clinicCode(){if(!profile)return "";if(!profile.code){const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let c="";const r=new Uint32Array(6);try{crypto.getRandomValues(r)}catch(e){for(let i=0;i<6;i++)r[i]=Math.random()*1e9}
- for(let i=0;i<6;i++)c+=A[r[i]%A.length];profile.code=c;store.set("profile",profile)}return profile.code}
+/* Clinic code: first initial + first three letters of last name (Maya Cruz -> MCRU). Staff use it in the "For" column.
+   Two people with the same code: one adds a number in their locker (MCRU2). */
+function nameCode(){const L=x=>(x||"").normalize("NFD").replace(/[^A-Za-z]/g,"");const w=(profile.name||"").trim().split(/\s+/).map(L).filter(Boolean);
+ if(!w.length)return "";if(w.length===1)return w[0].slice(0,4).toUpperCase();return (w[0][0]+w[w.length-1].slice(0,3)).toUpperCase()}
+function clinicCode(){if(!profile)return "";return profile.codeOverride||nameCode()}
 function forTokens(who){return (who||"").toLowerCase().replace(/’/g,"'").split(/[,;\/&+]|\band\b/).map(x=>x.trim()).filter(Boolean)}
 const ALLWORDS=/^(everyone|all|all teams|everybody)$/;
 function sportWords(s){const n=s.n.toLowerCase(),g=s.who==="Men"?["men's","mens","men"]:["women's","womens","women"];return [s.id,...g.map(x=>x+" "+n)]}
 function tokenSports(tk){return SPORTS.filter(s=>sportWords(s).includes(tk)||s.n.toLowerCase()===tk)}
-function isCodeToken(tk){return /^[a-z0-9]{6}$/.test(tk)&&!tokenSports(tk).length&&!/^(staff|athletes?|coaches)$/.test(tk)}
+function isCodeToken(tk){return /^[a-z0-9]{3,6}$/.test(tk)&&!tokenSports(tk).length&&!/^(staff|athletes?|coaches|everyone|all)$/.test(tk)&&!SPORTS.some(s=>s.pos.some(p=>p.toLowerCase()===tk))}
 function forMe(who){const T=forTokens(who);if(!T.length||T.some(x=>ALLWORDS.test(x)))return true;
  const staff=isStaff();if(T.includes("staff")&&staff)return true;if(T.some(x=>/^athletes?$/.test(x))&&!staff)return true;
  const code=clinicCode().toLowerCase();if(code&&T.includes(code))return true;
@@ -1719,9 +1721,9 @@ function vMe(){
    <div class="row"><span class="grow muted">Eating style</span><b>${esc(profile.diet)}</b></div>
    <button class="btn ghost block" data-editprofile="1">Edit profile</button></div>
   <section><h2>Your Clinic code</h2><div class="card stack">
-   ${draft.codeEdit?`<form class="stack" id="f-code" style="gap:8px"><label for="code-in">Clinic code<input id="code-in" value="${esc(clinicCode())}" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false" style="font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase"></label><p class="stamp">Got a new phone? Type your old code so your plan follows you.</p><div class="row"><button class="btn grow" type="submit">Save</button><button type="button" class="btn ghost" data-codecancel="1">Cancel</button></div></form>`:
+   ${draft.codeEdit?`<form class="stack" id="f-code" style="gap:8px"><label for="code-in">Clinic code<input id="code-in" value="${esc(clinicCode())}" maxlength="6" placeholder="${esc(nameCode())}" autocapitalize="characters" autocomplete="off" spellcheck="false" style="font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase"></label><p class="stamp">Only change it if ${esc(atNames(" or "))} gave you a different code, like ${esc(nameCode())}2. Clear it to go back to ${esc(nameCode())}.</p><div class="row"><button class="btn grow" type="submit">Save</button><button type="button" class="btn ghost" data-codecancel="1">Cancel</button></div></form>`:
    `<div class="row"><b class="grow codebig">${esc(clinicCode())}</b><button class="linkbtn small" data-codeedit="1">Change</button></div>
-   <p class="muted small">Give this to ${isStaff()?"Nick":esc(atNames(" or "))+" or Nick"} so they can send a plan or a message just for you. Keep it private.</p>
+   <p class="muted small">Give this to ${isStaff()?"Nick":esc(atNames(" or "))+" or Nick"} so they can send a plan or a message just for you.</p>
    ${S().atEmail?`<a class="btn block" href="mailto:${esc(S().atEmail)}?subject=${encodeURIComponent("My Clinic code: "+profile.name)}&body=${encodeURIComponent("Hi "+atNames(" and ")+",\n\nMy At the Clinic code is "+clinicCode()+".\n\n"+profile.name+(isStaff()?"":"\n"+teamLabel()))}">Send my code to ${esc(atNames(" & "))}</a>`:""}`}
   </div></section>
   <section><h2>Color scheme</h2><div class="card stack">
@@ -1929,7 +1931,7 @@ document.addEventListener("submit",ev=>{
   draft.atSent=`Injury report\n\nName: ${profile.name}\n${isStaff()?"Role: "+(profile.title||"Staff")+"\nTeam: "+teamLabel():"Sport: "+sportLabel(sp)}${profile.position?` (${profile.position})`:""}\nWhat hurts: ${document.getElementById("at-where").value.trim()}\nWhen/how: ${document.getElementById("at-when").value.trim()||"-"}\nPain (0-10): ${draft.pain||"-"}\nOther: ${document.getElementById("at-note").value.trim()||"-"}`;
   render();return;
  }
- if(f.id==="f-code"){const v=document.getElementById("code-in").value.toUpperCase().replace(/[^A-Z0-9]/g,"");if(v.length!==6){toast("Codes are 6 letters or numbers.");return}profile.code=v;store.set("profile",profile);draft.codeEdit=false;render();toast("Code saved.");return}
+ if(f.id==="f-code"){const v=document.getElementById("code-in").value.toUpperCase().replace(/[^A-Z0-9]/g,"");if(v&&(v.length<3||v.length>6)){toast("Codes are 3 to 6 letters or numbers.");return}if(!v||v===nameCode())delete profile.codeOverride;else profile.codeOverride=v;store.set("profile",profile);draft.codeEdit=false;render();toast("Code saved.");return}
  if(f.id==="f-game"){const date=document.getElementById("g-date").value,time=document.getElementById("g-time").value,opp=document.getElementById("g-opp").value.trim();if(!date||!time)return;
   GAMES.push({date,time,opp,away:!!draft.gAway});store.set("games",GAMES);draft.addGame=false;
   if(date===isoToday()){const c=charge[date]||(charge[date]={type:"game",done:[]});c.type="game";c.gameTime=time;store.set("charge",charge)}
