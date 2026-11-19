@@ -421,6 +421,7 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
 .rx-check{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:transparent;color:var(--on-gold,#003876);font-weight:700;cursor:pointer}
 .rx-check[aria-pressed="true"]{background:var(--gold);border-color:var(--gold)}
 .codebig{font:600 1.5rem/1 var(--mono);letter-spacing:.22em}
+#grocery .choice button{white-space:normal;text-align:left;max-width:100%}
 .pickopt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:.92rem;line-height:1.3;cursor:pointer}
 .pickopt .pk{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--line);font-weight:700;font-size:.8rem}
 .pickopt[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,transparent)}
@@ -1296,18 +1297,32 @@ function mealChoices(bank){const al=myAllergens(),veg=PLANPREF.veg||["Vegetarian
 /* Build my week: athletes pick how many days, then their meals one type at a time. The picks drive the day plan, grocery list and batch prep. */
 const PICK_GROUPS=[["breakfast","Breakfast",[["breakfast",""]]],["main","Lunch & dinner",[["main",""]]],["recovery","Recovery",[["recovery",""]]],["snack","Snacks",[["pre","Before practice"],["snack","Between meals"],["prebed","Before bed"]]]];
 let pickSeg="breakfast";
+/* Where athletes shop. Swaps rename a few grocery items to what that store is known for; no prices claimed. */
+const SHOPS=[
+ {id:"tj",n:"Trader Joe's",tip:"Great for ready-to-eat protein and frozen shortcuts on busy weeks.",swap:{rice:"Frozen rice pouches (brown or jasmine)",chicken:"Chicken breasts or pre-cooked chicken strips",eggs:"Eggs (or ready hard-boiled eggs)",veg:"Frozen vegetable mixes",berries:"Frozen berries"}},
+ {id:"costco",n:"Costco",bulk:1,tip:"Membership needed. Buy staples for 2+ weeks and freeze half, or split packs with a teammate.",swap:{chicken:"Chicken breasts (bulk pack; freeze in portions) or a rotisserie chicken",rice:"Rice (big bag; lasts weeks)",oats:"Oats (big bag)",eggs:"Eggs (bulk)",tuna:"Canned tuna or chicken (multi-pack)",berries:"Frozen berries (big bag)"}},
+ {id:"sams",n:"Sam's Club",bulk:1,tip:"Membership needed. Bulk deals like Costco: freeze portions or split with a teammate.",swap:{chicken:"Member's Mark chicken breasts (freeze in portions)",rice:"Rice (bulk)",oats:"Oats (bulk)",yogurt:"Greek yogurt multi-pack",berries:"Frozen fruit (big bag)"}},
+ {id:"walmart",n:"Walmart",tip:"Store brand (Great Value) staples keep costs down.",swap:{}},
+ {id:"aldi",n:"Aldi",tip:"Mostly store brands, so the basics cost less. Bring a quarter for the cart and your own bags.",swap:{}},
+ {id:"target",n:"Target",tip:"Good & Gather store brand covers most of this list.",swap:{}},
+ {id:"stater",n:"Stater Bros.",tip:"Check the weekly ad for meat and produce deals.",swap:{}},
+ {id:"pantry",n:"Cypress College Food Pantry",free:1,tip:"Free for enrolled students, by appointment (Eat › Groceries). Get what's offered first, then buy the rest.",swap:{}}
+];
+const PANTRYISH=new Set(["rice","pasta","oats","beans","lentils","tuna","pb","bread","crackers","applesauce","tomato","milk","fruit","veg"]);
+function myShop(){return SHOPS.find(s=>s.id===PLANPREF.shop)||null}
 function builderHTML(){const P=PLANPREF.pick,cnt=g=>g[2].reduce((a,[b])=>a+(P[b]||[]).length,0),cur=PICK_GROUPS.find(g=>g[0]===pickSeg)||PICK_GROUPS[0];
  return `<div class="card stack" id="builder"><h3>Build my week</h3>
   <span class="eyebrow">1 · How many days?</span><div class="choice">${[3,4,5,6,7].map(n=>`<button type="button" data-ndays="${n}" aria-pressed="${(PLANPREF.ndays||7)===n}">${n} days</button>`).join("")}</div>
-  <div class="choice">${["Vegetarian","Vegan"].includes(profile.diet)?"":`<button type="button" data-planvegbtn="1" aria-pressed="${!!PLANPREF.veg}">Vegetarian</button>`}<button type="button" data-planbudget="1" aria-pressed="${!!PLANPREF.budget}">Budget first</button></div>
-  <span class="eyebrow" style="margin-top:6px">2 · Pick your meals</span><p class="muted small">Pick 1–3 of each. Fewer picks = shorter grocery list and easier batch cooking.</p>
+  <div class="choice" style="margin-top:4px">${["Vegetarian","Vegan"].includes(profile.diet)?"":`<button type="button" data-planvegbtn="1" aria-pressed="${!!PLANPREF.veg}">Vegetarian</button>`}<button type="button" data-planbudget="1" aria-pressed="${!!PLANPREF.budget}">Budget first</button></div>
+  <span class="eyebrow" style="margin-top:6px">2 · Where do you shop?</span><div class="choice">${SHOPS.map(s=>`<button type="button" data-shop="${s.id}" aria-pressed="${PLANPREF.shop===s.id}">${esc(s.n)}</button>`).join("")}</div>
+  <span class="eyebrow" style="margin-top:6px">3 · Pick your meals</span><p class="muted small">Pick 1–3 of each. Fewer picks = shorter grocery list and easier batch cooking.</p>
   <div class="choice">${PICK_GROUPS.map(g=>`<button type="button" data-pickseg="${g[0]}" aria-pressed="${g===cur}">${g[1]}${cnt(g)?` · ${cnt(g)}`:""}</button>`).join("")}</div>
   ${cur[2].map(([b,lab])=>{const L=mealChoices(b);return `${lab?`<span class="eyebrow">${lab}</span>`:""}<div class="stack" style="gap:6px">${L.length?L.map(x=>{const on=(P[b]||[]).includes(x.n);return `<button type="button" class="pickopt" data-pickmeal="${esc(b)}" data-pickname="${esc(x.n)}" aria-pressed="${on}"><span class="pk">${on?"✓":"+"}</span>${esc(x.n)}</button>`}).join(""):`<p class="muted small">Nothing here fits your allergies. Ask ${esc(S().rdName||"the dietitian")} for swaps.</p>`}</div>`}).join("")}
   <button class="btn block" data-buildweek="1" ${PICK_GROUPS.some(g=>cnt(g))?"":"disabled"}>Build my plan and grocery list</button>
   ${PLANPREF.built?`<button class="linkbtn" data-buildcancel="1">Cancel</button>`:`<button class="linkbtn" data-buildskip="1">Skip and show a sample week</button>`}
   <p class="stamp">Skipped a type? The plan fills it with simple options.</p></div>`}
 function builtSummary(){const P=PLANPREF.pick,n=PICK_GROUPS.map(g=>[g[1],g[2].reduce((a,[b])=>a+(P[b]||[]).length,0)]).filter(x=>x[1]);
- return `<div class="card row"><div class="grow"><b>Your ${PLANPREF.ndays||7}-day plan</b><p class="stamp">${n.length?esc(n.map(x=>x[0]+": "+x[1]).join(" · ")):"Sample meals"}</p></div><button class="btn ghost sm" data-buildedit="1">Change meals</button></div>`}
+ return `<div class="card row"><div class="grow"><b>Your ${PLANPREF.ndays||7}-day plan${myShop()?` · ${esc(myShop().n)}`:""}</b><p class="stamp">${n.length?esc(n.map(x=>x[0]+": "+x[1]).join(" · ")):"Sample meals"}</p></div><button class="btn ghost sm" data-buildedit="1">Change meals</button></div>`}
 /* Picks rotate by slot and change every two days, so dinners double as next-day leftovers and the grocery list stays short. Swap moves one slot on one day. */
 function pickFor(type,i,bank,iso){iso=iso||isoToday();const L=mealOptions(bank);if(!L.length)return null;
   const k=iso+":"+type+":"+PLANPREF.pt+":"+i, day=Math.round(new Date(iso+"T12:00:00")/864e5);
@@ -1315,13 +1330,14 @@ function pickFor(type,i,bank,iso){iso=iso||isoToday();const L=mealOptions(bank);
 function planSlots(iso){const type=planType(iso);return dayTemplate(type,PLANPREF.pt).map((x,i)=>({bank:x.bank,i,type})).filter(x=>x.bank!=="during")}
 function groceryList(){const counts={};let meals=0;
   planWeek().forEach(iso=>planSlots(iso).forEach(({bank,i,type})=>{const p=pickFor(type,i,bank,iso);if(!p)return;meals++;(p.g||[]).forEach(k=>{counts[k]=(counts[k]||0)+1})}));
-  const by={};Object.entries(counts).forEach(([k,c])=>{const [label,sec]=ING[k]||[k,"Pantry & snacks"];(by[sec]=by[sec]||[]).push({k,label,c})});
+  const by={},sh=myShop();Object.entries(counts).forEach(([k,c])=>{let [label,sec]=ING[k]||[k,"Pantry & snacks"];if(sh&&sh.swap[k])label=sh.swap[k];(by[sec]=by[sec]||[]).push({k,label,c,pantry:!!(sh&&sh.free&&PANTRYISH.has(k))})});
   ING_SECTIONS.forEach(s=>by[s]&&by[s].sort((a,b)=>a.label.localeCompare(b.label)));return {by,meals}}
 function groceryHTML(){const {by,meals}=groceryList(),wk=planWeek()[0],got=PLANPREF.got[wk]||[];
-  const text=["Grocery list · At the Clinic · week of "+fmtDate(wk),...ING_SECTIONS.filter(s=>by[s]).flatMap(s=>["",s.toUpperCase(),...by[s].map(x=>"- "+x.label+(x.c>1?" (×"+x.c+")":""))])].join("\n");
+  const sh=myShop();const text=["Grocery list · At the Clinic · "+(PLANPREF.ndays||7)+" days"+(sh?" · "+sh.n:""),...ING_SECTIONS.filter(s=>by[s]).flatMap(s=>["",s.toUpperCase(),...by[s].map(x=>"- "+(x.pantry?"★ ":"")+x.label+(x.c>1&&!(sh&&sh.bulk)?" (×"+x.c+")":""))])].join("\n");
   return `<div class="card stack" id="grocery"><div class="row"><h3 class="grow">Grocery list · next ${PLANPREF.ndays||7} days</h3><span class="stamp">${meals} meals & snacks</span></div>
    <p class="muted small">Built from the meals you picked. Tap items as you shop.</p>
-   ${ING_SECTIONS.filter(s=>by[s]).map(s=>`<div class="stack" style="gap:6px"><span class="eyebrow">${s}</span><div class="choice">${by[s].map(x=>`<button type="button" data-groc="${x.k}" aria-pressed="${got.includes(x.k)}">${esc(x.label)}${x.c>1?` ×${x.c}`:""}</button>`).join("")}</div></div>`).join("")}
+   ${sh?`<div class="card stack" style="background:color-mix(in srgb,var(--gold) 12%,transparent);box-shadow:none"><b>${esc(sh.n)}</b><p class="small">${esc(sh.tip)}</p>${sh.free?`<p class="stamp">★ = often at the pantry. Check there first.</p>`:""}</div>`:""}
+   ${ING_SECTIONS.filter(s=>by[s]).map(s=>`<div class="stack" style="gap:6px"><span class="eyebrow">${s}</span><div class="choice">${by[s].map(x=>`<button type="button" data-groc="${x.k}" aria-pressed="${got.includes(x.k)}">${x.pantry?"★ ":""}${esc(x.label)}${x.c>1&&!(sh&&sh.bulk)?` ×${x.c}`:""}</button>`).join("")}</div></div>`).join("")}
    <div class="copybox" id="groc-copy" hidden>${esc(text)}</div>
    <div class="row" style="flex-wrap:wrap"><button class="btn sm" data-copy="groc-copy">Copy list</button><button class="btn ghost sm" data-grocreset="1">Clear ticks</button></div>
    <p class="stamp">Staples that last (rice, oats, beans, frozen vegetables) can be bought in bulk. Check labels against your allergies.</p></div>`}
@@ -1385,6 +1401,7 @@ function planHTML(){
 }
 function planClick(b){
   const ds=b.dataset, iso=planDate&&planWeek().includes(planDate)?planDate:isoToday();
+  if(ds.shop){PLANPREF.shop=PLANPREF.shop===ds.shop?"":ds.shop;savePlan();render();return true}
   if(ds.ndays){PLANPREF.ndays=+ds.ndays;savePlan();render();return true}
   if(ds.pickseg){pickSeg=ds.pickseg;render();return true}
   if(ds.pickmeal){const L=PLANPREF.pick[ds.pickmeal]||(PLANPREF.pick[ds.pickmeal]=[]),k=L.indexOf(ds.pickname);k<0?L.push(ds.pickname):L.splice(k,1);savePlan();render();return true}
