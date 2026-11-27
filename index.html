@@ -651,6 +651,10 @@ body[data-gameday="1"] #bg{opacity:.15}
 .lc{text-transform:none!important;letter-spacing:0}
 body[data-gameday="1"] .sticky,body[data-gameday="1"] .sticky b{color:#003876!important}body[data-gameday="1"] .sticky p{color:#003876}
 .scene.pro+.daynav{margin-top:-18px}.daynav+section{margin-top:-12px}
+.qltabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:2px}.qltabs::-webkit-scrollbar{display:none}
+.qltabs button{flex:none;border:1.5px solid var(--line);background:transparent;color:inherit;border-radius:999px;padding:7px 12px;font:700 .72rem var(--body);text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.qltabs button[aria-pressed="true"]{background:#003876;border-color:#003876;color:#fff}.qltabs b{background:#FED41F;color:#003876;border-radius:999px;padding:0 6px;margin-left:4px}
+.qlpicked{display:flex;flex-direction:column;gap:6px;padding-top:4px;border-top:1px dashed var(--line)}.qlx{background:color-mix(in srgb,#FED41F 35%,transparent)!important}
 </style>
 </head>
 <body>
@@ -1642,16 +1646,16 @@ const BANKNOTE={breakfast:"Carbs + protein + fruit.",pre:"Quick carbs, small and
 const PRACTICE_TIMES=[["am","Morning"],["mid","Midday"],["pm","Afternoon"]];
 function dayTemplate(type,pt){
   const T=(h,m)=>h*60+(m||0), o=(t,n,bank,occ,plate,extra)=>({t,n,bank,occ,plate,...(extra||{})});
-  if(type==="match")return [o(T(8),"Breakfast","breakfast","Breakfast","match"),o(T(12),"Lunch","main","Lunch","practice"),o(T(15),"Pre-game meal","main","Dinner","match"),o(T(17,15),"Top-off","pre","Pre-training"),o(T(18),"Game · 6 pm","during",null),o(T(20,30),"Recovery","recovery","Post-training"),o(T(21,15),"Late dinner","main","Dinner","practice"),o(T(22,30),"Before bed (optional)","prebed","Snack")];
+  if(type==="match")return [o(T(8),"Breakfast","breakfast","Breakfast","match"),o(T(12),"Lunch","main","Lunch","practice"),o(T(15),"Pre-game meal","main","Dinner","match"),o(T(17,15),"Top-off","pre","Pre-practice"),o(T(18),"Game · 6 pm","during",null),o(T(20,30),"Recovery","recovery","Post-practice"),o(T(21,15),"Late dinner","main","Dinner","practice"),o(T(22,30),"Before bed (optional)","prebed","Snack")];
   if(type==="rest")return [o(T(8,30),"Breakfast","breakfast","Breakfast","easy"),o(T(12,30),"Lunch","main","Lunch","easy"),o(T(15,30),"Snack","snack","Snack"),o(T(18,30),"Dinner","main","Dinner","easy"),o(T(21,30),"Before bed (optional)","prebed","Snack")];
-  if(type==="double")return [o(T(6,45),"Breakfast","breakfast","Breakfast","practice"),o(T(8,15),"Pre-practice","pre","Pre-training"),o(T(9),"Session 1 · 9–11 am","during",null),o(T(11,15),"Recovery","recovery","Post-training"),
-   o(T(12,30),"Lunch","main","Lunch","match"),o(T(14,45),"Pre-practice","pre","Pre-training"),o(T(15,30),"Session 2 · 3:30–5:30 pm","during",null),o(T(17,45),"Recovery","recovery","Post-training"),o(T(19),"Dinner","main","Dinner","match"),o(T(21,30),"Before bed","prebed","Snack")];
-  if(pt==="am")return [o(T(6,45),"Breakfast","breakfast","Breakfast","practice"),o(T(8,15),"Pre-practice","pre","Pre-training"),o(T(9),"Practice · 9–11:30 am","during",null),o(T(11,45),"Recovery","recovery","Post-training"),
+  if(type==="double")return [o(T(6,45),"Breakfast","breakfast","Breakfast","practice"),o(T(8,15),"Pre-practice","pre","Pre-practice"),o(T(9),"Session 1 · 9–11 am","during",null),o(T(11,15),"Recovery","recovery","Post-practice"),
+   o(T(12,30),"Lunch","main","Lunch","match"),o(T(14,45),"Pre-practice","pre","Pre-practice"),o(T(15,30),"Session 2 · 3:30–5:30 pm","during",null),o(T(17,45),"Recovery","recovery","Post-practice"),o(T(19),"Dinner","main","Dinner","match"),o(T(21,30),"Before bed","prebed","Snack")];
+  if(pt==="am")return [o(T(6,45),"Breakfast","breakfast","Breakfast","practice"),o(T(8,15),"Pre-practice","pre","Pre-practice"),o(T(9),"Practice · 9–11:30 am","during",null),o(T(11,45),"Recovery","recovery","Post-practice"),
    o(T(13),"Lunch","main","Lunch","practice"),o(T(16),"Snack","snack","Snack"),o(T(19),"Dinner","main","Dinner","practice"),o(T(21,30),"Before bed","prebed","Snack")];
-  if(pt==="mid")return [o(T(8),"Breakfast","breakfast","Breakfast","practice"),o(T(11),"Pre-practice","pre","Pre-training"),o(T(12),"Practice · 12–2:30 pm","during",null),o(T(14,45),"Recovery lunch","main","Post-training","practice"),
+  if(pt==="mid")return [o(T(8),"Breakfast","breakfast","Breakfast","practice"),o(T(11),"Pre-practice","pre","Pre-practice"),o(T(12),"Practice · 12–2:30 pm","during",null),o(T(14,45),"Recovery lunch","main","Post-practice","practice"),
    o(T(17),"Snack","snack","Snack"),o(T(19),"Dinner","main","Dinner","practice"),o(T(21,30),"Before bed","prebed","Snack")];
-  return [o(T(8),"Breakfast","breakfast","Breakfast","practice"),o(T(12),"Lunch","main","Lunch","practice"),o(T(14,45),"Pre-practice","pre","Pre-training"),o(T(15,30),"Practice · 3:30–6 pm","during",null),
-   o(T(18,15),"Recovery","recovery","Post-training"),o(T(19,30),"Dinner","main","Dinner","practice"),o(T(22),"Before bed","prebed","Snack")];
+  return [o(T(8),"Breakfast","breakfast","Breakfast","practice"),o(T(12),"Lunch","main","Lunch","practice"),o(T(14,45),"Pre-practice","pre","Pre-practice"),o(T(15,30),"Practice · 3:30–6 pm","during",null),
+   o(T(18,15),"Recovery","recovery","Post-practice"),o(T(19,30),"Dinner","main","Dinner","practice"),o(T(22),"Before bed","prebed","Snack")];
 }
 const MP_PLATE={easy:"Easy plate",practice:"Practice plate",match:"Big-day plate"};
 const MP_DAYTYPES=[["rest","Rest / light"],["practice","Practice"],["double","Two-a-day"],["match","Game day"]];
@@ -2204,8 +2208,16 @@ function vTraining(){
   <div class="seg">${segs.map(([id,l])=>`<button data-trainseg="${id}" aria-pressed="${trainSeg===id}">${l}</button>`).join("")}</div><div class="stack">${body}${consultCTA("Want to recover faster? Always sore or tired? You might not be eating enough. Food helps you heal and bounce back.")}</div></div>`;
 }
 /* Quick log: tap a meal, tap foods, tap how it felt, done */
-const QL_FOODS=[["Carbs",["Rice","Pasta","Bread or tortilla","Oats or cereal","Potatoes","Fruit","Bagel"]],["Protein",["Chicken","Beef","Fish","Eggs","Greek yogurt","Milk","Chocolate milk","Beans","Tofu","Protein shake","Turkey"]],["Veggies",["Veggies","Salad"]],["Snacks",["Bar","Pretzels or chips","Nuts or PB","Jerky","Sweets"]],["Drinks",["Water","Sports drink","Coffee","Soda or energy drink"]],["Out",["Fast food","Campus café","Vending"]]];
-const QL_OCC=["Breakfast","Lunch","Dinner","Snack","Pre-training","Post-training"];
+const QL_FOODS=[
+ ["Meals",["Burrito or bowl","Sandwich or wrap","Pizza","Burger","Tacos","Pasta dish","Stir-fry","Sushi or poke","Soup","Salad meal","Leftovers","Meal prep"]],
+ ["Carbs",["Rice","Pasta","Bread","Tortilla","Bagel","Oats","Cereal","Granola","Potatoes","Sweet potato","Noodles or ramen","Pancakes or waffles","Crackers","Quinoa"]],
+ ["Protein",["Chicken","Turkey","Beef","Pork","Fish or salmon","Shrimp","Tuna","Eggs","Deli meat","Greek yogurt","Cottage cheese","Cheese","Milk","Chocolate milk","Protein shake","Beans","Tofu","Lentils"]],
+ ["Fruit",["Banana","Apple","Orange","Berries","Grapes","Mango or pineapple","Dried fruit","Smoothie","Juice"]],
+ ["Veggies",["Mixed veggies","Salad","Broccoli","Carrots","Spinach or greens","Peppers","Corn","Green beans","Avocado","Salsa"]],
+ ["Snacks",["Granola bar","Protein bar","Pretzels","Chips","Popcorn","Trail mix","Nuts","Peanut butter","Jerky","Rice cakes","Hummus","Fruit snacks","Sweets or dessert"]],
+ ["Drinks",["Water","Sports drink","Coffee","Tea","Soda","Energy drink"]],
+ ["Where",["Home","Fast food","Restaurant","Campus café","Vending"]]];
+const QL_OCC=["Breakfast","Lunch","Dinner","Snack","Pre-practice","Post-practice"];
 function qlDefaultOcc(){const h=new Date().getHours()+new Date().getMinutes()/60;return h<10.5?"Breakfast":h<14.5?"Lunch":h<17?"Snack":h<21?"Dinner":"Snack"}
 function recentMeals(){const out=[];for(let i=0;i<14&&out.length<5;i++){const d=isoShift(isoToday(),-i);(J.days[d]||[]).slice().reverse().forEach(x=>{if(x.what&&!out.includes(x.what)&&out.length<5)out.push(x.what)})}return out}
 function quickLog(){
@@ -2213,10 +2225,12 @@ function quickLog(){
  const rec=recentMeals();
  return `<div class="card stack ql">
   <div class="choice">${QL_OCC.map(o=>`<button data-qlocc="${o}" aria-pressed="${q.occ===o}">${o}</button>`).join("")}</div>
-  ${QL_FOODS.map(([g,L])=>`<div class="stack" style="gap:6px"><span class="eyebrow">${g}</span><div class="qlgrid">${L.map(f=>`<button data-qlfood="${esc(f)}" aria-pressed="${q.foods.includes(f)}">${esc(f)}</button>`).join("")}</div></div>`).join("")}
+  ${(()=>{const cur=QL_FOODS.find(x=>x[0]===draft.qlg)||QL_FOODS[0],cnt=g=>g[1].filter(f=>q.foods.includes(f)).length;
+   return `<div class="qltabs">${QL_FOODS.map(g=>`<button type="button" data-qlg="${g[0]}" aria-pressed="${g===cur}">${g[0]}${cnt(g)?` <b>${cnt(g)}</b>`:""}</button>`).join("")}</div>
+   <div class="qlgrid">${cur[1].map(f=>`<button data-qlfood="${esc(f)}" aria-pressed="${q.foods.includes(f)}">${esc(f)}</button>`).join("")}</div>
+   ${q.foods.length?`<div class="qlpicked"><span class="eyebrow">Your ${esc(q.occ.toLowerCase())}</span><div class="choice">${q.foods.map(f=>`<button type="button" class="qlx" data-qlfood="${esc(f)}" aria-label="Remove ${esc(f)}">${esc(f)} ✕</button>`).join("")}</div></div>`:""}`})()}
   <div class="row" style="flex-wrap:wrap;gap:6px"><span class="eyebrow grow">Stomach</span>${[["Good","👍"],["Okay","😐"],["Upset","👎"]].map(([v,e])=>`<button class="qlface" data-qlgut="${v}" aria-pressed="${q.gut===v}" aria-label="${v}">${e}</button>`).join("")}</div>
   <button class="btn block" data-qllog="1" ${q.foods.length?"":"disabled"}>${q.foods.length?`Log ${esc(q.occ.toLowerCase())}`:"Tap what you ate"}</button>
-  ${rec.length?`<div class="stack" style="gap:6px"><span class="eyebrow">Again</span><div class="choice">${rec.map(r=>`<button data-jrepeat="${esc(r)}">${esc(r.length>34?r.slice(0,32)+"…":r)}</button>`).join("")}</div></div>`:""}
  </div>`;
 }
 
@@ -2265,7 +2279,7 @@ ${jDay===isoToday()?vHydro():(H[jDay]?`<section><h2>Hydration</h2><div class="ca
  </div>`;
 }
 function jForm(e){
- const occ=["Breakfast","Lunch","Dinner","Snack","Pre-training","Post-training"];
+ const occ=["Breakfast","Lunch","Dinner","Snack","Pre-practice","Post-practice"];
  return `<form class="card stack" id="f-j">
   <div class="row"><label class="grow" for="j-time">Time<input id="j-time" type="time" value="${esc(e.time||"")}"></label></div>
   <div class="stack" style="gap:6px"><span class="eyebrow">Meal</span><div class="choice" data-pick="occ">${occ.map(o=>`<button type="button" data-v="${o}" aria-pressed="${e.occ===o}">${o}</button>`).join("")}</div></div>
@@ -2514,6 +2528,7 @@ document.addEventListener("click",async ev=>{
  if(d.wipeyes){try{["profile","prefs","charge","journal","hydro","planpref","a2hs_done"].forEach(k=>localStorage.removeItem("cy_"+k))}catch(e){}profile=null;J={days:{}};charge={};prefs={theme:"varsity",large:0,mcm:1,varsity:1};draft={};tab="home";render();return}
  /* journal */
  if(d.ck){const dd=jDay,c=draft.ck&&draft.ck.d===dd?draft.ck:(draft.ck=Object.assign({d:dd},JSON.parse(JSON.stringify(CK[dd]||{}))));c[d.ck]=d.v;if(d.ck==="pain"&&d.v==="No"){delete c.area;delete c.lvl;delete c.isnew;c.sx=[]}render();return}
+ if(d.qlg){draft.qlg=d.qlg;render();return}
  if(d.cksx){const dd=jDay,c=draft.ck&&draft.ck.d===dd?draft.ck:(draft.ck=Object.assign({d:dd},JSON.parse(JSON.stringify(CK[dd]||{}))));c.sx=c.sx||[];const k=c.sx.indexOf(d.cksx);k<0?c.sx.push(d.cksx):c.sx.splice(k,1);render();return}
  if(d.ckedit){draft.ck=Object.assign({d:jDay},JSON.parse(JSON.stringify(CK[jDay]||{})));render();return}
  if(d.cksave){const c=draft.ck||{};const dd=c.d||jDay;const o={...c};delete o.d;o.at=new Date().toISOString();CK[dd]=o;store.set("checkin",CK);draft.ck=null;
@@ -2523,7 +2538,7 @@ document.addEventListener("click",async ev=>{
  if(d.qlocc){draft.ql.occ=d.qlocc;render();return}
  if(d.qlfood){const L=draft.ql.foods,i=L.indexOf(d.qlfood);i<0?L.push(d.qlfood):L.splice(i,1);render();return}
  if(d.qlgut){draft.ql.gut=draft.ql.gut===d.qlgut?"":d.qlgut;render();return}
- if(d.qllog||d.jrepeat){const q=draft.ql||{occ:qlDefaultOcc(),foods:[],gut:""};const n=new Date();const what=d.jrepeat||q.foods.join(", ");if(!what)return;
+ if(d.qllog||d.jrepeat){draft.qlg=null;const q=draft.ql||{occ:qlDefaultOcc(),foods:[],gut:""};const n=new Date();const what=d.jrepeat||q.foods.join(", ");if(!what)return;
   const list=J.days[jDay]||(J.days[jDay]=[]);list.push({id:Date.now().toString(36),time:String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0"),occ:d.jrepeat?qlDefaultOcc():q.occ,what,gut:d.jrepeat?"":q.gut,energy:"",note:"",photo:""});
   if(!store.set("journal",J)){toast("Phone storage is full");return}draft.ql=null;render();toast("Logged.");return}
  if(d.jnew){const n=new Date();draft.jEdit={time:String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0"),occ:"",what:"",gut:"",energy:"",note:"",photo:""};draft.jDelAsk=false;render();return}
