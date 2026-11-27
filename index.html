@@ -574,6 +574,29 @@ h3{font-weight:700}
 .hero.welcome .hero-logo{right:auto;left:50%;top:-14%;transform:translateX(-50%);width:80%}
 .a2tip{justify-content:center;text-align:center}
 .view>.hero:first-child:not(.welcome){align-items:center;text-align:center}
+.scoreboard{background:#0B1F3A;color:#fff;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:12px;border-bottom:5px solid #FED41F;box-shadow:0 6px 18px rgba(11,37,69,.18)}
+.sb-top{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sb-cell{background:#000F22;border-radius:10px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.sb-cell span{font:700 .58rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.sb-cell b{font:700 1.7rem/1 var(--display);color:#FED41F;font-variant-numeric:tabular-nums;letter-spacing:.04em}.sb-cell small{font-size:.9rem;color:rgba(254,212,31,.6)}
+.sb-plays{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sb-play{border:1.5px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.75);border-radius:10px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.sb-play i{font-style:normal;font-size:1.1rem;filter:grayscale(1);opacity:.6}.sb-play span{font:700 .56rem/1.1 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-align:center}
+.sb-play.on{background:#FED41F;border-color:#FED41F;color:#003876}.sb-play.on i{filter:none;opacity:1}
+.sb-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.sb-day{text-align:center;border-radius:6px;padding:5px 0;background:rgba(255,255,255,.06);display:flex;flex-direction:column;gap:2px}
+.sb-day span{font:700 .55rem/1 var(--mono);color:rgba(255,255,255,.5)}.sb-day b{font:700 .8rem/1 var(--display)}
+.sb-day.w{background:#FED41F;color:#003876}.sb-day.w span{color:#003876}.sb-day.l b{color:rgba(255,255,255,.45)}.sb-day.now{outline:1.5px solid #FED41F}.sb-day.fut b{color:rgba(255,255,255,.3)}
+.sb-level b{font:700 .9rem var(--display);text-transform:uppercase;letter-spacing:.08em;color:#FED41F}.sb-level .stamp{color:rgba(255,255,255,.65)}
+.sb-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px}.sb-bar i{display:block;height:100%;background:linear-gradient(90deg,#FED41F,#fff3b0)}
+.hof-wall{display:flex;flex-direction:column;gap:8px}
+.hof summary{display:flex;align-items:center;gap:12px}
+.hof-pen{flex:none;width:34px;height:40px;background:#003876;color:#FED41F;display:grid;place-items:center;clip-path:polygon(0 0,100% 0,100% 78%,50% 100%,0 78%);font-size:.9rem;padding-bottom:6px}
+.hof[open] .hof-pen{background:#FED41F;color:#003876}
+.hof-row{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline}.hof-y{font:700 .72rem/1.2 var(--mono);color:#003876;background:color-mix(in srgb,#FED41F 45%,transparent);padding:3px 6px;border-radius:4px;white-space:nowrap}
+.ckgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.ckgrid div{display:flex;flex-direction:column;gap:2px}.ckgrid b{font:700 1rem var(--display)}
+.ckform .choice button{min-width:40px}
+.cartbtn{pointer-events:auto;border:3px solid #FED41F!important}
 </style>
 </head>
 <body>
@@ -1049,10 +1072,10 @@ function shareDays(){if(!profile||!profile.consentAt)return;const days=[...new S
   const h=H[iso];if(h){const oz=h.n*BOTTLE;if(snap.w!==oz){staffSend({t:"water",date:iso,bottles:h.n,size:BOTTLE,oz,goal:hydroGoal(h)});snap.w=oz}}});
  Object.keys(SHSNAP).forEach(k=>{if(new Date(isoToday())-new Date(k)>10*864e5)delete SHSNAP[k]});store.set("shsnap",SHSNAP)}
 {const _set=store.set;store.set=function(k,v){const ok=_set.call(store,k,v);if(ok&&(k==="journal"||k==="hydro"))shareSoon();return ok}}
-function vConsent(){return `<div class="view"><div><p class="eyebrow">Your data</p><h1 style="margin-top:4px">What the app shares</h1></div>${privacyHTML()}
+function vConsent(){return `<div class="view"><div><p class="eyebrow">Your data</p><h1 style="margin-top:4px">What the app shares</h1>${profile&&profile.consentAt?`<p class="muted small" style="margin-top:6px">Updated: the Performance Journal now shares your daily check-in with staff too.</p>`:""}</div>${privacyHTML()}
  <button class="btn block" data-consent="1">I understand</button></div>`}
 function privacyHTML(){return `<div class="card stack"><p class="small">So the dietitian and athletic trainers can support your training, the app shares what you log with Cypress athletics staff. It goes to a private staff sheet only they can open.</p>
- <div class="stack" style="gap:4px"><span class="eyebrow">Shared with staff</span><p class="muted small">Your name, team, position and number · meals you log · water</p></div>
+ <div class="stack" style="gap:4px"><span class="eyebrow">Shared with staff</span><p class="muted small">Your name, team, position and number · meals you log · water · daily check-in (sleep, soreness, energy, stress, pain or injury)</p></div>
  <div class="stack" style="gap:4px"><span class="eyebrow">Stays on this phone</span><p class="muted small">Journal notes and photos · allergies and eating style · everything else</p></div>
  <p class="stamp">Questions about your data? Ask ${esc(S().rdName||"the dietitian")} or ${esc(atNames(" or "))}.</p></div>`}
 loadSheets();
@@ -1245,7 +1268,7 @@ function render(){
  applyPrefs();paintBg();
  const app=document.getElementById("app");
  if(!profile||draft.editingProfile){app.innerHTML=vOnboard();document.getElementById("tabs").innerHTML="";return}
- if(!profile.consentAt){app.innerHTML=topbar()+vConsent();renderTabs(true);return}
+ if(!profile.consentAt||(profile.consentV||1)<2){app.innerHTML=topbar()+vConsent();renderTabs(true);return}
  if(needsStop()){app.innerHTML=topbar()+vStop();renderTabs(true);return}
  const V={home:vHome,eat:vEat,training:vTraining,journal:vJournal,rd:vRD,learn:vLearn,me:vMe,edit:vEdit}[tab]||vHome;
  document.body.dataset.tab=tab;
@@ -1265,7 +1288,7 @@ function renderTabs(hide){
 }
 
 function readOnboard(){const p=draft.p,g=id=>document.getElementById(id);if(!p)return;
- if(g("f-first"))p.first=g("f-first").value.trim();if(g("f-last"))p.last=g("f-last").value.trim();if(p.first||p.last)p.name=[p.first,p.last].filter(Boolean).join(" ");if(g("f-consent")&&g("f-consent").checked&&!p.consentAt)p.consentAt=new Date().toISOString();if(g("f-sport"))p.sport=g("f-sport").value;if(g("f-pos"))p.position=g("f-pos").value;if(g("f-title"))p.title=g("f-title").value;if(g("f-num"))p.num=g("f-num").value.replace(/\D/g,"").slice(0,2);
+ if(g("f-first"))p.first=g("f-first").value.trim();if(g("f-last"))p.last=g("f-last").value.trim();if(p.first||p.last)p.name=[p.first,p.last].filter(Boolean).join(" ");if(g("f-consent")&&g("f-consent").checked&&(!p.consentAt||(p.consentV||1)<2)){p.consentAt=p.consentAt||new Date().toISOString();p.consentV=2}if(g("f-sport"))p.sport=g("f-sport").value;if(g("f-pos"))p.position=g("f-pos").value;if(g("f-title"))p.title=g("f-title").value;if(g("f-num"))p.num=g("f-num").value.replace(/\D/g,"").slice(0,2);
  if(g("f-area"))p.area=g("f-area").value;if(g("f-other"))p.other=g("f-other").value;if(g("f-diet"))p.diet=g("f-diet").value}
 function vOnboard(){
  const p=draft.p||(draft.p=profile?JSON.parse(JSON.stringify(profile)):{role:"athlete",name:"",sport:"",position:"",title:"",area:"",allergies:[],other:"",diet:"No restrictions",ack:false});
@@ -1328,6 +1351,56 @@ const STAMPS=[
 function habBest(){const b=Math.max(store.get("habbest",0),habStreak());if(b>store.get("habbest",0))store.set("habbest",b);return b}
 function stampsHTML(){const got=STAMPS.filter(s=>s.ok());return `<section><div class="row"><h2 class="grow">Locker stamps</h2><span class="stamp">${got.length}/${STAMPS.length}</span></div>
  <div class="stamps">${STAMPS.map(s=>{const on=s.ok(),hide=s.k==="est"&&!on;return `<details class="stampx ${on?"on":""}"><summary aria-label="${esc(hide?"Hidden stamp":s.n)}"><span class="sx-ring">${on?"★":hide?"?":"·"}</span><span class="sx-n">${esc(hide?"Hidden":s.n)}</span></summary><p class="small">${esc(on?s.d:hide?"Somewhere in the app, an old pennant is waiting.":"Not yet: "+s.d)}</p></details>`}).join("")}</div></section>`}
+
+/* ===== Charge Board: daily plays -> wins, records, streaks and levels (like the Orbit app's orbit + constellations) ===== */
+const PLAYS=[
+ {k:"check",n:"Check-in",i:"✓",how:"Save today's check-in",go:"journal"},
+ {k:"sleep",n:"Sleep 7+",i:"☾",how:"7+ hours in your check-in",go:"journal"},
+ {k:"fuel",n:"Fuel log",i:"🍴",how:"Log 3+ meals or snacks",go:"journal"},
+ {k:"water",n:"Hydrate",i:"💧",how:"Hit your water goal",go:"journal"},
+ {k:"habits",n:"Habits",i:"★",how:"All 3 Start here habits",go:"home"}];
+function playDone(k,d){const c=CK[d];if(k==="check")return !!c;if(k==="sleep")return !!c&&ckSlpNum(c.sleep)>=7;if(k==="fuel")return (J.days[d]||[]).length>=3;
+ if(k==="water"){const h=H[d];return !!h&&h.n*BOTTLE>=hydroGoal(h)}if(k==="habits")return (HAB[d]||[]).length>=3;return false}
+function firstDay(){let f=store.get("firstday",null);if(!f){f=isoToday();store.set("firstday",f)}return f}
+function dayScore(d){return PLAYS.filter(p=>playDone(p.k,d)).length}
+const LEVELS=[[0,"Walk-on"],[100,"Rookie"],[300,"Starter"],[700,"All-Conference"],[1500,"All-State"],[3000,"All-American"],[6000,"Hall of Famer"]];
+function careerPts(){let pts=0;const days=new Set([...Object.keys(CK),...Object.keys(J.days||{}),...Object.keys(H),...Object.keys(HAB)]);days.forEach(d=>{const s=dayScore(d);pts+=s*10+(s===5?20:0)});return pts}
+function winStreak(){let n=0,d=isoToday();if(dayScore(d)<3)d=isoShift(d,-1);while(dayScore(d)>=3){n++;d=isoShift(d,-1)}return n}
+function vScoreboard(){if(isStaff())return "";const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winStreak();
+ let li=0;LEVELS.forEach((l,i)=>{if(pts>=l[0])li=i});const nxt=LEVELS[li+1],pct=nxt?Math.round((pts-LEVELS[li][0])/(nxt[0]-LEVELS[li][0])*100):100;
+ const mon=isoShift(t,-((new Date(t+"T12:00:00").getDay()+6)%7)),wk=[...Array(7)].map((_,i)=>isoShift(mon,i));
+ const f0=firstDay(),W=wk.filter(d=>d<t&&dayScore(d)>=3).length+(s>=3?1:0),L=wk.filter(d=>d<t&&d>=f0&&dayScore(d)<3).length;
+ return `<section><div class="row"><h2 class="grow">Charge Board</h2><span class="stamp">${st?`🔥 ${st}-day win streak`:"3 plays = a win"}</span></div>
+ <div class="scoreboard">
+  <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/5</small></b></div><div class="sb-cell"><span>This week</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
+  <div class="sb-plays">${PLAYS.map(p=>{const on=playDone(p.k,t);return `<button class="sb-play ${on?"on":""}" data-go="${p.go}" aria-label="${esc(p.n)}: ${on?"done":"not yet"}. ${esc(p.how)}"><i aria-hidden="true">${p.i}</i><span>${esc(p.n)}</span></button>`}).join("")}</div>
+  <div class="sb-week">${wk.map(d=>{const sc=dayScore(d),f=d>t||(d<f0&&sc<3);return `<div class="sb-day ${f?"fut":sc>=3?"w":d===t?"now":"l"}"><span>${"MTWTFSS"[wk.indexOf(d)]}</span><b>${f?"·":sc>=3?"W":d===t?sc+"/5":"L"}</b></div>`}).join("")}</div>
+  <div class="sb-level"><div class="row"><b class="grow">${LEVELS[li][1]}</b><span class="stamp">${nxt?`${nxt[0]-pts} pts to ${nxt[1]}`:"Top level"}</span></div><div class="sb-bar"><i style="width:${pct}%"></i></div></div>
+ </div>
+ <p class="stamp">${s>=3?"Today's a W. Keep stacking them.":`${3-s} more play${3-s===1?"":"s"} for today's win. Tap one to log it.`}</p></section>`}
+/* ===== Charger Hall of Fame: real program achievements (sources in AGENTS.md) ===== */
+const HOF={
+ baseball:{h:"5× state champions",l:[["1991 · 1994 · 1997 · 2003 · 2013","3C2A state champions under Scott Pickler"],["2025","State Final Four, 39 wins and the first OEC title since 2009"],["13","State tournament appearances"]]},
+ softball:{h:"10× state champions",l:[["2017","48-0: the first undefeated state champion in 3C2A history"],["2010 · 2011 · 2012","State title three-peat"],["2023","10th state title, and Coach Brad Pickler's 1,500th win"],["31","State tournament appearances (2024 state runner-up)"]]},
+ mbb:{h:"23-win season",l:[["2024-25","23-10 overall, 11-6 in the Orange Empire Conference"]]},
+ wbb:{h:"2005 state champions",l:[["2005","State champions. Tourney MVP Brittany Imaku now coaches the Chargers"],["2016 · 2017 · 2018","Three straight OEC titles"],["2023 · 2026","State Elite 8"]]},
+ msoc:{h:"Breakthrough program",l:[["2024","First playoff win in program history"],["2022","First home playoff game in college history"]]},
+ wsoc:{h:"3× state finalists",l:[["2021 · 2023 · 2024","3C2A state championship games"],["2019","Unbeaten OEC champions"]]},
+ wvb:{h:"OEC champions",l:[["2010 · 2016 · 2021","Orange Empire Conference champions (23-3 in 2021)"],["2018","State tournament"]]},
+ bvb:{h:"State pairs qualifiers",l:[["2022","A Charger pair advanced to the 3C2A Pairs State Championship"],["2021","Eight Chargers named All-OEC"]]},
+ flag:{h:"Inaugural OEC co-champions",l:[["2026","First season: 18-6, OEC co-champions and OEC tournament runner-up"]]},
+ mwp:{h:"Back and building",l:[["2024","Postseason berth and OEC Coach of the Year"],["2019","Program returns to the pool"]]},
+ wwp:{h:"Top-10 in the state",l:[["2024","Broke into the state coaches' top-10 rankings"]]},
+ mswim:{h:"Individual state champion",l:[["2022","Ethan Umpornpuckdi: 1650 free state champion, Cypress's 36th state banner"]]},
+ wswim:{h:"Most decorated diver",l:[["2017 · 2018","Alejandra Gomez: three state diving titles in two seasons"]]},
+ golf:{h:"2018 state champions",l:[["2018","First state title in program history, by 18 strokes"],["2017","State runner-up"]]}};
+function hofCard(id,open){const s=sportById(id),h=HOF[id];if(!s||!h)return "";
+ return `<details class="hof" ${open?"open":""}><summary><span class="hof-pen" aria-hidden="true">★</span><span class="fsum"><b>${esc(sportLabel(s))}</b><span class="stamp">${esc(h.h)}</span></span></summary>
+  <div class="ans stack" style="gap:8px">${h.l.map(([y,d])=>`<div class="hof-row"><span class="hof-y">${esc(y)}</span><span class="small">${esc(d)}</span></div>`).join("")}</div></details>`}
+function vHof(){const staff=isStaff(),mine=profile.sport;
+ return `<section><div class="row"><h2 class="grow">Charger Hall of Fame</h2><span class="stamp">36+ state banners</span></div>
+  <div class="hof-wall">${staff?SPORTS.map(s=>hofCard(s.id,false)).join(""):hofCard(mine,true)+`<details class="mdet"><summary>Every Charger program</summary><div class="ans stack" style="gap:8px">${SPORTS.filter(s=>s.id!==mine).map(s=>hofCard(s.id,false)).join("")}</div></details>`}</div>
+  <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></section>`}
 function vHome(){
  if(!isStaff())autoGameDay();
  const first=(profile.name||"").trim().split(" ")[0];
@@ -1343,18 +1416,12 @@ function vHome(){
    <h1>Hey ${esc(first)}</h1>
    
   </div>
+  ${vScoreboard()}
   ${vStartHere()}
   ${c.type==="game"?vCountdown(c):""}
   ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
-  <section><h2>What's on deck?</h2>
-   <div class="seg" data-daytype="1">${DAYTYPES.map(([id,l])=>`<button data-dt="${id}" aria-pressed="${c.type===id}">${l}</button>`).join("")}</div>
-   <div class="card stack"><p><b>${esc(plan.plate)}</b></p>
-    <div class="stack" style="gap:6px">${plan.m.map(([w,d],i)=>`<details class="mdet"><summary><span><span class="mpn">${i+1}</span>${esc(w)}</span></summary><div class="ans"><p class="small">${esc(d)}</p></div></details>`).join("")}</div>
-    <p class="src">USOPC/UCCS Athlete's Plate; ACSM/AND/DC 2016</p></div>
-  </section>
   ${isStaff()?"":vGames()}
-  ${vHydro()}
-  ${vBoard()}
+  ${vHof()}
  </div>`;
 }
 
@@ -1869,7 +1936,7 @@ function vEat(){
    `<section><h2>Quick recipes</h2><div class="stack" style="gap:8px">${RECIPES.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b><span class="stamp">${esc(r.t)}</span></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }
  return `<div class="view"><div class="scene pro" aria-hidden="true"><div class="bn-txt"><span class="bn-l">Sports Nutrition</span><span class="bn-s">Fuel · Recover · Repeat</span></div><div class="bn-icons"><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-2-2-7-1.5-7 4 0 4 3 8 5 8 1 0 1.4-.6 2-.6s1 .6 2 .6c2 0 5-4 5-8 0-5.5-5-6-7-4z"/><path d="M12 7c0-2 1-3.5 3-4"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a8 7 0 0 1-16 0z"/><path d="M8 19h8"/><path d="M14 9l6-6M11 9l5-6"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v3l-2 3v11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9l-2-3V3"/><path d="M8 13h8"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c3-5 9-6 14-3l4-3v12l-4-3c-5 3-11 2-14-3z"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11a7 6 0 0 1 14 0v9z"/><path d="M9 13l2-1.5M13 14l2-1.5"/></g></svg></div></div>
- <div class="row" style="align-items:flex-end"><div class="grow"><h1>Eat</h1></div>${(n=>`<button class="cartbtn" data-segjump="${eatSeg==="glist"?"plan":"glist"}" aria-pressed="${eatSeg==="glist"}" aria-label="${eatSeg==="glist"?"Close":"Open"} my Grocery List${n?`, ${n} items`:""}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.5" fill="currentColor"/><circle cx="17" cy="20" r="1.5" fill="currentColor"/></svg>${n?`<span class="cartn">${n}</span>`:""}</button>`)(GLIST.filter(x=>!x.done).length)}</div>
+ <div class="row" style="justify-content:flex-end;margin:-46px 10px -14px 0;position:relative;z-index:2;pointer-events:none"><span class="grow"></span>${(n=>`<button class="cartbtn" data-segjump="${eatSeg==="glist"?"plan":"glist"}" aria-pressed="${eatSeg==="glist"}" aria-label="${eatSeg==="glist"?"Close":"Open"} my Grocery List${n?`, ${n} items`:""}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.5" fill="currentColor"/><circle cx="17" cy="20" r="1.5" fill="currentColor"/></svg>${n?`<span class="cartn">${n}</span>`:""}</button>`)(GLIST.filter(x=>!x.done).length)}</div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
   ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> = your allergens</p>`:""}
   <div class="stack">${body}${eatSeg==="glist"?"":pantryHTML()}</div></div>`;
@@ -2024,7 +2091,7 @@ function vTraining(){
    <p class="src">Sources: Casa et al., NATA Position Statement on Exertional Heat Illnesses, J Athl Train 2015; Patricios et al., Consensus on Concussion in Sport, Br J Sports Med 2023; Andersen et al., NATA Position Statement on Emergency Planning, 2002</p>`;
  }
  return `<div class="view"><div class="scene pro" aria-hidden="true"><div class="bn-txt"><span class="bn-l">Athletic Training</span><span class="bn-s">Prevent · Treat · Return</span></div><div class="bn-icons"><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 3 10 2-5h7"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7"/><path d="M12 13V9M10 3h4M12 3v3M18 7l1.5-1.5"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7a3 3 0 0 1 6 0"/><path d="M7 11c0-2 2-3 5-3s5 1 5 3l-1 8c0 1.5-1.5 2-4 2s-4-.5-4-2z"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M20 12h2v6"/></g></svg></div></div>
-  <div><p class="eyebrow">Rehab &amp; therapy · ${esc(atNames(" & "))}</p><h1 style="margin-top:6px">Training</h1></div>
+
   <div class="seg">${segs.map(([id,l])=>`<button data-trainseg="${id}" aria-pressed="${trainSeg===id}">${l}</button>`).join("")}</div><div class="stack">${body}</div></div>`;
 }
 /* Quick log: tap a meal, tap foods, tap how it felt, done */
@@ -2043,17 +2110,48 @@ function quickLog(){
   ${rec.length?`<div class="stack" style="gap:6px"><span class="eyebrow">Again</span><div class="choice">${rec.map(r=>`<button data-jrepeat="${esc(r)}">${esc(r.length>34?r.slice(0,32)+"…":r)}</button>`).join("")}</div></div>`:""}
  </div>`;
 }
+
+/* ===== Daily check-in: sleep, body, pain (Performance Journal). Shared with staff after consent (v2). ===== */
+let CK=store.get("checkin",{});
+const PAIN_AREAS=["Head / neck","Shoulder","Elbow / wrist / hand","Back","Hip / groin","Thigh","Knee","Lower leg / ankle / foot","Other"];
+const PAIN_SX=["Swelling","Numbness or tingling","Can't put weight on it","Headache or dizzy"];
+function ckFlag(c){if(!c||c.pain!=="Yes")return "";if((c.sx||[]).includes("Headache or dizzy")||c.area==="Head / neck")return "head";if((c.sx||[]).some(x=>x!=="Swelling")||(+c.lvl>=4)||c.isnew==="Yes")return "see";return ""}
+function checkinHTML(d){const c=draft.ck&&draft.ck.d===d?draft.ck:Object.assign({d},CK[d]||{}),saved=!!CK[d]&&!draft.ck;
+ const chips=(k,opts,lab)=>`<div class="stack" style="gap:6px"><span class="eyebrow">${lab}</span><div class="choice">${opts.map(o=>`<button type="button" data-ck="${k}" data-v="${esc(String(o))}" aria-pressed="${String(c[k])===String(o)}">${esc(String(o))}</button>`).join("")}</div></div>`;
+ if(saved){const f=ckFlag(c);return `<section><h2>Check-in</h2><div class="card stack">
+  <div class="ckgrid"><div><span class="eyebrow">Sleep</span><b>${esc(c.sleep||"–")}${c.sleep?" h":""}</b><span class="stamp">${esc(c.sq||"")}</span></div><div><span class="eyebrow">Soreness</span><b>${esc(c.sore||"–")}</b></div><div><span class="eyebrow">Energy</span><b>${esc(c.energy||"–")}</b></div><div><span class="eyebrow">Stress</span><b>${esc(c.stress||"–")}</b></div></div>
+  ${c.pain==="Yes"?`<p class="small"><b>Pain:</b> ${esc(c.area||"")} · ${esc(String(c.lvl??""))}/10${c.isnew==="Yes"?" · new":""}${(c.sx||[]).length?" · "+esc(c.sx.join(", ")):""}</p>`:`<p class="small muted">No pain or injury reported.</p>`}
+  ${f?flagHTML(f):""}
+  <button class="btn ghost sm" data-ckedit="1" style="align-self:flex-start">Edit check-in</button></div></section>`}
+ return `<section><h2>Check-in</h2><div class="card stack ckform">
+  <p class="muted small">30 seconds. Be honest; it helps your trainers and dietitian help you.</p>
+  ${chips("sleep",["5 or less",6,7,8,"9+"],"Hours of sleep last night")}
+  ${chips("sq",["Poor","Okay","Great"],"Sleep quality")}
+  ${chips("sore",["None","Mild","Sore","Very sore"],"Muscle soreness")}
+  ${chips("energy",["Low","Okay","High"],"Energy")}
+  ${chips("stress",["Low","Medium","High"],"Stress")}
+  ${chips("pain",["No","Yes"],"Any pain or injury?")}
+  ${c.pain==="Yes"?`${chips("area",PAIN_AREAS,"Where?")}${chips("lvl",[0,1,2,3,4,5,6,7,8,9,10],"How bad? (0 = none, 10 = worst)")}${chips("isnew",["Yes","No"],"New since yesterday?")}
+   <div class="stack" style="gap:6px"><span class="eyebrow">Any of these?</span><div class="choice">${PAIN_SX.map(o=>`<button type="button" data-cksx="${esc(o)}" aria-pressed="${(c.sx||[]).includes(o)}">${esc(o)}</button>`).join("")}</div></div>${ckFlag(c)?flagHTML(ckFlag(c)):""}`:""}
+  <button class="btn block" data-cksave="1" ${c.sleep&&c.sore&&c.energy&&c.pain?"":"disabled"}>Save check-in</button></div></section>`}
+function flagHTML(f){return f==="head"?`<div class="card stack" style="border-left:4px solid var(--stop)!important"><b>Possible concussion signs. Stop activity and tell ${esc(atNames(" or "))} right now.</b><p class="small">Don't practice or play until an athletic trainer clears you.</p><button class="btn sm" data-go="training" data-session="">Go to Training</button></div>`
+ :`<div class="card stack" style="border-left:4px solid var(--gold)!important"><b>See ${esc(atNames(" or "))} today.</b><p class="small">New pain, pain 4 or higher, numbness or not being able to put weight on it should be checked before you train.</p></div>`}
+function ckSlpNum(v){return v==="5 or less"?5:v==="9+"?9:+v||0}
 let jDay=isoToday();
 function vJournal(){
  const list=(J.days[jDay]||[]).slice().sort((a,b)=>(a.time||"").localeCompare(b.time||""));
  const e=draft.jEdit;
- return `<div class="view"><div><p class="eyebrow">Food journal · on this phone</p><h1 style="margin-top:6px">Journal</h1></div>
+ return `<div class="view"><div class="scene pro" aria-hidden="true"><div class="bn-txt"><span class="bn-l">Performance Journal</span><span class="bn-s">Sleep · Body · Fuel · Water</span></div><div class="bn-icons"><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 3 10 2-5h7"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="M10 10.5l3 3M12.5 9l1 1M9 12.5l1 1"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8M5 3v4a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-2 6 0 8v10"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11z"/></g></svg></div></div>
   <div class="daynav"><button class="btn ghost sm" data-jday="-1" aria-label="Previous day">‹</button><b>${jDay===isoToday()?"Today":esc(fmtDate(jDay))}</b><button class="btn ghost sm" data-jday="1" aria-label="Next day" ${jDay>=isoToday()?"disabled":""}>›</button></div>
+  ${checkinHTML(jDay)}
+  <section><h2>Fuel</h2>
   ${e?jForm(e):quickLog()+`<button class="linkbtn" data-jnew="1" style="align-self:flex-start">Add with details or a photo</button>`}
   <div class="stack">${list.length?list.map(x=>`<button class="card entry" style="text-align:left;cursor:pointer" data-jopen="${x.id}">
     <div class="row"><span class="eyebrow grow">${esc(x.time||"")} · ${esc(x.occ)}</span>${x.gut?`<span class="chip ${x.gut==="Upset"?"stop":""}">Stomach: ${esc(x.gut)}</span>`:""}</div>
     <p>${esc(x.what)}</p>${x.photo?`<img src="${x.photo}" alt="Photo of ${esc(x.what)}">`:""}${x.energy?`<span class="stamp">Energy: ${esc(x.energy)}</span>`:""}${x.note?`<p class="muted small">${esc(x.note)}</p>`:""}</button>`).join(""):`<p class="muted">Nothing logged. What did you eat?</p>`}</div>
   ${list.length?`<button class="btn ghost block" data-jshare="1">Copy this day to send to ${esc(S().rdName||"the dietitian")}</button><div id="jshare"></div>`:""}
+  </section>
+  ${jDay===isoToday()?vHydro():(H[jDay]?`<section><h2>Hydration</h2><div class="card"><p><b>${H[jDay].n*BOTTLE} oz</b> <span class="muted small">· ${H[jDay].n} bottles</span></p></div></section>`:"")}
  </div>`;
 }
 function jForm(e){
@@ -2262,7 +2360,7 @@ document.addEventListener("click",async ev=>{
   if(pg&&k<0){const c=progCurDay(pg),I=pg.ex.map((x,j)=>j).filter(j=>pg.ex[j].day===c);if(I.every(j=>progDone(pg.id,j))&&!store.get("st_rehab",0)){store.set("st_rehab",1);setTimeout(()=>toast("Stamp earned: Tape Table"),400)}}
   if(pg){const x=pg.ex[i];staffSend({t:k<0?"prog":"progdel",date:iso,program:pg.name,ptype:pg.type,day:x.day,ex:x.n,dose:[x.sets,x.reps].filter(Boolean).join(" x "),key:iso+"|"+pg.id+"|"+i})}
   render();return}
- if(d.consent){profile.consentAt=new Date().toISOString();store.set("profile",profile);rosterSync();shareDays();render();return}
+ if(d.consent){profile.consentAt=profile.consentAt||new Date().toISOString();profile.consentV=2;store.set("profile",profile);rosterSync();shareDays();render();return}
  if(d.editprofile){draft.editingProfile=true;draft.p=null;render();return}
  if(d.ack){profile.ack=true;store.set("profile",profile);render();return}
  if(d.ackgo){profile.ack=true;store.set("profile",profile);draft.session="Onboarding & allergy review";go("rd");return}
@@ -2317,7 +2415,13 @@ document.addEventListener("click",async ev=>{
  if(d.wipeno){draft.wipeAsk=false;render();return}
  if(d.wipeyes){try{["profile","prefs","charge","journal","hydro","planpref","a2hs_done"].forEach(k=>localStorage.removeItem("cy_"+k))}catch(e){}profile=null;J={days:{}};charge={};prefs={theme:"varsity",large:0,mcm:1,varsity:1};draft={};tab="home";render();return}
  /* journal */
- if(d.jday){jDay=isoShift(jDay,+d.jday);if(jDay>isoToday())jDay=isoToday();draft.jEdit=null;render();return}
+ if(d.ck){const dd=jDay,c=draft.ck&&draft.ck.d===dd?draft.ck:(draft.ck=Object.assign({d:dd},JSON.parse(JSON.stringify(CK[dd]||{}))));c[d.ck]=d.v;if(d.ck==="pain"&&d.v==="No"){delete c.area;delete c.lvl;delete c.isnew;c.sx=[]}render();return}
+ if(d.cksx){const dd=jDay,c=draft.ck&&draft.ck.d===dd?draft.ck:(draft.ck=Object.assign({d:dd},JSON.parse(JSON.stringify(CK[dd]||{}))));c.sx=c.sx||[];const k=c.sx.indexOf(d.cksx);k<0?c.sx.push(d.cksx):c.sx.splice(k,1);render();return}
+ if(d.ckedit){draft.ck=Object.assign({d:jDay},JSON.parse(JSON.stringify(CK[jDay]||{})));render();return}
+ if(d.cksave){const c=draft.ck||{};const dd=c.d||jDay;const o={...c};delete o.d;o.at=new Date().toISOString();CK[dd]=o;store.set("checkin",CK);draft.ck=null;
+  staffSend({t:"check",date:dd,sleep:o.sleep||"",sq:o.sq||"",sore:o.sore||"",energy:o.energy||"",stress:o.stress||"",pain:o.pain||"",area:o.area||"",lvl:o.lvl??"",isnew:o.isnew||"",sx:(o.sx||[]).join(", "),flag:ckFlag(o)});
+  render();toast(ckFlag(o)?"Saved. Please see the athletic trainers.":"Check-in saved.");return}
+ if(d.jday){draft.ck=null;jDay=isoShift(jDay,+d.jday);if(jDay>isoToday())jDay=isoToday();draft.jEdit=null;render();return}
  if(d.qlocc){draft.ql.occ=d.qlocc;render();return}
  if(d.qlfood){const L=draft.ql.foods,i=L.indexOf(d.qlfood);i<0?L.push(d.qlfood):L.splice(i,1);render();return}
  if(d.qlgut){draft.ql.gut=draft.ql.gut===d.qlgut?"":d.qlgut;render();return}

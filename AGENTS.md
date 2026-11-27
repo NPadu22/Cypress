@@ -39,3 +39,10 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 
 1. Open `index.html` locally and check Home, Eat, Training, Journal, RD, Learn and Me with a sample profile.
 2. Check the browser console for errors.
+
+## Home: Charge Board and Hall of Fame
+- Charge Board (`PLAYS`, `vScoreboard`): 5 daily plays (check-in, sleep 7+, 3+ food logs, water goal, 3 habits). 3+ = a W. Points: 10 per play, +20 for 5/5. Levels in `LEVELS`. Days before first use (`cy_firstday`) never count as losses.
+- Charger Hall of Fame (`HOF`): only verified facts. Sources (Nov 2026): baseball-reference.com Cypress College pages (5 baseball state titles 1991, 1994, 1997, 2003, 2013; 13 state appearances); cypresschargers.com / cypress.prestosports.com releases (softball 10 titles, 48-0 in 2017, 2010-12 three-peat, 2023 title, 31 appearances; men's golf 2018 title; women's basketball 2005 title per 3C2A preview; women's soccer state finals 2021/2023/2024; volleyball OEC 2010/2016/2021; flag football 2026 inaugural OEC co-champs; swim 2022 Umpornpuckdi 1650 free and 36th state banner; diving Alejandra Gomez 3 titles; baseball 2025 OEC title and Final Four). Update each season.
+
+## Performance Journal
+- Daily check-in (`CK`, `checkinHTML`): sleep, quality, soreness, energy, stress, pain (area, 0-10, new, symptoms). `ckFlag`: "head" (head/neck or headache/dizzy) = stop and tell an AT now; "see" = see an AT today. Sent to the staff sheet Check-ins tab (`t:"check"`). Consent version 2 covers check-ins; older consents are asked again.

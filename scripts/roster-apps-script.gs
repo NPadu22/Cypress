@@ -11,7 +11,7 @@
  * Later edits: Deploy > Manage deployments > pencil > Version: New version > Deploy (the URL stays the same).
  *
  * The public sheet's Roster tab gets name, role, team, position and jersey number only (it feeds the For dropdown).
- * Meals, water and program check-offs go ONLY to the private staff sheet. Tabs there are created automatically.
+ * Meals, water and daily check-ins (sleep, soreness, energy, stress, pain) go ONLY to the private staff sheet. Tabs there are created automatically.
  */
 const ROSTER_TAB = 'Roster';
 const STAFF_SHEET_ID = '1-Aiua0P9YyE5TI3mu-g9fdhxERPU7Ygfs_DuwwJHQWE';
@@ -19,7 +19,8 @@ const STAFF_SHEET_ID = '1-Aiua0P9YyE5TI3mu-g9fdhxERPU7Ygfs_DuwwJHQWE';
 const STAFF_TABS = {
   Meals: ['Date', 'Code', 'Name', 'Team', 'Position', 'Meal', 'Time', 'What they ate', 'Gut', 'From meal plan', 'Logged', 'Entry ID'],
   Hydration: ['Date', 'Code', 'Name', 'Team', 'Position', 'Bottles', 'Bottle (oz)', 'Total (oz)', 'Goal (oz)', 'Updated', 'Key'],
-  Programs: ['Date', 'Code', 'Name', 'Team', 'Position', 'Program', 'Type', 'Day', 'Exercise', 'Dose', 'Done at', 'Key']
+  Programs: ['Date', 'Code', 'Name', 'Team', 'Position', 'Program', 'Type', 'Day', 'Exercise', 'Dose', 'Done at', 'Key'],
+  'Check-ins': ['Date', 'Code', 'Name', 'Team', 'Position', 'Sleep (h)', 'Sleep quality', 'Soreness', 'Energy', 'Stress', 'Pain', 'Where', 'Pain 0-10', 'New', 'Symptoms', 'Flag', 'Updated', 'Key']
 };
 
 function doPost(e) {
@@ -41,6 +42,9 @@ function doPost(e) {
       remove(tab(ss, 'Meals'), clean(d.entryId, 40), 11);
     } else if (t === 'water') {
       upsert(tab(ss, 'Hydration'), [date].concat(who, [num(d.bottles), num(d.size), num(d.oz), num(d.goal), now, id + '|' + date]), 10);
+    } else if (t === 'check') {
+      const flag = clean(d.flag, 6) === 'head' ? 'CONCUSSION SIGNS' : clean(d.flag, 6) === 'see' ? 'See AT today' : '';
+      upsert(tab(ss, 'Check-ins'), [date].concat(who, [clean(d.sleep, 10), clean(d.sq, 10), clean(d.sore, 12), clean(d.energy, 10), clean(d.stress, 10), clean(d.pain, 4), clean(d.area, 30), clean(d.lvl, 3), clean(d.isnew, 4), clean(d.sx, 120), flag, now, id + '|' + date]), 17);
     } else if (t === 'prog') {
       upsert(tab(ss, 'Programs'), [date].concat(who, [clean(d.program, 60), clean(d.ptype, 4), clean(d.day, 20), clean(d.ex, 80), clean(d.dose, 40), now, id + '|' + clean(d.key, 120)]), 11);
     } else if (t === 'progdel') {
