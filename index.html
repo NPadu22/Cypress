@@ -599,6 +599,19 @@ h3{font-weight:700}
 .cartbtn{pointer-events:auto;border:3px solid #FED41F!important}
 .consult-cta{display:flex;align-items:center;gap:12px;border-left:5px solid #FED41F!important}.consult-cta b{display:block;font-family:var(--display);font-size:1.02rem;margin:3px 0}.consult-cta .btn{flex:none}
 @media (max-width:400px){.consult-cta{flex-direction:column;align-items:stretch}}
+.hof-banners{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.hof-ban{background:#003876;color:#fff;text-align:center;padding:10px 4px 16px;clip-path:polygon(0 0,100% 0,100% 82%,50% 100%,0 82%);display:flex;flex-direction:column;gap:2px;border-top:4px solid #FED41F}
+.hof-ban b{font:700 1.6rem/1 var(--display);color:#FED41F}.hof-ban span{font:700 .56rem/1.15 var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.hof-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.hof-mini{border-radius:10px!important;box-shadow:none!important;background:var(--surface)!important}
+.hof-mini summary{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px!important}.hof-mini summary::after{display:none}
+.hof-mini summary b{font:700 .78rem var(--display);text-transform:uppercase;letter-spacing:.04em}.hof-mini summary span{font-size:.68rem;opacity:.7;line-height:1.2}
+.hof-mini p{padding:0 10px 8px;margin:0}.hof-mini[open]{grid-column:1/-1}
+.hof-swipe{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 2px 10px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.hof-swipe::-webkit-scrollbar{display:none}
+.hof-card{flex:0 0 82%;scroll-snap-align:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(11,37,69,.06),0 6px 18px rgba(11,37,69,.05);border-top:5px solid #003876}
+.hof-sport{display:block;font:700 1rem/1.15 var(--display);text-transform:uppercase;letter-spacing:.04em}
+.hof-card .hof-pen{font:700 .95rem var(--display)}
 </style>
 </head>
 <body>
@@ -844,8 +857,8 @@ if(!prefs.varsity){prefs.theme="varsity";prefs.mcm=1;prefs.varsity=1;store.set("
 let charge=store.get("charge",{});
 let J=store.get("journal",{days:{}});
 let draft={};
-const TABS=[["home","Home"],["eat","Eat"],["training","Training"],["journal","Journal"],["rd","RD"],["learn","Learn"]];
-let tab=(location.hash||"").slice(1); if(!TABS.some(t=>t[0]===tab)&&tab!=="me")tab="home";
+const TABS=[["home","Home"],["eat","Eat"],["training","Training"],["journal","Journal"],["learn","Learn"]];
+let tab=(location.hash||"").slice(1); if(!TABS.some(t=>t[0]===tab)&&tab!=="me"&&tab!=="rd")tab="home";
 let canEdit=false, artifactApi=null, ED=null, edSeg="ann";
 
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1399,9 +1412,15 @@ const HOF={
 function hofCard(id,open){const s=sportById(id),h=HOF[id];if(!s||!h)return "";
  return `<details class="hof" ${open?"open":""}><summary><span class="hof-pen" aria-hidden="true">★</span><span class="fsum"><b>${esc(sportLabel(s))}</b><span class="stamp">${esc(h.h)}</span></span></summary>
   <div class="ans stack" style="gap:8px">${h.l.map(([y,d])=>`<div class="hof-row"><span class="hof-y">${esc(y)}</span><span class="small">${esc(d)}</span></div>`).join("")}</div></details>`}
+const HOF_TITLES={softball:10,baseball:5,wbb:1,golf:1};
+function hofStaff(){const order=[...SPORTS].sort((a,b)=>(HOF_TITLES[b.id]||0)-(HOF_TITLES[a.id]||0));
+ return `<div class="hof-swipe" role="region" aria-label="Hall of Fame by program, swipe sideways">${order.map(s=>{const h=HOF[s.id],n=HOF_TITLES[s.id];return `<article class="hof-card">
+  <div class="row" style="align-items:flex-start;gap:10px"><span class="hof-pen" aria-hidden="true">${n?n:"★"}</span><div class="grow"><b class="hof-sport">${esc(sportLabel(s))}</b><span class="stamp">${esc(h.h)}</span></div></div>
+  <div class="stack" style="gap:6px">${h.l.map(([y,d])=>`<div class="hof-row"><span class="hof-y">${esc(y)}</span><span class="small">${esc(d)}</span></div>`).join("")}</div></article>`}).join("")}</div>
+  <p class="stamp" style="text-align:center">Swipe for all ${SPORTS.length} programs ›</p>`}
 function vHof(){const staff=isStaff(),mine=profile.sport;
  return `<section><div class="row"><h2 class="grow">Charger Hall of Fame</h2><span class="stamp">36+ state banners</span></div>
-  <div class="hof-wall">${staff?SPORTS.map(s=>hofCard(s.id,false)).join(""):hofCard(mine,true)+`<details class="mdet"><summary>Every Charger program</summary><div class="ans stack" style="gap:8px">${SPORTS.filter(s=>s.id!==mine).map(s=>hofCard(s.id,false)).join("")}</div></details>`}</div>
+  <div class="hof-wall">${staff?hofStaff():hofCard(mine,true)+`<details class="mdet"><summary>Every Charger program</summary><div class="ans stack" style="gap:8px">${SPORTS.filter(s=>s.id!==mine).map(s=>hofCard(s.id,false)).join("")}</div></details>`}</div>
   <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></section>`}
 function vHome(){
  if(!isStaff())autoGameDay();
@@ -2490,7 +2509,7 @@ document.addEventListener("submit",ev=>{
   draft.jEdit=null;render();toast("Logged.");return;
  }
 });
-window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h)||h==="me"){tab=h;render()}});
+window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h)||h==="me"||h==="rd"){tab=h;render()}});
 render();
 setTimeout(()=>a2hs(),1500);
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")&&!/claude|anthropic/.test(location.hostname)){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
