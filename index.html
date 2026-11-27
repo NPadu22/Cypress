@@ -1192,8 +1192,6 @@ function vHome(){
   <div class="hero stack">
    <p class="eyebrow">${esc(fmtDate(today))} · ${esc(isStaff()?(profile.title||"Staff")+" · "+teamLabel():sportLabel(sp))}</p>
    <h1>Hey ${esc(first)}</h1>
-   <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">Today's charge</p><div class="pct">${pct}<small>%</small></div></div><span class="chip gold">${n}/5 fueled</span></div>
-   <div class="meterwrap"><div class="meter ${n===5?"full":""}" role="group" aria-label="Today's fueling moments">${plan.m.map(([w],i)=>`<button class="cell" data-cell="${i}" aria-pressed="${c.done.includes(i)}" aria-label="${esc(w)}"><span>${esc(w)}</span></button>`).join("")}</div></div>
    
   </div>
   ${c.type==="game"?vCountdown(c):""}
