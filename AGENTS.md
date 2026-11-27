@@ -44,3 +44,8 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 
 ## Performance Journal
 - Daily check-in (`CK`, `checkinHTML`): sleep, quality, soreness, energy, stress, pain (area, 0-10, new, symptoms). `ckFlag`: "head" (head/neck or headache/dizzy) = stop and tell an AT now; "see" = see an AT today. Sent to the staff sheet Check-ins tab (`t:"check"`). Consent version 2 covers check-ins; older consents are asked again.
+
+## Schedules and game day
+- Schedule tab of the Google Sheet (gid 7, setting `schedSheet`): Date, Time (text, e.g. 7:00 PM), Team (dropdown of team labels), Opponent, Home/Away, Location, Notes, Show. Athletes see their team on Home; staff see every team.
+- A game today (Schedule tab or an athlete's own game) turns the app black with gold (`body[data-gameday="1"]`) and shows the Game Day card with sport-specific fueling (`GAMEDAY`). Staff get the black screen when any team plays.
+- The Chargers site blocks automated fetches; schedules are entered in the sheet.

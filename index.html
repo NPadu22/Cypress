@@ -612,13 +612,51 @@ h3{font-weight:700}
 .hof-card{flex:0 0 82%;scroll-snap-align:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(11,37,69,.06),0 6px 18px rgba(11,37,69,.05);border-top:5px solid #003876}
 .hof-sport{display:block;font:700 1rem/1.15 var(--display);text-transform:uppercase;letter-spacing:.04em}
 .hof-card .hof-pen{font:700 .95rem var(--display)}
+/* schedule */
+.sched-row{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.sched-row:last-child{border-bottom:0}
+.sched-date{flex:none;width:44px;text-align:center;border-radius:8px;background:#003876;color:#fff;padding:5px 0;display:flex;flex-direction:column;line-height:1}
+.sched-date b{font:700 .6rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#FED41F}.sched-date span{font:700 1.2rem var(--display)}
+/* Hall of Fame ribbon */
+.ribbon{overflow:hidden;background:#003876;border-radius:10px;border-top:3px solid #FED41F;border-bottom:3px solid #FED41F;padding:10px 0;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.rb-track{display:inline-flex;gap:10px;align-items:center;white-space:nowrap;color:#fff;font:600 .8rem/1 var(--body);animation:rb 90s linear infinite;padding-left:10px}
+.ribbon:active .rb-track,.ribbon:hover .rb-track{animation-play-state:paused}
+@keyframes rb{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.rb-team{font:700 .78rem var(--display);text-transform:uppercase;letter-spacing:.08em;color:#FED41F}.rb-h{font-weight:700}
+.rb-y{font:700 .7rem var(--mono);background:#FED41F;color:#003876;padding:3px 6px;border-radius:4px}.rb-sep{color:rgba(254,212,31,.6)}
+@media (prefers-reduced-motion:reduce){.ribbon{overflow-x:auto}.rb-track{animation:none}}
+/* GAME DAY: all black with gold */
+body[data-gameday="1"]{--bg:#000;--surface:#0E0E0E;--surface-2:#1A1A1A;--line:#2A2A2A;--fg:#F5F5F5;--muted:#B5B5B5;--gold-text:#FED41F;color-scheme:dark;background:#000}
+body[data-gameday="1"] .topbar{border-bottom-color:#FED41F;box-shadow:0 3px 0 #000}
+body[data-gameday="1"] .wordmark span,body[data-gameday="1"] h2,body[data-gameday="1"] h3,body[data-gameday="1"] b{color:#F5F5F5}
+body[data-gameday="1"] .hero{background:#000!important;border:2px solid #FED41F;box-shadow:none}
+body[data-gameday="1"] .hero h1{color:#FED41F}
+body[data-gameday="1"] .card,body[data-gameday="1"] details{background:#0E0E0E!important;border-color:#2A2A2A!important;color:#F5F5F5}
+body[data-gameday="1"] .tabs{background:#000!important}
+body[data-gameday="1"] .scoreboard{background:#000;border:1px solid #2A2A2A;border-bottom:5px solid #FED41F}
+body[data-gameday="1"] .whiteboard{background:#0E0E0E!important;border-color:#2A2A2A!important}
+body[data-gameday="1"] .whiteboard b{color:#FED41F}
+body[data-gameday="1"] .sched-date{background:#FED41F}.sched-date b{}
+body[data-gameday="1"] .sched-date b,body[data-gameday="1"] .sched-date span{color:#000}
+body[data-gameday="1"] .scene.pro{background:#000;border:1px solid #2A2A2A}
+body[data-gameday="1"] #bg{opacity:.15}
+.gd-hero{background:#000;color:#fff;border-radius:16px;padding:18px;border:2px solid #FED41F;display:flex;flex-direction:column;gap:10px;box-shadow:0 0 0 4px rgba(254,212,31,.12)}
+.gd-eyebrow{font:700 .7rem var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#FED41F}
+.gd-h{font:700 1.9rem/1 var(--display)!important;text-transform:uppercase;color:#fff!important;margin:0}.gd-h::before{display:none!important}
+.gd-sub{color:rgba(255,255,255,.75);font-size:.86rem;margin:0}
+.gd-plan{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.gd-step{display:flex;gap:12px;align-items:flex-start}.gd-n{flex:none;width:26px;height:26px;border-radius:50%;background:#FED41F;color:#000;font:700 .8rem/26px var(--display);text-align:center}
+.gd-step b{color:#FED41F!important;font:700 .8rem var(--display);text-transform:uppercase;letter-spacing:.08em}.gd-step p{margin:2px 0 0;font-size:.86rem;color:#E8E8E8}
+.gd-tip{background:#141414;border-left:3px solid #FED41F;padding:10px 12px;border-radius:8px;font-size:.84rem;margin:0}
+.gd-hero .sched-row{border-color:#222}.gd-hero .sched-date{background:#FED41F}.gd-hero .sched-date b,.gd-hero .sched-date span{color:#000}
+.lc{text-transform:none!important;letter-spacing:0}
+body[data-gameday="1"] .sticky,body[data-gameday="1"] .sticky b{color:#003876!important}body[data-gameday="1"] .sticky p{color:#003876}
 </style>
 </head>
 <body>
 <div id="bg" aria-hidden="true"></div>
 <div class="app" id="app"></div>
 <nav class="tabs" id="tabs" aria-label="Main"></nav>
-<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":"","teamSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=0","atSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=3","nutSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=4","rosterURL":"https://script.google.com/macros/s/AKfycbyrgTUr1Q6CZ3vV83rl18LVk-Gvsmj_KM5_Nh91kpLLHkSkOpoARePhM_kiMOHWnwDHbA/exec"}}</script>
+<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":"","teamSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=0","atSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=3","nutSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=4","schedSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=7","rosterURL":"https://script.google.com/macros/s/AKfycbyrgTUr1Q6CZ3vV83rl18LVk-Gvsmj_KM5_Nh91kpLLHkSkOpoARePhM_kiMOHWnwDHbA/exec"}}</script>
 <script id="cy-main">
 "use strict";
 /* ============ data ============ */
@@ -959,7 +997,8 @@ function vCountdown(c){
 }
 /* Games: athletes add their own (or teams get schedules in cy-data "schedules"); each can go to the phone calendar with alerts. */
 let GAMES=store.get("games",[]);
-function teamSchedule(){const L=(DATA.schedules&&DATA.schedules[profile.sport])||[];return L.map(g=>({date:g.d,time:g.t||"",opp:g.opp||"",away:!!g.away,loc:g.loc||"",src:"team"}))}
+function allTeamGames(){const fromSheet=SHEET.sched?SHEET.sched.rows:[];const fromData=Object.entries(DATA.schedules||{}).flatMap(([id,L])=>L.map(g=>({date:g.d,time:g.t||"",sport:id,opp:g.opp||"",away:!!g.away,ha:g.away?"Away":"Home",loc:g.loc||""})));return [...fromSheet,...fromData]}
+function teamSchedule(){return allTeamGames().filter(g=>g.sport===profile.sport).map(g=>({...g,src:"team"}))}
 function upcomingGames(){const today=isoToday();const all=[...teamSchedule(),...GAMES.map(g=>({...g,src:"mine"}))].filter(g=>g.date>=today);
  const seen=new Set();return all.filter(g=>{const k=g.date+g.time;if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))}
 function icsEsc(s){return String(s||"").replace(/[\\;,]/g,m=>"\\"+m).replace(/\n/g,"\\n")}
@@ -991,7 +1030,7 @@ function vGames(){
 /* ===== Google Sheet (public; anyone with the link can read it). Tabs: Team, Training room, Programs, Nutrition, Roster, Lists.
    "For" column (dropdown built from the Roster): "CODE · Name (Team)", "Team · Women's Softball",
    "Position · Women's Softball · Pitcher", Everyone, Athletes, Staff. Several allowed, separated by commas. ===== */
-let SHEET={team:store.get("sheet_team",null),at:store.get("sheet_at",null),prog:store.get("sheet_prog",null),nut:store.get("sheet_nut",null)};
+let SHEET={sched:store.get("sheet_sched",null),team:store.get("sheet_team",null),at:store.get("sheet_at",null),prog:store.get("sheet_prog",null),nut:store.get("sheet_nut",null)};
 let PROGDONE=store.get("progdone",{});
 function parseCSV(text){const rows=[];let row=[],f="",q=false;
  for(let i=0;i<text.length;i++){const c=text[i];
@@ -1020,7 +1059,10 @@ async function loadSheet(kind,url,parse){if(!url)return;try{const r=await fetch(
  const rows=parse(await r.text());if(!rows)return;const val={rows,fetched:new Date().toISOString()};
  const changed=JSON.stringify((SHEET[kind]||{}).rows)!==JSON.stringify(rows);SHEET[kind]=val;store.set("sheet_"+kind,val);
  if(changed&&profile&&!document.querySelector("form:focus-within"))render()}catch(e){}}
-function loadSheets(){const s=S();loadSheet("team",s.teamSheet,annRows);loadSheet("at",s.atSheet,annRows);loadSheet("nut",s.nutSheet,annRows)}
+function schedRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T,iD=col("date"),iT=col("time"),iM=col("team"),iO=col("opp"),iH=col("home"),iL=col("loc"),iN=col("notes"),iS=col("show");if(iD<0||iM<0)return null;
+ return R.map(r=>{const s=sportByLabel(g(r,iM));return s?{date:sheetDate(g(r,iD)),time:to24(g(r,iT)),sport:s.id,opp:g(r,iO),ha:g(r,iH)||"Home",away:/away/i.test(g(r,iH)),loc:g(r,iL),note:g(r,iN),show:g(r,iS)||"yes"}:null}).filter(x=>x&&x.date&&x.show.toLowerCase()!=="no")}
+function to24(v){v=(v||"").trim();if(!v||/tba|tbd/i.test(v))return "";const m=v.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);if(!m)return "";let h=+m[1];const mi=m[2]||"00",ap=(m[3]||"").toLowerCase();if(ap==="pm"&&h<12)h+=12;if(ap==="am"&&h===12)h=0;return String(h).padStart(2,"0")+":"+mi}
+function loadSheets(){const s=S();loadSheet("sched",s.schedSheet,schedRows);loadSheet("team",s.teamSheet,annRows);loadSheet("at",s.atSheet,annRows);loadSheet("nut",s.nutSheet,annRows)}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){loadSheets();staffFlush()}});
 function syncAgo(t){const m=Math.round((Date.now()-new Date(t))/60000);return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":fmtDate(t.slice(0,10))}
 /* Code: first initial + first three letters of last name (Jordan Lee -> JLEE). A number is added for duplicates (in the locker). */
@@ -1287,6 +1329,7 @@ function render(){
  if(needsStop()){app.innerHTML=topbar()+vStop();renderTabs(true);return}
  const V={home:vHome,eat:vEat,training:vTraining,journal:vJournal,rd:vRD,learn:vLearn,me:vMe,edit:vEdit}[tab]||vHome;
  document.body.dataset.tab=tab;
+ try{document.body.dataset.gameday=profile&&isGameDay()?"1":""}catch(e){document.body.dataset.gameday=""}
  app.innerHTML=topbar()+V();
  renderTabs();
 }
@@ -1385,7 +1428,7 @@ function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winSt
  let li=0;LEVELS.forEach((l,i)=>{if(pts>=l[0])li=i});const nxt=LEVELS[li+1],pct=nxt?Math.round((pts-LEVELS[li][0])/(nxt[0]-LEVELS[li][0])*100):100;
  const mon=isoShift(t,-((new Date(t+"T12:00:00").getDay()+6)%7)),wk=[...Array(7)].map((_,i)=>isoShift(mon,i));
  const f0=firstDay(),W=wk.filter(d=>d<t&&dayScore(d)>=3).length+(s>=3?1:0),L=wk.filter(d=>d<t&&d>=f0&&dayScore(d)<3).length;
- return `<section><div class="row"><h2 class="grow">Charge Board</h2><span class="stamp">${st?`🔥 ${st}-day win streak`:"3 plays = a win"}</span></div>
+ return `<section><div class="row"><h2 class="grow">Charger Scoreboard</h2><span class="stamp">${st?`🔥 ${st}-day win streak`:"3 plays = a win"}</span></div>
  <div class="scoreboard">
   <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/5</small></b></div><div class="sb-cell"><span>This week</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
   <div class="sb-plays">${PLAYS.map(p=>{const on=playDone(p.k,t);return `<button class="sb-play ${on?"on":""}" data-go="${p.go}" aria-label="${esc(p.n)}: ${on?"done":"not yet"}. ${esc(p.how)}"><i aria-hidden="true">${p.i}</i><span>${esc(p.n)}</span></button>`}).join("")}</div>
@@ -1419,9 +1462,53 @@ function hofStaff(){const order=[...SPORTS].sort((a,b)=>(HOF_TITLES[b.id]||0)-(H
   <div class="stack" style="gap:6px">${h.l.map(([y,d])=>`<div class="hof-row"><span class="hof-y">${esc(y)}</span><span class="small">${esc(d)}</span></div>`).join("")}</div></article>`}).join("")}</div>
   <p class="stamp" style="text-align:center">Swipe for all ${SPORTS.length} programs ›</p>`}
 function vHof(){const staff=isStaff(),mine=profile.sport;
+ const order=[...SPORTS].sort((a,b)=>(a.id===mine&&!staff?-1:b.id===mine&&!staff?1:0)||(HOF_TITLES[b.id]||0)-(HOF_TITLES[a.id]||0));
+ const items=order.flatMap(s=>[`<span class="rb-team">★ ${esc(sportLabel(s))}</span><span class="rb-h">${esc(HOF[s.id].h)}</span>`,...HOF[s.id].l.slice(0,2).map(([y,d])=>`<span class="rb-y">${esc(y)}</span><span>${esc(d)}</span>`)]).join('<span class="rb-sep">•</span>');
  return `<section><div class="row"><h2 class="grow">Charger Hall of Fame</h2><span class="stamp">36+ state banners</span></div>
+  <div class="ribbon" aria-label="Hall of Fame highlights"><div class="rb-track">${items}<span class="rb-sep">•</span>${items}<span class="rb-sep">•</span></div></div>
+  <details class="mdet"><summary>${staff?"All programs":"Details"}</summary><div class="ans">
   <div class="hof-wall">${staff?hofStaff():hofCard(mine,true)+`<details class="mdet"><summary>Every Charger program</summary><div class="ans stack" style="gap:8px">${SPORTS.filter(s=>s.id!==mine).map(s=>hofCard(s.id,false)).join("")}</div></details>`}</div>
-  <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></section>`}
+  <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></div></details></section>`}
+
+/* ===== Team schedule on Home (Schedule tab of the Google Sheet). Athletes: their team. Staff: every team. ===== */
+function gLine(g,showTeam){const s=sportById(g.sport);return `<div class="sched-row"><div class="sched-date"><b>${esc(new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{month:"short"}))}</b><span>${esc(new Date(g.date+"T12:00:00").getDate())}</span></div>
+ <div class="grow">${showTeam?`<span class="eyebrow">${esc(sportLabel(s))}</span>`:""}<b class="small">${g.away?"at ":g.ha==="Neutral"?"vs ":"vs "}${esc(g.opp||"TBA")}</b><p class="stamp">${esc([new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{weekday:"short"}),g.time?fmtClock(new Date(g.date+"T"+g.time)):"Time TBA",g.ha,g.loc].filter(Boolean).join(" · "))}</p></div>
+ ${g.date===isoToday()?`<span class="chip gold">Today</span>`:""}</div>`}
+function vSchedule(){const t=isoToday(),staff=isStaff();
+ const L=allTeamGames().filter(g=>g.date>=t&&(staff?(profile.sport==="all"||!profile.sport?true:g.sport===profile.sport||true):g.sport===profile.sport)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ const show=L.slice(0,staff?8:5);
+ return `<section><div class="row"><h2 class="grow">${staff?"Charger schedule":"Schedule"}</h2>${SHEET.sched&&S().schedSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.sched.fetched))}</span>`:""}</div>
+  <div class="card stack" style="gap:0">${show.length?show.map(g=>gLine(g,staff)).join(""):`<p class="muted small">${staff?"No games on the Schedule tab yet. Add them in the Google Sheet and they show here for each team.":"Your team's schedule isn't posted yet. You can add your own games below."}</p>`}
+  ${L.length>show.length?`<p class="stamp" style="padding-top:8px">+ ${L.length-show.length} more on the schedule</p>`:""}</div></section>`}
+/* ===== Game day: black and gold screen with sport-specific fueling ===== */
+const GAMEDAY={
+ baseball:{pre:"3–4 h before: big carb meal. Rice or pasta bowl with chicken, or two turkey sandwiches and fruit.",top:"30–60 min before: banana, pretzels or a granola bar.",during:"Every 2–3 innings: sips of water. Between games of a doubleheader: a sandwich, fruit and a sports drink.",after:"Within 1 hour: chocolate milk or a recovery meal with carbs and protein.",tip:"Long day in the sun: drink before you're thirsty and keep snacks in your bag."},
+ softball:{pre:"3–4 h before: big carb meal. Rice bowl with chicken, pasta, or a turkey sandwich with fruit.",top:"30–60 min before: banana, applesauce or pretzels.",during:"Between innings: sips of water. Between games: half a sandwich, fruit and a sports drink.",after:"Within 1 hour: chocolate milk or carbs plus protein.",tip:"Tournament days: pack a cooler. Don't go 4+ hours without food."},
+ mbb:{pre:"3–4 h before: pasta with chicken, or a rice bowl. Easy on fat and fiber.",top:"30–60 min before: banana, pretzels or a few chews.",during:"Timeouts: sips of water. Halftime: sports drink if you're cramping or the game is fast.",after:"Within 1 hour: chocolate milk, a sandwich or a recovery bowl.",tip:"Night game? Eat a real lunch and a pre-game meal around 3–4 pm."},
+ wbb:{pre:"3–4 h before: pasta with chicken, or a rice bowl. Easy on fat and fiber.",top:"30–60 min before: banana, pretzels or a few chews.",during:"Timeouts: sips of water. Halftime: sports drink if you're cramping or the pace is high.",after:"Within 1 hour: chocolate milk, a sandwich or a recovery bowl.",tip:"Night game? Eat a real lunch and a pre-game meal around 3–4 pm."},
+ msoc:{pre:"3–4 h before: big carb meal. Pasta, rice or potatoes with lean protein.",top:"30–60 min before: banana or a granola bar, plus 16 oz of fluid.",during:"Halftime: 8–16 oz sports drink and a few chews or orange slices.",after:"Within 1 hour: chocolate milk or carbs plus protein. Replace fluids.",tip:"90 minutes of running burns through fuel. The day before, add an extra fist of carbs at each meal."},
+ wsoc:{pre:"3–4 h before: big carb meal. Pasta, rice or potatoes with lean protein.",top:"30–60 min before: banana or a granola bar, plus 16 oz of fluid.",during:"Halftime: 8–16 oz sports drink and a few chews or orange slices.",after:"Within 1 hour: chocolate milk or carbs plus protein. Replace fluids.",tip:"90 minutes of running burns through fuel. The day before, add an extra fist of carbs at each meal."},
+ wvb:{pre:"3–4 h before: rice or pasta with chicken, or a turkey sandwich and fruit.",top:"30–60 min before: banana, pretzels or applesauce.",during:"Between sets: sips of water or sports drink. Long match? A few chews in set 3.",after:"Within 1 hour: chocolate milk or carbs plus protein.",tip:"Tournament with several matches: small snacks between matches, not one big meal."},
+ bvb:{pre:"3–4 h before: carb meal. Bagel with turkey, or a rice bowl and fruit.",top:"30–60 min before: banana or pretzels and 16 oz of fluid.",during:"Between matches: shade, water plus a sports drink, and a small snack (fruit, pretzels, a bar).",after:"Within 1 hour: carbs plus protein. Keep drinking.",tip:"Sun and sand pull water and salt out fast. Bring 2 bottles and a salty snack."},
+ flag:{pre:"3–4 h before: carb meal. Pasta, a rice bowl or a turkey sandwich.",top:"30–60 min before: banana or a granola bar.",during:"Between halves or games: sips of sports drink and a small snack.",after:"Within 1 hour: chocolate milk or carbs plus protein.",tip:"Multi-game days: eat something small between every game."},
+ mwp:{pre:"3–4 h before: big carb meal. Pasta or rice with lean protein.",top:"30–60 min before: banana or pretzels.",during:"Between quarters: sips of water or sports drink. You still sweat in the pool.",after:"Within 1 hour: chocolate milk or carbs plus protein.",tip:"Water polo is all-out. Don't skip the pre-game meal."},
+ wwp:{pre:"3–4 h before: big carb meal. Pasta or rice with lean protein.",top:"30–60 min before: banana or pretzels.",during:"Between quarters: sips of water or sports drink. You still sweat in the pool.",after:"Within 1 hour: chocolate milk or carbs plus protein.",tip:"Water polo is all-out. Don't skip the pre-game meal."},
+ mswim:{pre:"3–4 h before the first race: oatmeal, a bagel or a rice bowl.",top:"30–60 min before your race: banana, applesauce or a few chews.",during:"Between events: small snacks (pretzels, fruit, a bar) and water. Eat a little every 1–2 hours at long meets.",after:"Within 1 hour of your last race: chocolate milk or carbs plus protein.",tip:"Long meet? Pack more snacks than you think you need."},
+ wswim:{pre:"3–4 h before the first race: oatmeal, a bagel or a rice bowl.",top:"30–60 min before your race: banana, applesauce or a few chews.",during:"Between events: small snacks (pretzels, fruit, a bar) and water. Eat a little every 1–2 hours at long meets.",after:"Within 1 hour of your last race: chocolate milk or carbs plus protein.",tip:"Long meet? Pack more snacks than you think you need."},
+ golf:{pre:"2–3 h before your tee time: a full breakfast or lunch with carbs and protein.",top:"Before the first tee: a banana or a bar.",during:"Every 3–4 holes: a small snack (half a sandwich, nuts, fruit, a bar) and water. Don't wait until the back nine.",after:"After the round: a real meal with carbs and protein.",tip:"Focus fades when blood sugar drops. Steady snacks keep your swing steady."}};
+function gameToday(){const t=isoToday();if(isStaff())return null;return upcomingGames().find(g=>g.date===t)||null}
+function staffGamesToday(){const t=isoToday();return allTeamGames().filter(g=>g.date===t)}
+function isGameDay(){return isStaff()?staffGamesToday().length>0:!!gameToday()}
+function vGameDay(){
+ if(isStaff()){const L=staffGamesToday();if(!L.length)return "";return `<section class="gd-hero"><span class="gd-eyebrow">Game day</span><h2 class="gd-h">Chargers in action today</h2><div class="stack" style="gap:0">${L.map(g=>gLine(g,true)).join("")}</div></section>`}
+ const g=gameToday();if(!g)return "";const sp=sportById(profile.sport),F=GAMEDAY[profile.sport]||GAMEDAY.wvb;
+ return `<section class="gd-hero"><span class="gd-eyebrow">Game day · ${esc(sportLabel(sp))}</span>
+  <h2 class="gd-h">${g.away?"at":"vs"} ${esc(g.opp||"TBA")}</h2>
+  <p class="gd-sub">${esc([g.time?fmtClock(new Date(g.date+"T"+g.time)):"Time TBA",g.ha||(g.away?"Away":"Home"),g.loc].filter(Boolean).join(" · "))}</p>
+  <div class="gd-plan">${[["Pre-game meal",F.pre],["Top-off",F.top],[sp&&/swim/.test(sp.id)?"Between events":sp&&sp.id==="golf"?"On the course":"During",F.during],["Recovery",F.after]].map(([h,d],i)=>`<div class="gd-step"><span class="gd-n">${i+1}</span><div><b>${esc(h)}</b><p>${esc(d)}</p></div></div>`).join("")}</div>
+  <p class="gd-tip"><b>Coach's note:</b> ${esc(F.tip)}</p>
+  <p class="src" style="color:rgba(255,255,255,.55)">ACSM/AND/DC 2016; ISSN Nutrient Timing, 2017</p></section>`}
+function greet(){const h=new Date().getHours();return h<5?"Up late":h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
 function vHome(){
  if(!isStaff())autoGameDay();
  const first=(profile.name||"").trim().split(" ")[0];
@@ -1434,13 +1521,15 @@ function vHome(){
  return `<div class="view">
   <div class="hero stack sky-${(h=>h<6||h>=20?"night":h<10?"dawn":h<17?"day":"dusk")(new Date().getHours())}">
    <p class="eyebrow">${esc(fmtDate(today))} · ${esc(isStaff()?(profile.title||"Staff")+" · "+teamLabel():sportLabel(sp))}</p>
-   <h1>Hey ${esc(first)}</h1>
+   <h1>${esc(greet())}, ${esc(first)}</h1>
    
   </div>
+  ${vGameDay()}
   ${vScoreboard()}
   ${vStartHere()}
   ${c.type==="game"?vCountdown(c):""}
   ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
+  ${vSchedule()}
   ${isStaff()?"":vGames()}
   ${vHof()}
  </div>`;
@@ -2077,11 +2166,11 @@ function vTraining(){
  let body="";
  if(trainSeg==="room"){
   const A=S().atSheet&&SHEET.at?rowsFor("at"):[];
-  body=`<section><div class="row"><h2 class="grow">From the ATs</h2>${SHEET.at&&S().atSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.at.fetched))}</span>`:""}</div>
+  body=`<section><div class="row"><h2 class="grow"><span>From the AT<span class="lc">s</span></span></h2>${SHEET.at&&S().atSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.at.fetched))}</span>`:""}</div>
     ${A.length?`<div class="cork">${A.map((a,i)=>{const l=forLabel(a.who);return `<div class="sticky" style="--r:${[-1.5,1.2,-.8,1.6][i%4]}deg"><div class="row"><span class="chip">${esc(a.tag||"Training room")}</span><span class="grow"></span><span class="stamp">${a.when?esc(fmtDate(a.when)):""}</span></div>${l?`<span class="stamp">${esc(l)}</span>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}</div>`}).join("")}</div>`
      :`<div class="cork"><div class="sticky" style="--r:-1deg"><b>No notes from the ATs yet.</b><p class="small">Check back before practice and road trips.</p></div></div>`}
     ${isStaff()?"":`<p class="muted small" style="margin-top:10px">Your code <b class="tapecode">${esc(clinicCode())}</b> · the ATs use it to send a note just for you.</p>`}</section>
-   <section><h2>See the ATs</h2>${atCard()}</section>`;
+   <section><h2><span>See the AT<span class="lc">s</span></span></h2>${atCard()}</section>`;
  }else if(trainSeg==="at"){
   body=`<section><h2>Report an injury</h2><p class="muted small">Every injury, even small ones.</p>
    ${draft.atSent?`<div class="card stack"><span class="chip ok" style="align-self:flex-start">Ready to send</span><div class="copybox" id="at-copy">${esc(draft.atSent)}</div><div class="row" style="flex-wrap:wrap">${s.atEmail?`<a class="btn" href="mailto:${esc(s.atEmail)}?subject=${encodeURIComponent("Injury report: "+profile.name)}&body=${encodeURIComponent(draft.atSent)}">Email</a>`:""}<button class="btn ghost" data-copy="at-copy">Copy</button>${s.atPhone?`<a class="btn ghost" href="sms:${esc(s.atPhone)}?&body=${encodeURIComponent(draft.atSent)}">Text</a>`:""}<button class="btn ghost" data-reset="atSent">New</button></div><p class="stamp">If Email or Text doesn't open, copy the message instead.</p></div>`:
