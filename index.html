@@ -618,7 +618,7 @@ h3{font-weight:700}
 .sched-date b{font:700 .6rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#FED41F}.sched-date span{font:700 1.2rem var(--display)}
 /* Hall of Fame ribbon */
 .ribbon{overflow:hidden;background:#003876;border-radius:10px;border-top:3px solid #FED41F;border-bottom:3px solid #FED41F;padding:10px 0;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.rb-track{display:inline-flex;gap:10px;align-items:center;white-space:nowrap;color:#fff;font:600 .8rem/1 var(--body);animation:rb 90s linear infinite;padding-left:10px}
+.rb-track{display:inline-flex;gap:10px;align-items:center;white-space:nowrap;color:#fff;font:600 .8rem/1 var(--body);animation:rb 220s linear infinite;padding-left:10px}
 .ribbon:active .rb-track,.ribbon:hover .rb-track{animation-play-state:paused}
 @keyframes rb{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .rb-team{font:700 .78rem var(--display);text-transform:uppercase;letter-spacing:.08em;color:#FED41F}.rb-h{font-weight:700}
@@ -1466,9 +1466,7 @@ function vHof(){const staff=isStaff(),mine=profile.sport;
  const items=order.flatMap(s=>[`<span class="rb-team">★ ${esc(sportLabel(s))}</span><span class="rb-h">${esc(HOF[s.id].h)}</span>`,...HOF[s.id].l.slice(0,2).map(([y,d])=>`<span class="rb-y">${esc(y)}</span><span>${esc(d)}</span>`)]).join('<span class="rb-sep">•</span>');
  return `<section><div class="row"><h2 class="grow">Charger Hall of Fame</h2><span class="stamp">36+ state banners</span></div>
   <div class="ribbon" aria-label="Hall of Fame highlights"><div class="rb-track">${items}<span class="rb-sep">•</span>${items}<span class="rb-sep">•</span></div></div>
-  <details class="mdet"><summary>${staff?"All programs":"Details"}</summary><div class="ans">
-  <div class="hof-wall">${staff?hofStaff():hofCard(mine,true)+`<details class="mdet"><summary>Every Charger program</summary><div class="ans stack" style="gap:8px">${SPORTS.filter(s=>s.id!==mine).map(s=>hofCard(s.id,false)).join("")}</div></details>`}</div>
-  <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></div></details></section>`}
+  <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></section>`}
 
 /* ===== Team schedule on Home (Schedule tab of the Google Sheet). Athletes: their team. Staff: every team. ===== */
 function gLine(g,showTeam){const s=sportById(g.sport);return `<div class="sched-row"><div class="sched-date"><b>${esc(new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{month:"short"}))}</b><span>${esc(new Date(g.date+"T12:00:00").getDate())}</span></div>
