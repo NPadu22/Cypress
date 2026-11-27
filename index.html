@@ -427,6 +427,7 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
 .mpnav{min-width:40px;padding:0 10px;font-size:1.3rem}
 .chip.accent{background:color-mix(in srgb,var(--gold) 35%,transparent)}.chip.violet{background:color-mix(in srgb,#00AEEF 22%,transparent)}.chip.warn{background:color-mix(in srgb,#ED1C24 16%,transparent)}
 #glist-form input{min-width:0}
+.hab{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}.hab:last-of-type{border-bottom:0}.hab summary{cursor:pointer;list-style:none;padding-top:4px}.hab details[open] summary{margin-bottom:4px}
 .cork{display:grid;gap:12px;padding:14px;border-radius:14px;background:repeating-linear-gradient(45deg,color-mix(in srgb,#614219 22%,transparent) 0 6px,color-mix(in srgb,#614219 16%,transparent) 6px 12px)}
 .sticky{display:flex;flex-direction:column;gap:4px;background:#FFF6C9;color:#003876;padding:12px 14px;border-radius:4px;box-shadow:0 6px 14px rgba(0,0,0,.15);transform:rotate(var(--r,0deg))}
 .sticky .chip{background:#003876;color:#FED41F}
@@ -1179,6 +1180,19 @@ function vStop(){
 }
 
 function autoGameDay(){const t=isoToday(),g=upcomingGames().find(x=>x.date===t);if(g&&!(charge[t]&&charge[t].manual)){const c=charge[t]||(charge[t]={type:"game",done:[]});if(c.type!=="game"||!c.gameTime){c.type="game";c.gameTime=c.gameTime||g.time;store.set("charge",charge)}}}
+/* Start here: three daily habits for athletes new to nutrition (checks stay on this phone). */
+const HABITS=[
+ {t:"Eat breakfast",why:"Your body runs on empty after a night's sleep. Eat within an hour of waking up.",ex:"Oatmeal with a banana · eggs and toast · a bagel with peanut butter · Greek yogurt and granola"},
+ {t:"Carbs before practice",why:"Carbs are your fuel. Eat a meal 2–4 hours before, or a small snack 30–60 minutes before.",ex:"Rice or pasta with chicken · a turkey sandwich · a banana or pretzels if you're short on time"},
+ {t:"Recovery snack after",why:"Carbs plus protein within an hour after practice help you bounce back for tomorrow.",ex:"Chocolate milk · a turkey sandwich · Greek yogurt and fruit · a rice bowl with chicken"}];
+let HAB=store.get("habits",{});
+function habStreak(){let n=0,d=isoToday();if((HAB[d]||[]).length<3)d=isoShift(d,-1);while((HAB[d]||[]).length>=3){n++;d=isoShift(d,-1)}return n}
+function vStartHere(){if(isStaff())return "";const t=isoToday(),D=HAB[t]||[],st=habStreak();
+ return `<section><div class="row"><h2 class="grow">Start here</h2><span class="stamp">${st?`🔥 ${st}-day streak`:"3 habits a day"}</span></div>
+  <div class="card stack" style="gap:4px">${HABITS.map((h,i)=>{const on=D.includes(i);return `<div class="hab"><button class="rx-check" data-hab="${i}" aria-pressed="${on}" aria-label="Done: ${esc(h.t)}">${on?"✓":""}</button>
+   <details class="grow"><summary><b>${esc(h.t)}</b></summary><p class="small">${esc(h.why)}</p><p class="muted small"><b>Try:</b> ${esc(h.ex)}</p></details></div>`}).join("")}
+   <p class="stamp">${D.length===3?"All three today. That's how you stay charged.":`${D.length}/3 today · tap a habit to see why it matters`}</p>
+   <p class="src">Thomas, Erdman & Burke, ACSM/AND/DC Nutrition and Athletic Performance, 2016</p></div></section>`}
 function vHome(){
  if(!isStaff())autoGameDay();
  const first=(profile.name||"").trim().split(" ")[0];
@@ -1194,6 +1208,7 @@ function vHome(){
    <h1>Hey ${esc(first)}</h1>
    
   </div>
+  ${vStartHere()}
   ${c.type==="game"?vCountdown(c):""}
   ${vProgSummary()}
   ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
@@ -2100,6 +2115,8 @@ document.addEventListener("click",async ev=>{
  if(d.cancelprofile){draft.editingProfile=false;draft.p=null;render();return}
  if(d.codeedit){draft.codeEdit=true;render();return}
  if(d.codecancel){draft.codeEdit=false;render();return}
+ if(d.hab!==undefined){const k=isoToday(),L=HAB[k]||(HAB[k]=[]),i=+d.hab,j=L.indexOf(i);j<0?L.push(i):L.splice(j,1);
+  for(const x of Object.keys(HAB))if(new Date(k)-new Date(x)>60*864e5)delete HAB[x];store.set("habits",HAB);render();if(L.length===3&&j<0)toast("All three today. Nice work.");return}
  if(d.progday!==undefined){progDay[d.progday]=d.day;render();return}
  if(d.prog!==undefined){const iso=isoToday(),day=PROGDONE[iso]||(PROGDONE[iso]={}),L=day[d.prog]||(day[d.prog]=[]),i=+d.progi,k=L.indexOf(i),pg=myPrograms().find(x=>x.id===d.prog);k<0?L.push(i):L.splice(k,1);
   for(const x of Object.keys(PROGDONE))if(new Date(iso)-new Date(x)>21*864e5)delete PROGDONE[x];store.set("progdone",PROGDONE);
