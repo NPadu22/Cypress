@@ -820,7 +820,8 @@ function planFor(type,kind){
 
 /* ============ hydration ============ */
 let H=store.get("hydro",{});
-const BOTTLE=24;
+let BOTTLE=+store.get("bottle",24)||24;
+const BOTTLE_SIZES=[12,16,17,20,24,26,32,40,64];
 function hydroDay(){const t=isoToday();return H[t]||(H[t]={n:0,hrs:2,cond:"warm"})}
 function hydroGoal(h){
  const sp=sportById(profile.sport);
@@ -834,7 +835,7 @@ function vHydro(){
  return `<section><h2>Hydration</h2><div class="card stack">
   <div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">Today</p><div class="pct">${oz}<small> / ${goal} oz</small></div></div><span class="chip ${h.n>=need?"ok":"gold"}">${h.n}/${need} bottles</span></div>
   <div class="bottles" role="group" aria-label="Bottles, ${BOTTLE} oz each">${Array.from({length:slots},(_,i)=>`<button class="btl" data-btl="${i}" aria-pressed="${i<h.n}" aria-label="Bottle ${i+1}"><svg viewBox="0 0 24 40"><path d="M9 2h6v4l3 4v26a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10l3-4z"/><rect class="fill" x="7.5" y="14" width="9" height="22.5" rx="1"/></svg></button>`).join("")}</div>
-  <p class="stamp">1 bottle = ${BOTTLE} oz</p>
+  <label class="row" for="bottle-size" style="gap:10px;align-items:center"><span class="stamp grow">My bottle holds</span><select id="bottle-size" data-bottle="1" style="width:auto">${BOTTLE_SIZES.map(v=>`<option value="${v}" ${v===BOTTLE?"selected":""}>${v} oz${v===17?" (500 mL)":v===32?" (1 qt)":""}</option>`).join("")}</select></label>
   <details class="mdet"><summary>Adjust for training and heat</summary><div class="ans">
   <div class="stack" style="gap:6px"><span class="eyebrow">Training today</span><div class="choice">${[0,1,2,3,4].map(v=>`<button data-hhrs="${v}" aria-pressed="${h.hrs===v}">${v===4?"4+ hrs":v+" hr"+(v===1?"":"s")}</button>`).join("")}</div></div>
   <div class="stack" style="gap:6px"><span class="eyebrow">Conditions</span><div class="choice">${[["cool","Cool"],["warm","Warm"],["hot","Hot (85°F+)"],["pool","Pool"]].map(([v,l])=>`<button data-hcond="${v}" aria-pressed="${h.cond===v}">${l}</button>`).join("")}</div></div></div></details>
@@ -2310,6 +2311,7 @@ document.addEventListener("input",ev=>{
 });
 document.addEventListener("change",async ev=>{
  const t=ev.target;
+ if(t.dataset&&t.dataset.bottle){BOTTLE=+t.value||24;store.set("bottle",BOTTLE);shareSoon();render();toast("Bottle set to "+BOTTLE+" oz");return}
  if(t.dataset&&t.dataset.areapick){profile.area=t.value;store.set("profile",profile);render();toast(myArea()?"Showing picks near "+myArea().short:"Area saved");return}
  if(t.id==="f-sport"){readOnboard();draft.p.position="";render();return}
  if(t.id==="gtime"&&t.value){const k=isoToday();const c=charge[k]||(charge[k]={type:"game",done:[]});c.gameTime=t.value;store.set("charge",charge);t.blur();render();return}
