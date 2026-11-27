@@ -662,6 +662,13 @@ body[data-gameday="1"] .sticky,body[data-gameday="1"] .sticky b{color:#003876!im
 .view>.hero:first-child:not(.welcome) .eyebrow{font:600 .6rem/1.3 var(--mono)!important;letter-spacing:.16em;color:#FED41F!important;order:2;margin:0}
 .view>.hero:first-child:not(.welcome) h1{font:700 1.02rem/1.05 var(--display)!important;letter-spacing:.08em!important;color:#fff!important;order:1;margin:0!important}
 body[data-gameday="1"] .view>.hero:first-child:not(.welcome){background:#000!important;border:1px solid #2A2A2A!important}
+.sb-coach{background:#fdfdfb;color:#0B1F3A;border-radius:12px;padding:10px 12px 4px;border:4px solid #B6B2A3}
+.sb-coach-tag{background:#FED41F;color:#003876;font:700 .62rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:5px 8px;transform:rotate(-1.5deg)}
+.sb-coach-n{font:700 .8rem var(--mono);color:#003876}
+.sb-coach .hab{border-color:#E3E3DC}.sb-coach .hab b{font-family:"Marker Felt","Chalkboard SE","Comic Sans MS",var(--display);color:#003876;font-weight:600}
+.sb-coach .rx-check{border-color:#B6B2A3;color:#ED1C24}.sb-coach .rx-check[aria-pressed="true"]{background:transparent;border-color:#ED1C24;font-family:"Marker Felt","Chalkboard SE",cursive;font-size:1.2rem}
+.sb-coach details,.sb-coach summary{background:transparent!important;border:0!important;box-shadow:none!important;color:#0B1F3A}
+body[data-gameday="1"] .sb-coach{background:#111;color:#eee;border-color:#2A2A2A}body[data-gameday="1"] .sb-coach .hab b{color:#FED41F}body[data-gameday="1"] .sb-coach details,body[data-gameday="1"] .sb-coach summary{color:#eee}
 </style>
 </head>
 <body>
@@ -1404,6 +1411,10 @@ function habStreak(){let n=0,d=isoToday();if((HAB[d]||[]).length<3)d=isoShift(d,
 function pennant(){const first=!store.get("st_1966",0);store.set("st_1966",1);const el=document.createElement("div");el.className="pennant";el.setAttribute("role","dialog");el.setAttribute("aria-label","Cypress Chargers, established 1966");
  el.innerHTML=`<svg viewBox="0 0 300 140" aria-hidden="true"><path d="M10 20 L290 70 L10 120 Z" fill="#003876" stroke="#FED41F" stroke-width="4"/><rect x="4" y="12" width="10" height="116" rx="3" fill="#B6B2A3"/><text x="40" y="66" fill="#FED41F" font-family="Futura,Jost,sans-serif" font-weight="600" font-size="30" letter-spacing="3">CHARGERS</text><text x="42" y="92" fill="#fff" font-family="Futura,Jost,sans-serif" font-size="14" letter-spacing="5">EST. 1966</text></svg><p>${first?"Hidden stamp found: Est. 1966":"Est. 1966"}</p>`;
  el.addEventListener("click",()=>el.remove());document.body.appendChild(el);setTimeout(()=>el.remove(),3200);if(first)setTimeout(render,300)}
+function habPanel(){const t=isoToday(),D=HAB[t]||[],st=habStreak();
+ return `<div class="sb-coach"><div class="row"><span class="sb-coach-tag">Coach's board · Start here</span><span class="grow"></span><span class="sb-coach-n">${st?`🔥 ${st}`:`${D.length}/3`}</span></div>
+  ${HABITS.map((h,i)=>{const on=D.includes(i);return `<div class="hab"><button class="rx-check" data-hab="${i}" aria-pressed="${on}" aria-label="Done: ${esc(h.t)}">${on?"✓":""}</button>
+   <details class="grow"><summary><b>${esc(h.t)}</b></summary><p class="small">${esc(h.why)}</p><p class="small" style="opacity:.75"><b>Try:</b> ${esc(h.ex)}</p></details></div>`}).join("")}</div>`}
 function vStartHere(){const t=isoToday(),D=HAB[t]||[],st=habStreak();
  return `<section><div class="row"><h2 class="grow">Start here</h2><span class="stamp">${st?`🔥 ${st}-day streak`:"3 habits a day"}</span></div>
   <div class="card stack whiteboard" style="gap:4px"><span class="wb-tag" aria-hidden="true">Coach's board</span>${HABITS.map((h,i)=>{const on=D.includes(i);return `<div class="hab"><button class="rx-check" data-hab="${i}" aria-pressed="${on}" aria-label="Done: ${esc(h.t)}">${on?"✓":""}</button>
@@ -1444,6 +1455,7 @@ function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winSt
   <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/${PLAYS.length}</small></b></div><div class="sb-cell"><span>This week</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
   <div class="sb-plays">${PLAYS.map(p=>{const on=playDone(p.k,t);return `<button class="sb-play ${on?"on":""}" data-go="${p.go}" aria-label="${esc(p.n)}: ${on?"done":"not yet"}. ${esc(p.how)}"><i aria-hidden="true">${p.i}</i><span>${esc(p.n)}</span></button>`}).join("")}</div>
   <div class="sb-week">${wk.map(d=>{const sc=dayScore(d),f=d>t||(d<f0&&sc<3);return `<div class="sb-day ${f?"fut":sc>=3?"w":d===t?"now":"l"}"><span>${"MTWTFSS"[wk.indexOf(d)]}</span><b>${f?"·":sc>=3?"W":d===t?sc+"/"+PLAYS.length:"L"}</b></div>`}).join("")}</div>
+  ${habPanel()}
   <div class="sb-level"><div class="row"><b class="grow">${LEVELS[li][1]}</b><span class="stamp">${nxt?`${nxt[0]-pts} pts to ${nxt[1]}`:"Top level"}</span></div><div class="sb-bar"><i style="width:${pct}%"></i></div></div>
  </div>
  <p class="stamp">${s>=3?"Today's a W. Keep stacking them.":`${3-s} more play${3-s===1?"":"s"} for today's win. Tap one to log it.`}</p></section>`}
@@ -1535,7 +1547,6 @@ function vHome(){
   </div>
   ${vGameDay()}
   ${vScoreboard()}
-  ${vStartHere()}
   ${c.type==="game"?vCountdown(c):""}
   ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   ${vSchedule()}
