@@ -2270,17 +2270,6 @@ function vMe(){
    <div class="choice">${[["0","Standard text"],["1","Larger text"]].map(([v,l])=>`<button data-large="${v}" aria-pressed="${String(prefs.large?1:0)===v}">${l}</button>`).join("")}</div></div></section>
   ${boardState==="off"?"":`<section><h2>Team charge board</h2><div class="card stack"><p class="muted small">Shares your daily charge and team, no name.</p>
    <div class="choice"><button data-board="1" aria-pressed="${!prefs.noBoard}">Count me in</button><button data-board="0" aria-pressed="${!!prefs.noBoard}">Don't share</button></div></div></section>`}
-  <details class="fold"><summary><span class="fsum"><b>Add the iPhone widget</b><span class="stamp">Square or rectangle · today's tip</span></span></summary><div class="ans">
-   <ol class="a2-steps">
-    <li><span class="a2-ic"><b class="a2n">1</b></span><span>Get <b>Scriptable</b> (free) from the App Store</span></li>
-    <li><span class="a2-ic"><b class="a2n">2</b></span><span>Tap <b>Copy widget script</b> below</span></li>
-    <li><span class="a2-ic"><b class="a2n">3</b></span><span>In Scriptable tap <b>+</b>, paste, name it <b>At the Clinic</b></span></li>
-    <li><span class="a2-ic"><b class="a2n">4</b></span><span>Hold your Home Screen → <b>Edit</b> → <b>Add Widget</b> → Scriptable → small or medium</span></li>
-    <li><span class="a2-ic"><b class="a2n">5</b></span><span>Hold the widget → <b>Edit Widget</b> → Script: At the Clinic${!isStaff()&&sportById(profile.sport)?` · Parameter: <b>${esc(profile.sport)}</b>`:""}</span></li>
-   </ol>
-   <button class="btn block" data-wcopy="1">Copy widget script</button>
-   <a class="linkbtn" href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener">Scriptable on the App Store</a>
-  </div></details>
   ${isStandalone()?"":`<button class="btn ghost block" data-a2show="1">Add to Home Screen</button>`}
   <button class="btn ghost block" data-walkup="1">Replay my walk-up</button>
   <section><h2>Start over</h2><div class="card stack"><p class="muted small">Erases everything saved on this phone. Logs already shared with staff stay in the staff sheet; ask ${esc(S().rdName||"the dietitian")} to remove them.</p>
