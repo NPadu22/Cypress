@@ -669,6 +669,27 @@ body[data-gameday="1"] .view>.hero:first-child:not(.welcome){background:#000!imp
 .sb-coach .rx-check{border-color:#B6B2A3;color:#ED1C24}.sb-coach .rx-check[aria-pressed="true"]{background:transparent;border-color:#ED1C24;font-family:"Marker Felt","Chalkboard SE",cursive;font-size:1.2rem}
 .sb-coach details,.sb-coach summary{background:transparent!important;border:0!important;box-shadow:none!important;color:#0B1F3A}
 body[data-gameday="1"] .sb-coach{background:#111;color:#eee;border-color:#2A2A2A}body[data-gameday="1"] .sb-coach .hab b{color:#FED41F}body[data-gameday="1"] .sb-coach details,body[data-gameday="1"] .sb-coach summary{color:#eee}
+/* Rohde touches round 2 */
+.tunnel{position:fixed;inset:0;z-index:95;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;animation:wuIn .3s ease both}
+.tunnel.out{opacity:0;transition:opacity .4s}
+.tn-walls{position:absolute;inset:0;perspective:600px}
+.tn-walls i{position:absolute;left:50%;top:50%;width:140vmax;height:140vmax;margin:-70vmax 0 0 -70vmax;border:2px solid rgba(254,212,31,.18);border-radius:46% 46% 0 0;animation:tnzoom 2.4s linear infinite}
+.tn-walls i:nth-child(2){animation-delay:.48s}.tn-walls i:nth-child(3){animation-delay:.96s}.tn-walls i:nth-child(4){animation-delay:1.44s}.tn-walls i:nth-child(5){animation-delay:1.92s}
+@keyframes tnzoom{from{transform:scale(.05);opacity:0}30%{opacity:1}to{transform:scale(1);opacity:0}}
+.tn-glow{position:absolute;left:50%;top:50%;width:60vmin;height:60vmin;margin:-30vmin;border-radius:50%;background:radial-gradient(circle,rgba(254,212,31,.35),transparent 70%);animation:tnglow 2s ease-in-out infinite alternate}
+@keyframes tnglow{from{transform:scale(.8)}to{transform:scale(1.15)}}
+.tn-in{position:relative;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px}
+.tn-k{font:700 .75rem var(--mono);letter-spacing:.3em;text-transform:uppercase;color:#FED41F}
+.tn-h{font:700 2.6rem/1 var(--display);text-transform:uppercase;color:#fff}.tn-s{color:rgba(255,255,255,.7);margin:0}
+.tn-q{font-style:italic;color:#FED41F;margin:10px 0 6px}.tn-go{background:#FED41F!important;color:#000!important}
+@media (prefers-reduced-motion:reduce){.tn-walls i,.tn-glow{animation:none}}
+.scoreboard{position:relative}
+.scoreboard.lit{box-shadow:0 0 0 2px #FED41F,0 0 22px rgba(254,212,31,.35),0 6px 18px rgba(11,37,69,.18)}
+.scoreboard.lit::before{content:"";position:absolute;inset:4px;border-radius:13px;pointer-events:none;background:radial-gradient(circle,#FED41F 1.4px,transparent 2px) 0 0/14px 14px;-webkit-mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);padding:3px;opacity:.55;animation:bulbs 1.6s steps(2) infinite}
+@keyframes bulbs{50%{opacity:.25}}
+.sb-w{position:absolute;top:-12px;right:14px;width:38px;height:38px;border-radius:50%;background:#FED41F;color:#003876;font:700 1.2rem/38px var(--display);text-align:center;box-shadow:0 3px 8px rgba(0,0,0,.3);transform:rotate(-10deg);z-index:2}
+@media (prefers-reduced-motion:reduce){.scoreboard.lit::before{animation:none}}
+.sticky{position:relative}.sticky::before{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#ED1C24 60%,#9e1218);box-shadow:0 2px 3px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
@@ -1348,6 +1369,7 @@ function render(){
  if(needsStop()){app.innerHTML=topbar()+vStop();renderTabs(true);return}
  const V={home:vHome,eat:vEat,training:vTraining,journal:vJournal,rd:vRD,learn:vLearn,me:vMe,edit:vEdit}[tab]||vHome;
  document.body.dataset.tab=tab;
+ if(tab==="home"&&!document.querySelector(".walkup"))setTimeout(()=>{try{tunnel()}catch(e){}},300);
  try{document.body.dataset.gameday=profile&&isGameDay()?"1":""}catch(e){document.body.dataset.gameday=""}
  app.innerHTML=topbar()+V();
  renderTabs();
@@ -1450,9 +1472,10 @@ function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winSt
  let li=0;LEVELS.forEach((l,i)=>{if(pts>=l[0])li=i});const nxt=LEVELS[li+1],pct=nxt?Math.round((pts-LEVELS[li][0])/(nxt[0]-LEVELS[li][0])*100):100;
  const mon=isoShift(t,-((new Date(t+"T12:00:00").getDay()+6)%7)),wk=[...Array(7)].map((_,i)=>isoShift(mon,i));
  const f0=firstDay(),W=wk.filter(d=>d<t&&dayScore(d)>=3).length+(s>=3?1:0),L=wk.filter(d=>d<t&&d>=f0&&dayScore(d)<3).length;
+ const isSun=new Date().getDay()===0;
  return `<section><div class="row"><h2 class="grow">Charger Scoreboard</h2><span class="stamp">${st?`🔥 ${st}-day win streak`:"3 plays = a win"}</span></div>
- <div class="scoreboard">
-  <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/${PLAYS.length}</small></b></div><div class="sb-cell"><span>This week</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
+ <div class="scoreboard ${s>=3?"lit":""}">${s>=3?`<span class="sb-w" aria-hidden="true">W</span>`:""}
+  <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/${PLAYS.length}</small></b></div><div class="sb-cell"><span>${isSun?"Final · week":"This week"}</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
   <div class="sb-plays">${PLAYS.map(p=>{const on=playDone(p.k,t);return `<button class="sb-play ${on?"on":""}" data-go="${p.go}" aria-label="${esc(p.n)}: ${on?"done":"not yet"}. ${esc(p.how)}"><i aria-hidden="true">${p.i}</i><span>${esc(p.n)}</span></button>`}).join("")}</div>
   <div class="sb-week">${wk.map(d=>{const sc=dayScore(d),f=d>t||(d<f0&&sc<3);return `<div class="sb-day ${f?"fut":sc>=3?"w":d===t?"now":"l"}"><span>${"MTWTFSS"[wk.indexOf(d)]}</span><b>${f?"·":sc>=3?"W":d===t?sc+"/"+PLAYS.length:"L"}</b></div>`}).join("")}</div>
   ${habPanel()}
@@ -1488,7 +1511,7 @@ function vHof(){const staff=isStaff(),mine=profile.sport;
  const order=[...SPORTS].sort((a,b)=>(a.id===mine&&!staff?-1:b.id===mine&&!staff?1:0)||(HOF_TITLES[b.id]||0)-(HOF_TITLES[a.id]||0));
  const items=order.flatMap(s=>[`<span class="rb-team">★ ${esc(sportLabel(s))}</span><span class="rb-h">${esc(HOF[s.id].h)}</span>`,...HOF[s.id].l.slice(0,2).map(([y,d])=>`<span class="rb-y">${esc(y)}</span><span>${esc(d)}</span>`)]).join('<span class="rb-sep">•</span>');
  return `<section><div class="row"><h2 class="grow">Charger Hall of Fame</h2><span class="stamp">36+ state banners</span></div>
-  <div class="ribbon" aria-label="Hall of Fame highlights"><div class="rb-track">${items}<span class="rb-sep">•</span>${items}<span class="rb-sep">•</span></div></div>
+  <div class="ribbon" aria-label="Hall of Fame highlights"><div class="rb-track">${items}<span class="rb-sep">•</span><span class="rb-team">★ Next banner</span><span>${esc(staff?"Coming soon. Make it yours, Chargers.":"Has your name on it.")}</span><span class="rb-sep">•</span>${items}<span class="rb-sep">•</span><span class="rb-team">★ Next banner</span><span>${esc(staff?"Coming soon. Make it yours, Chargers.":"Has your name on it.")}</span><span class="rb-sep">•</span></div></div>
   <p class="src">Sources: Cypress College Athletics (cypresschargers.com), 3C2A</p></section>`}
 
 /* ===== Team schedule on Home (Schedule tab of the Google Sheet). Athletes: their team. Staff: every team. ===== */
@@ -2145,6 +2168,12 @@ function walkup(){
  try{el.querySelector(".wu-go").focus({preventScroll:true})}catch(e){}
  clearTimeout(walkup.t);walkup.t=setTimeout(()=>closeWalkup(),12000);
 }
+function tunnel(){const k="tunnel_"+isoToday();if(store.get(k,0)||!profile||isStaff()||tab!=="home"||document.querySelector(".walkup,.tunnel"))return;const g=gameToday();if(!g)return;store.set(k,1);
+ const el=document.createElement("div");el.className="tunnel";el.setAttribute("role","dialog");el.setAttribute("aria-label","Game day");
+ el.innerHTML=`<div class="tn-walls" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="tn-glow" aria-hidden="true"></div>
+  <div class="tn-in"><p class="tn-k">Game day</p><h1 class="tn-h">${g.away?"At":"Vs"} ${esc(g.opp||"TBA")}</h1><p class="tn-s">${esc(g.time?fmtClock(new Date(g.date+"T"+g.time)):"")}</p><p class="tn-q">Fuel like it matters. It does.</p><button class="btn tn-go" data-tnclose="1">Walk out</button></div>`;
+ el.addEventListener("click",e=>{if(e.target.closest("[data-tnclose]")||e.target===el){el.classList.add("out");setTimeout(()=>el.remove(),400)}});
+ document.body.appendChild(el);setTimeout(()=>{if(el.isConnected){el.classList.add("out");setTimeout(()=>el.remove(),400)}},6000)}
 function closeWalkup(){const el=document.querySelector(".walkup");if(!el)return;el.classList.add("out");setTimeout(()=>{el.remove();setTimeout(()=>a2hs(),400)},450)}
 /* Add to Home Screen: shows at sign-up and every time the app is opened in a browser instead of from the Home Screen */
 let deferredInstall=null;
@@ -2289,7 +2318,7 @@ function vJournal(){
   ${e?jForm(e):quickLog()+`<button class="linkbtn" data-jnew="1" style="align-self:flex-start">Add with details or a photo</button>`}
   <div class="stack">${list.length?list.map(x=>`<button class="card entry" style="text-align:left;cursor:pointer" data-jopen="${x.id}">
     <div class="row"><span class="eyebrow grow">${esc(x.time||"")} · ${esc(x.occ)}</span>${x.gut?`<span class="chip ${x.gut==="Upset"?"stop":""}">Stomach: ${esc(x.gut)}</span>`:""}</div>
-    <p>${esc(x.what)}</p>${x.photo?`<img src="${x.photo}" alt="Photo of ${esc(x.what)}">`:""}${x.energy?`<span class="stamp">Energy: ${esc(x.energy)}</span>`:""}${x.note?`<p class="muted small">${esc(x.note)}</p>`:""}</button>`).join(""):`<p class="muted">Nothing logged. What did you eat?</p>`}</div>
+    <p>${esc(x.what)}</p>${x.photo?`<img src="${x.photo}" alt="Photo of ${esc(x.what)}">`:""}${x.energy?`<span class="stamp">Energy: ${esc(x.energy)}</span>`:""}${x.note?`<p class="muted small">${esc(x.note)}</p>`:""}</button>`).join(""):`<p class="muted">Blank page. Every great season starts with one. What did you eat?</p>`}</div>
   ${list.length?`<button class="btn ghost block" data-jshare="1">Copy this day to send to ${esc(S().rdName||"the dietitian")}</button><div id="jshare"></div>`:""}
   </section>
 ${jDay===isoToday()?vHydro():(H[jDay]?`<section><h2>Hydration</h2><div class="card"><p><b>${H[jDay].n*BOTTLE} oz</b> <span class="muted small">· ${H[jDay].n} bottles</span></p></div></section>`:"")}
