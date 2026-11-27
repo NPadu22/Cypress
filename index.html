@@ -417,6 +417,23 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
  .pp-side p,.pp-side li{font-size:10.5pt;line-height:1.35;margin:0}.pp-side ul{margin:2pt 0;padding-left:14pt}
  .pp-src{font-size:8pt!important;color:#4F728F;margin-top:10pt!important}.pp-foot{font-size:9pt!important;margin-top:12pt!important;border-top:1px solid #B6B2A3;padding-top:6pt}
 }
+.cartbtn{position:relative;width:46px;height:46px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#003876);box-shadow:0 2px 8px rgba(0,0,0,.08);cursor:pointer;display:grid;place-items:center}
+.cartbtn svg{width:24px;height:24px}.cartbtn[aria-pressed="true"]{background:#003876;color:#FED41F}
+.cartn{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#FED41F;color:#003876;font:700 .72rem/20px var(--mono);text-align:center;padding:0 4px}
+.glist{list-style:none;margin:0;padding:4px 14px}.gl{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.gl:last-child{border-bottom:0}
+.gl-chk{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:transparent;font-weight:700;color:#003876;cursor:pointer}.gl.done .gl-chk{background:#FED41F;border-color:#FED41F}
+.gl-t{flex:1;display:flex;flex-direction:column;gap:2px}.gl-t span{font-size:.74rem;opacity:.65}.gl.done .gl-t b{text-decoration:line-through;opacity:.6}
+.gl-ic{border:0;background:transparent;color:inherit;opacity:.55;font-size:1rem;width:30px;height:30px;cursor:pointer}
+.mpnav{min-width:40px;padding:0 10px;font-size:1.3rem}
+.chip.accent{background:color-mix(in srgb,var(--gold) 35%,transparent)}.chip.violet{background:color-mix(in srgb,#00AEEF 22%,transparent)}.chip.warn{background:color-mix(in srgb,#ED1C24 16%,transparent)}
+#glist-form input{min-width:0}
+.cork{display:grid;gap:12px;padding:14px;border-radius:14px;background:repeating-linear-gradient(45deg,color-mix(in srgb,#614219 22%,transparent) 0 6px,color-mix(in srgb,#614219 16%,transparent) 6px 12px)}
+.sticky{display:flex;flex-direction:column;gap:4px;background:#FFF6C9;color:#003876;padding:12px 14px;border-radius:4px;box-shadow:0 6px 14px rgba(0,0,0,.15);transform:rotate(var(--r,0deg))}
+.sticky .chip{background:#003876;color:#FED41F}
+.pex{padding:8px 0;border-top:1px solid var(--line)}
+.setchips{display:inline-flex;gap:4px;flex-wrap:wrap;vertical-align:middle}.setchips span,.dose{font:600 .78rem/1 var(--mono);padding:4px 7px;border-radius:6px;background:color-mix(in srgb,var(--gold) 30%,transparent)}
+.tapecode{font-family:var(--mono);letter-spacing:.14em;background:#FED41F;color:#003876;padding:2px 8px;border-radius:3px}
+.consent{display:flex;gap:10px;align-items:center;font-weight:600}.consent input{width:22px;height:22px}
 .rx-item{display:flex;gap:10px;align-items:flex-start}
 .rx-check{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:transparent;color:var(--on-gold,#003876);font-weight:700;cursor:pointer}
 .rx-check[aria-pressed="true"]{background:var(--gold);border-color:var(--gold)}
@@ -443,7 +460,7 @@ input,select,textarea{border:0;background:var(--surface-2);border-radius:12px}
 <div id="bg" aria-hidden="true"></div>
 <div class="app" id="app"></div>
 <nav class="tabs" id="tabs" aria-label="Main"></nav>
-<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to At the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":"","annSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=0","rxSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=1"}}</script>
+<script type="application/json" id="cy-data">{"updated":"2026-11-14","announcements":[{"t":"Welcome to At the Clinic","d":"Your fueling and recovery guide for every Charger sport. Book a consult through Rachael or Nicolette in the RD tab.","when":"2026-11-14"}],"places":[{"g":"Near campus","n":"Señor Taco","where":"Valley View St, across from campus","train":"Burrito bowl or plate: grilled chicken or carne asada, rice, beans, salsa. Add tortillas on game days.","light":"Tacos al carbón with beans and a side salad. Go easy on the chips.","a":["Dairy","Wheat/Gluten"]},{"g":"Near campus","n":"Yaho Grill","where":"Valley View St","train":"Chicken or salmon teriyaki plate with extra rice and steamed veggies.","light":"Salmon salad, or a regular plate with sauce on the side.","a":["Soy","Wheat/Gluten","Fish"]},{"g":"Near campus","n":"Bafang Dumpling","where":"Valley View St","train":"Dumplings plus a beef noodle soup. Add a vegetable side.","light":"Dumplings with hot & sour soup. Noodle soups run salty, so drink extra water.","a":["Wheat/Gluten","Soy","Sesame","Egg"]},{"g":"Near campus","n":"Bushfire Kitchen","where":"Katella Ave","train":"Tri-tip or chicken bowl with rice and roasted vegetables.","light":"Spinach salad with grilled salmon and a roll.","a":["Dairy","Fish"]},{"g":"Near campus","n":"Bandoleros Café","where":"Valley View St","train":"Breakfast burrito, or chilaquiles with eggs and beans, a few hours before afternoon practice.","light":"Portions are big. Eat half and box the rest for later.","a":["Egg","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Chipotle","where":"","train":"Burrito or bowl: double rice, beans, chicken or steak, fajita veggies, salsa. Chips if you need extra fuel.","light":"Bowl with single rice, beans, chicken and lots of veggies.","a":["Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jack in the Box","where":"","train":"Chicken Teriyaki Bowl (rice, chicken, veggies) and a milk.","light":"Breakfast Jack with an orange juice.","a":["Soy","Wheat/Gluten","Sesame","Egg","Dairy"]},{"g":"Chain","n":"Taco Bell","where":"","train":"Cantina Chicken Bowl, or a bean burrito plus two chicken soft tacos.","light":"Two chicken soft tacos \"Fresco style\" (pico instead of cheese and sauce).","a":["Dairy","Wheat/Gluten","Soy"]},{"g":"Chain","n":"Jamba","where":"","train":"Fruit smoothie with added protein, plus oatmeal or a bagel on the side.","light":"Small fruit smoothie with added protein. Skip the sherbet and frozen yogurt ones.","a":["Dairy","Soy","Peanut","Tree nut"]},{"g":"Chain","n":"Panda Express","where":"","train":"Plate: steamed rice or chow mein, grilled teriyaki chicken and string bean chicken.","light":"Bowl: half super greens, half rice, grilled teriyaki chicken.","a":["Soy","Wheat/Gluten","Egg","Sesame"]},{"g":"Chain","n":"Subway","where":"","train":"Footlong turkey or chicken with all the veggies, baked chips and a chocolate milk.","light":"6-inch or a protein bowl with chicken and veggies.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"Chick-fil-A","where":"","train":"Grilled chicken sandwich, fruit cup and chocolate milk. Add a second sandwich after hard sessions.","light":"Grilled nuggets with a side salad or fruit.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"In-N-Out","where":"","train":"Double-Double or hamburger, fries and a milk. Ask for extra lettuce and tomato.","light":"Hamburger \"protein style\" plus fruit you packed.","a":["Wheat/Gluten","Dairy","Egg","Soy"]},{"g":"Chain","n":"CAVA","where":"","train":"Grains + greens bowl with chicken, hummus, roasted veggies and pita on the side.","light":"Greens bowl with chicken or falafel and tzatziki.","a":["Sesame","Dairy","Wheat/Gluten"]},{"g":"Chain","n":"Jersey Mike's","where":"","train":"Regular turkey or chicken sub \"Mike's Way\" with baked chips.","light":"Mini sub, or a sub in a tub.","a":["Wheat/Gluten","Egg","Dairy"]},{"g":"Chain","n":"Starbucks","where":"","train":"Oatmeal plus egg bites or a breakfast sandwich, and a banana, before early practice.","light":"Protein box and a latte.","a":["Dairy","Egg","Wheat/Gluten","Tree nut"]},{"g":"Chain","n":"Poke (any)","where":"","train":"Large: white rice base, salmon or ahi, edamame, cucumber, ponzu.","light":"Half rice, half greens.","a":["Fish","Soy","Sesame","Wheat/Gluten"]},{"g":"Chain","n":"Pho (any)","where":"","train":"Large pho with chicken or beef. Extra noodles on heavy days.","light":"Regular pho. The salty broth is great after a sweaty practice.","a":["Fish","Soy"]}],"schedules":{},"settings":{"rdName":"Nick","rdTitle":"Sports Dietitian","bookingLink":"","email":"","phone":"","place":"In person · Cypress College Athletics","atName":"Rachael Kirkpatrick & Nicolette Marinello","atEmail":"rkirkpatrick@cypresscollege.edu,nmarinello@cypresscollege.edu","atPhone":"","atRoom":"","teamSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=0","atSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=3","progSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=1","nutSheet":"https://docs.google.com/spreadsheets/d/1R8R6b_h75QeAtJ11DojEfV2ULv-IpIw95V0mFeZ-Jd0/gviz/tq?tqx=out:csv&headers=1&gid=4","rosterURL":""}}</script>
 <script id="cy-main">
 "use strict";
 /* ============ data ============ */
@@ -812,11 +829,11 @@ function vGames(){
   <p class="stamp">Alerts at pre-game meal (3½ h before) and top-off (45 min before).</p></div></section>`;
 }
 
-/* ===== Google Sheet: announcements and prescriptions (published as CSV; anyone with the link can read it).
-   "For" column picks who sees a row: blank/Everyone, Athletes, Staff, a team (Softball, Women's Soccer, wsoc),
-   a position (Pitcher), or a person's private Clinic code. Several allowed: "Softball, Baseball". ===== */
-let SHEET={ann:store.get("sheet_ann",null),rx:store.get("sheet_rx",null)};
-let RXDONE=store.get("rxdone",{});
+/* ===== Google Sheet (public; anyone with the link can read it). Tabs: Team, Training room, Programs, Nutrition, Roster, Lists.
+   "For" column (dropdown built from the Roster): "CODE · Name (Team)", "Team · Women's Softball",
+   "Position · Women's Softball · Pitcher", Everyone, Athletes, Staff. Several allowed, separated by commas. ===== */
+let SHEET={team:store.get("sheet_team",null),at:store.get("sheet_at",null),prog:store.get("sheet_prog",null),nut:store.get("sheet_nut",null)};
+let PROGDONE=store.get("progdone",{});
 function parseCSV(text){const rows=[];let row=[],f="",q=false;
  for(let i=0;i<text.length;i++){const c=text[i];
   if(q){if(c==='"'){if(text[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
@@ -825,59 +842,98 @@ function parseCSV(text){const rows=[];let row=[],f="",q=false;
 function sheetDate(v){v=(v||"").trim();if(!v)return "";let m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
  m=v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);if(m){const y=m[3].length===2?"20"+m[3]:m[3];return `${y}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
  const d=new Date(v);return isNaN(d)?"":d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function sheetTable(text){const R=parseCSV(text);if(R.length<2)return null;const H=R[0].map(h=>h.trim().toLowerCase());
+function sheetTable(text){const R=parseCSV(text);if(R.length<1)return null;const H=R[0].map(h=>h.trim().toLowerCase());
  const col=n=>H.findIndex(h=>h===n||h.startsWith(n));return {R:R.slice(1),col,g:(r,i)=>i<0?"":(r[i]||"").trim()}}
-function liveRow(when,hide,show){const today=isoToday();return show.toLowerCase()!=="no"&&!(hide&&hide<today)&&!(when&&when>today)}
+function liveRow(when,hide,show){const today=isoToday();return (show||"yes").toLowerCase()!=="no"&&!(hide&&hide<today)&&!(when&&when>today)}
 function annRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T,iD=col("date"),iF=col("for"),iT=col("tag"),iH=col("headline"),iX=col("details"),iE=col("hide"),iS=col("show");
- if(iH<0)return null;
- return R.map(r=>({when:sheetDate(g(r,iD)),who:g(r,iF),tag:g(r,iT),t:g(r,iH),d:g(r,iX),hide:sheetDate(g(r,iE)),show:g(r,iS)||"yes"})).filter(a=>a.t)}
-function rxRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T;
- const iD=col("date"),iF=col("for"),iY=col("type"),iP=col("plan"),iI=col("item"),iQ=col("dose"),iW=col("when"),iC=col("cue"),iV=col("video"),iE=col("hide"),iS=col("show"),iB=col("from");
- if(iP<0||iI<0)return null;const out=[],by={};
- for(const r of R){const name=g(r,iP),item=g(r,iI);if(!name||!item)continue;const who=g(r,iF);
+ if(iH<0)return null;const iM=[col("meal 1"),col("meal 2"),col("meal 3")];
+ return R.map(r=>({when:sheetDate(g(r,iD)),who:g(r,iF),tag:g(r,iT),t:g(r,iH),d:g(r,iX),hide:sheetDate(g(r,iE)),show:g(r,iS)||"yes",meals:iM.map(i=>g(r,i)).filter(Boolean)})).filter(a=>a.t)}
+function progRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T;
+ const iP=col("program"),iF=col("for"),iY=col("type"),iW=col("when"),iDy=col("day"),iPh=col("phase"),iE=col("exercise"),iSe=col("sets"),iRe=col("reps"),iC=col("cue"),iV=col("video"),iS=col("show"),iB=col("from");
+ if(iP<0||iE<0)return null;const out=[],by={};
+ for(const r of R){const name=g(r,iP),ex=g(r,iE);if(!name||!ex)continue;if((g(r,iS)||"yes").toLowerCase()==="no")continue;const who=g(r,iF);if(!who)continue;
   const id=(name+"~"+who).toLowerCase().replace(/[^a-z0-9~]+/g,"-");
-  if(!by[id]){by[id]={id,name,who,type:rxType(g(r,iY)),from:g(r,iB),when:sheetDate(g(r,iD)),hide:sheetDate(g(r,iE)),show:g(r,iS)||"yes",ex:[]};out.push(by[id])}
-  const v=g(r,iV);by[id].ex.push({n:item,dose:g(r,iQ),at:g(r,iW),cue:g(r,iC),video:/^https:\/\//i.test(v)?v:""})}
+  if(!by[id]){by[id]={id,name,who,type:/^pt/i.test(g(r,iY))?"PT":"AT",when:g(r,iW),from:g(r,iB),ex:[]};out.push(by[id])}
+  const v=g(r,iV),sets=g(r,iSe),reps=g(r,iRe);
+  by[id].ex.push({n:ex,day:g(r,iDy),phase:g(r,iPh),sets,reps,cue:g(r,iC),video:/^https:\/\//i.test(v)?v:""})}
  return out}
-function rxType(v){v=(v||"").toLowerCase();return /^(pt|phys)/.test(v)?"PT":/^(at|ath|train)/.test(v)?"AT":"Nutrition"}
-async function loadSheet(kind,url){if(!url)return;try{const r=await fetch(url+(url.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
- const rows=(kind==="rx"?rxRows:annRows)(await r.text());if(!rows)return;const val={rows,fetched:new Date().toISOString()};
+async function loadSheet(kind,url,parse){if(!url)return;try{const r=await fetch(url+(url.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
+ const rows=parse(await r.text());if(!rows)return;const val={rows,fetched:new Date().toISOString()};
  const changed=JSON.stringify((SHEET[kind]||{}).rows)!==JSON.stringify(rows);SHEET[kind]=val;store.set("sheet_"+kind,val);
  if(changed&&profile&&!document.querySelector("form:focus-within"))render()}catch(e){}}
-function loadSheets(){loadSheet("ann",S().annSheet);loadSheet("rx",S().rxSheet)}
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")loadSheets()});
-/* Clinic code: first initial + first three letters of last name (Maya Cruz -> MCRU). Staff use it in the "For" column.
-   Two people with the same code: one adds a number in their locker (MCRU2). */
-function nameCode(){const L=x=>(x||"").normalize("NFD").replace(/[^A-Za-z]/g,"");const w=(profile.name||"").trim().split(/\s+/).map(L).filter(Boolean);
- if(!w.length)return "";if(w.length===1)return w[0].slice(0,4).toUpperCase();return (w[0][0]+w[w.length-1].slice(0,3)).toUpperCase()}
-function clinicCode(){if(!profile)return "";return profile.codeOverride||nameCode()}
-function forTokens(who){return (who||"").toLowerCase().replace(/’/g,"'").split(/[,;\/&+]|\band\b/).map(x=>x.trim()).filter(Boolean)}
-const ALLWORDS=/^(everyone|all|all teams|everybody)$/;
-function sportWords(s){const n=s.n.toLowerCase(),g=s.who==="Men"?["men's","mens","men"]:["women's","womens","women"];return [s.id,...g.map(x=>x+" "+n)]}
-function tokenSports(tk){return SPORTS.filter(s=>sportWords(s).includes(tk)||s.n.toLowerCase()===tk)}
-function isCodeToken(tk){return /^[a-z0-9]{3,6}$/.test(tk)&&!tokenSports(tk).length&&!/^(staff|athletes?|coaches|everyone|all)$/.test(tk)&&!SPORTS.some(s=>s.pos.some(p=>p.toLowerCase()===tk))}
-function forMe(who){const T=forTokens(who);if(!T.length||T.some(x=>ALLWORDS.test(x)))return true;
- const staff=isStaff();if(T.includes("staff")&&staff)return true;if(T.some(x=>/^athletes?$/.test(x))&&!staff)return true;
- const code=clinicCode().toLowerCase();if(code&&T.includes(code))return true;
- if(T.some(x=>tokenSports(x).some(s=>s.id===profile.sport)))return true;
- const pos=(profile.position||"").toLowerCase();if(pos&&T.includes(pos))return true;return false}
-function forLabel(who){const T=forTokens(who);if(!T.length||T.some(x=>ALLWORDS.test(x)))return "Everyone";
- if(T.every(isCodeToken))return isStaff()&&!T.includes(clinicCode().toLowerCase())?"Code "+who.toUpperCase():"Just for you";return who}
+function loadSheets(){const s=S();loadSheet("team",s.teamSheet,annRows);loadSheet("at",s.atSheet,annRows);loadSheet("prog",s.progSheet,progRows);loadSheet("nut",s.nutSheet,annRows)}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){loadSheets();staffFlush()}});
 function syncAgo(t){const m=Math.round((Date.now()-new Date(t))/60000);return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":fmtDate(t.slice(0,10))}
-function sheetAnns(){return S().annSheet&&SHEET.ann?SHEET.ann.rows.filter(a=>liveRow(a.when,a.hide,a.show)&&(isStaff()||forMe(a.who))).sort((a,b)=>(b.when||"").localeCompare(a.when||"")):[]}
-function allAnns(){return [...sheetAnns(),...DATA.announcements]}
-function myRx(types){const L=S().rxSheet&&SHEET.rx?SHEET.rx.rows:[];return L.filter(p=>liveRow(p.when,p.hide,p.show)&&forMe(p.who)&&(!types||types.includes(p.type)))}
-function staffRx(){const L=S().rxSheet&&SHEET.rx?SHEET.rx.rows:[];return L.filter(p=>liveRow(p.when,p.hide,p.show))}
-function rxDone(id,i){return ((RXDONE[isoToday()]||{})[id]||[]).includes(i)}
-function rxCard(p,preview){const done=p.ex.filter((_,i)=>rxDone(p.id,i)).length,lab=forLabel(p.who);
- return `<div class="card stack rx"><div class="row"><span class="chip ${p.type==="Nutrition"?"gold":"info"}">${p.type==="Nutrition"?"Nutrition":p.type==="PT"?"Physical therapy":"Athletic training"}</span><span class="grow"></span>${preview?"":`<span class="stamp">${done}/${p.ex.length} today</span>`}</div>
-  <div><b>${esc(p.name)}</b><p class="stamp">${esc([lab!=="Everyone"?lab:"",p.from?"From "+p.from:""].filter(Boolean).join(" · "))}</p></div>
-  <div class="stack" style="gap:6px">${p.ex.map((x,i)=>{const on=rxDone(p.id,i);return `<div class="rx-item">${preview?`<span class="mpn">${i+1}</span>`:`<button class="rx-check" data-rx="${esc(p.id)}" data-rxi="${i}" aria-pressed="${on}" aria-label="Done: ${esc(x.n)}">${on?"✓":""}</button>`}
-   <div class="grow"><b class="small">${esc(x.n)}</b>${x.dose||x.at?`<span class="stamp"> ${esc([x.dose,x.at].filter(Boolean).join(" · "))}</span>`:""}${x.cue?`<p class="muted small">${esc(x.cue)}</p>`:""}${x.video?`<a class="linkbtn small" href="${esc(x.video)}" target="_blank" rel="noopener">Watch demo ›</a>`:""}</div></div>`}).join("")}</div></div>`}
-function vMyPlan(){const L=myRx();if(!L.length)return "";return `<section><h2>Your plan</h2><div class="stack">${L.map(p=>rxCard(p)).join("")}</div></section>`}
-function vRxStaff(){const L=staffRx();
- return `<section><h2>Prescriptions</h2><p class="muted small">Everything live on the Prescriptions tab, as athletes see it. Add rows in the Google Sheet; changes show in about 5 minutes.</p>
-  ${L.length?`<div class="stack">${L.map(p=>rxCard(p,true)).join("")}</div>`:`<div class="card"><p class="muted small">${S().rxSheet?"No prescriptions live right now.":"The Google Sheet isn't connected yet."}</p></div>`}</section>`}
+/* Code: first initial + first three letters of last name (Jordan Lee -> JLEE). A number is added for duplicates (in the locker). */
+function nameParts(){const w=(profile.name||"").trim().split(/\s+/);return {first:profile.first||w[0]||"",last:profile.last||(w.length>1?w.slice(1).join(" "):"")}}
+function nameCode(){const L=x=>(x||"").normalize("NFD").replace(/[^A-Za-z]/g,"");const {first,last}=nameParts(),f=L(first),l=L(last);
+ if(!f&&!l)return "";if(!l)return f.slice(0,4).toUpperCase();return (f[0]+l.slice(0,3)).toUpperCase()}
+function clinicCode(){if(!profile)return "";return profile.codeOverride||nameCode()}
+const lc=x=>(x||"").toLowerCase().replace(/’/g,"'").trim();
+function forTokens(who){return (who||"").split(/[,;]/).map(x=>x.trim()).filter(Boolean)}
+function sportByLabel(x){x=lc(x);return SPORTS.find(s=>lc(sportLabel(s))===x||s.id===x||lc(s.n)===x&&SPORTS.filter(z=>lc(z.n)===x).length===1)}
+/* What one "For" token means: {all|athletes|staff|code|sport|pos} */
+function forParse(tok){const x=lc(tok);
+ if(!x||/^(everyone|all|everybody|all teams)$/.test(x))return {k:"all"};if(/^athletes?$/.test(x))return {k:"athletes"};if(x==="staff")return {k:"staff"};
+ let m=x.match(/^team\s*·\s*(.+)$/);if(m){const s=sportByLabel(m[1]);return s?{k:"sport",s:s.id}:{k:"none"}}
+ m=x.match(/^position\s*·\s*(.+?)\s*·\s*(.+)$/);if(m){const s=sportByLabel(m[1]);return s?{k:"pos",s:s.id,p:m[2]}:{k:"none"}}
+ m=x.match(/^([a-z0-9]{3,6})\s*·/);if(m)return {k:"code",c:m[1]};
+ const s=sportByLabel(x);if(s)return {k:"sport",s:s.id};
+ if(SPORTS.some(z=>z.pos.some(p=>lc(p)===x)))return {k:"pos",s:"",p:x};
+ if(/^[a-z0-9]{3,6}$/.test(x))return {k:"code",c:x};return {k:"none"}}
+function forMe(who){const T=forTokens(who);if(!T.length)return true;const staff=isStaff(),code=lc(clinicCode()),pos=lc(profile.position);
+ return T.map(forParse).some(f=>f.k==="all"||(f.k==="athletes"&&!staff)||(f.k==="staff"&&staff)||(f.k==="code"&&f.c===code)||(f.k==="sport"&&f.s===profile.sport)||(f.k==="pos"&&pos===lc(f.p)&&(!f.s||f.s===profile.sport)))}
+function forLabel(who){const T=forTokens(who),F=T.map(forParse);if(!T.length||F.some(f=>f.k==="all"))return "";
+ if(isStaff())return who;if(F.some(f=>f.k==="code"&&f.c===lc(clinicCode())))return "Just for you";
+ const f=F.find(f=>f.k==="pos"&&lc(f.p)===lc(profile.position))||F.find(f=>f.k==="sport");return f?(f.k==="pos"?profile.position+"s":"Your team"):""}
+const seeAll=()=>isStaff();
+function rowsFor(kind){const L=SHEET[kind]?SHEET[kind].rows:[];return L.filter(a=>liveRow(a.when,a.hide,a.show)&&(seeAll()||forMe(a.who))).sort((a,b)=>(b.when||"").localeCompare(a.when||""))}
+function allAnns(){const team=S().teamSheet&&SHEET.team?rowsFor("team"):[],nut=S().nutSheet&&SHEET.nut?rowsFor("nut").slice(0,1).map(a=>({...a,tag:a.tag||"Nutrition"})):[];return [...team,...nut,...(team.length?[]:DATA.announcements)]}
+function myPrograms(){const L=SHEET.prog?SHEET.prog.rows:[];return L.filter(pg=>seeAll()?true:forMe(pg.who))}
+function progDone(id,i){return ((PROGDONE[isoToday()]||{})[id]||[]).includes(i)}
+let progDay={};
+const PHASE_ORDER={"":0,"anytime":0,"pre-practice":1,"before practice":1,"post-practice":2,"after practice":2};
+function progCurDay(pg){const D=[...new Set(pg.ex.map(x=>x.day))];return D.includes(progDay[pg.id])?progDay[pg.id]:D[0]}
+function setChips(sets,reps){const S=(reps||"").split(/[\/,]/).map(x=>x.trim()).filter(Boolean);
+ if(S.length>1)return `<span class="setchips">${S.map(x=>`<span>${esc(x)}</span>`).join("")}</span>`;const n=parseInt(sets,10);
+ return sets||reps?`<span class="dose">${esc([sets?sets+(n?" ×":""):"",reps].filter(Boolean).join(" "))}</span>`:""}
+function progCard(pg){const D=[...new Set(pg.ex.map(x=>x.day))],cur=progCurDay(pg),idx=pg.ex.map((x,i)=>i).filter(i=>pg.ex[i].day===cur),done=idx.filter(i=>progDone(pg.id,i)).length,lab=forLabel(pg.who);
+ const phases=[...new Set(idx.map(i=>pg.ex[i].phase))].sort((a,b)=>(PHASE_ORDER[lc(a)]??3)-(PHASE_ORDER[lc(b)]??3));
+ const ex=i=>{const x=pg.ex[i],on=progDone(pg.id,i);return `<div class="pex"><div class="row" style="align-items:flex-start"><div class="grow"><b>${esc(x.n)}</b> ${setChips(x.sets,x.reps)}${x.cue?`<p class="muted small">${esc(x.cue)}</p>`:""}${x.video?`<a class="linkbtn small" href="${esc(x.video)}" target="_blank" rel="noopener">Watch demo ›</a>`:""}</div>
+  <button class="rx-check" data-prog="${esc(pg.id)}" data-progi="${i}" aria-pressed="${on}" aria-label="Done: ${esc(x.n)}">${on?"✓":""}</button></div></div>`};
+ return `<div class="card stack prog"><div class="row"><span class="chip ${pg.type==="PT"?"info":"gold"}">${pg.type==="PT"?"Physical therapy":"Athletic training"}</span><span class="grow"></span><span class="stamp">${done}/${idx.length} today</span></div>
+  <div><h3>${esc(pg.name)}</h3><p class="stamp">${esc([lab,pg.when,pg.from?"From "+pg.from:""].filter(Boolean).join(" · "))}</p></div>
+  ${D.length>1?`<div class="choice">${D.map(d=>`<button type="button" data-progday="${esc(pg.id)}" data-day="${esc(d)}" aria-pressed="${d===cur}">${esc(d||"Other")}</button>`).join("")}</div>`:""}
+  ${phases.map(ph=>`${ph?`<span class="eyebrow">${esc(ph)}</span>`:""}${idx.filter(i=>pg.ex[i].phase===ph).map(ex).join("")}`).join("")}</div>`}
+function vProgSummary(){if(isStaff())return "";const L=myPrograms();if(!L.length)return "";
+ const tot=L.reduce((a,pg)=>{const c=progCurDay(pg),I=pg.ex.map((x,i)=>i).filter(i=>pg.ex[i].day===c);return [a[0]+I.filter(i=>progDone(pg.id,i)).length,a[1]+I.length]},[0,0]);
+ return `<section><h2>Your programs</h2><button class="card row" style="width:100%;text-align:left;border:0;cursor:pointer" data-go="training"><div class="grow"><b>${L.map(x=>esc(x.name)).join(" · ")}</b><p class="stamp">From the athletic trainers · ${tot[0]}/${tot[1]} done today</p></div><span class="linkbtn">Open ›</span></button></section>`}
+/* ===== Automatic staff sharing (after consent at sign-up). Goes to a PRIVATE staff sheet through the Apps Script; never to the public sheet. ===== */
+function devId(){let id=store.get("devid",null);if(!id){id=Math.random().toString(36).slice(2,12)+Date.now().toString(36);store.set("devid",id)}return id}
+function staffSend(o){if(!profile||!profile.consentAt)return;const {first,last}=nameParts();
+ const Q=store.get("staffq",[]);Q.push({...o,id:devId(),code:clinicCode(),name:first+" "+last,team:isStaff()?"Staff":sportLabel(sportById(profile.sport)),position:isStaff()?(profile.title||"Staff"):(profile.position||"")});store.set("staffq",Q.slice(-400));staffFlush()}
+let staffBusy=false;
+async function staffFlush(){if(staffBusy||!S().rosterURL)return;staffBusy=true;try{let Q=store.get("staffq",[]);
+  while(Q.length){try{await fetch(S().rosterURL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Q[0])})}catch(e){break}
+   Q=store.get("staffq",[]);Q.shift();store.set("staffq",Q)}}finally{staffBusy=false}}
+function rosterSync(){if(!profile||!profile.consentAt)return;const {first,last}=nameParts();
+ staffSend({t:"roster",first,last,role:isStaff()?"Staff":"Athlete",teamName:isStaff()?(profile.sport==="all"?"All teams":sportLabel(sportById(profile.sport))):sportLabel(sportById(profile.sport)),pos:isStaff()?(profile.title||""):(profile.position||""),num:profile.num||""})}
+let SHSNAP=store.get("shsnap",{}),shareT=null;
+function shareSoon(){clearTimeout(shareT);shareT=setTimeout(shareDays,1500)}
+function shareDays(){if(!profile||!profile.consentAt)return;const days=[...new Set([isoToday(),typeof jDay!=="undefined"?jDay:isoToday()])];
+ days.forEach(iso=>{const snap=SHSNAP[iso]||(SHSNAP[iso]={e:{},w:null});const cur={};
+  (J.days[iso]||[]).forEach(e=>{const what=(e.what||(e.photo?"(photo only)":"")).slice(0,120),h=[e.occ,e.time,what,e.gut||""].join("|");cur[e.id]=h;
+   if(snap.e[e.id]!==h)staffSend({t:"meal",date:iso,occ:e.occ||"",time:e.time||"",what,gut:e.gut||"",plan:e.note==="From meal plan"?"Yes":"",entryId:e.id})});
+  Object.keys(snap.e).forEach(id=>{if(!cur[id])staffSend({t:"mealdel",entryId:id})});snap.e=cur;
+  const h=H[iso];if(h){const oz=h.n*BOTTLE;if(snap.w!==oz){staffSend({t:"water",date:iso,bottles:h.n,size:BOTTLE,oz,goal:hydroGoal(h)});snap.w=oz}}});
+ Object.keys(SHSNAP).forEach(k=>{if(new Date(isoToday())-new Date(k)>10*864e5)delete SHSNAP[k]});store.set("shsnap",SHSNAP)}
+{const _set=store.set;store.set=function(k,v){const ok=_set.call(store,k,v);if(ok&&(k==="journal"||k==="hydro"))shareSoon();return ok}}
+function vConsent(){return `<div class="view"><div><p class="eyebrow">Your data</p><h1 style="margin-top:4px">What the app shares</h1></div>${privacyHTML()}
+ <button class="btn block" data-consent="1">I understand</button></div>`}
+function privacyHTML(){return `<div class="card stack"><p class="small">So the dietitian and athletic trainers can support your training, the app shares what you log with Cypress athletics staff. It goes to a private staff sheet only they can open.</p>
+ <div class="stack" style="gap:4px"><span class="eyebrow">Shared with staff</span><p class="muted small">Your name, team, position and number · meals you log · water · program exercises you check off</p></div>
+ <div class="stack" style="gap:4px"><span class="eyebrow">Stays on this phone</span><p class="muted small">Journal notes and photos · allergies and eating style · everything else</p></div>
+ <p class="stamp">Questions about your data? Ask ${esc(S().rdName||"the dietitian")} or ${esc(atNames(" or "))}.</p></div>`}
 loadSheets();
 setInterval(()=>{const a=document.activeElement;if(tab==="home"&&profile&&!(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))){const c=charge[isoToday()];if(c&&c.type==="game"&&c.gameTime)render()}},30000);
 
@@ -1068,6 +1124,7 @@ function render(){
  applyPrefs();paintBg();
  const app=document.getElementById("app");
  if(!profile||draft.editingProfile){app.innerHTML=vOnboard();document.getElementById("tabs").innerHTML="";return}
+ if(!profile.consentAt){app.innerHTML=topbar()+vConsent();renderTabs(true);return}
  if(needsStop()){app.innerHTML=topbar()+vStop();renderTabs(true);return}
  const V={home:vHome,eat:vEat,training:vTraining,journal:vJournal,rd:vRD,learn:vLearn,me:vMe,edit:vEdit}[tab]||vHome;
  app.innerHTML=topbar()+V();
@@ -1086,7 +1143,7 @@ function renderTabs(hide){
 }
 
 function readOnboard(){const p=draft.p,g=id=>document.getElementById(id);if(!p)return;
- if(g("f-name"))p.name=g("f-name").value;if(g("f-sport"))p.sport=g("f-sport").value;if(g("f-pos"))p.position=g("f-pos").value;if(g("f-title"))p.title=g("f-title").value;if(g("f-num"))p.num=g("f-num").value.replace(/\D/g,"").slice(0,2);
+ if(g("f-first"))p.first=g("f-first").value.trim();if(g("f-last"))p.last=g("f-last").value.trim();if(p.first||p.last)p.name=[p.first,p.last].filter(Boolean).join(" ");if(g("f-consent")&&g("f-consent").checked&&!p.consentAt)p.consentAt=new Date().toISOString();if(g("f-sport"))p.sport=g("f-sport").value;if(g("f-pos"))p.position=g("f-pos").value;if(g("f-title"))p.title=g("f-title").value;if(g("f-num"))p.num=g("f-num").value.replace(/\D/g,"").slice(0,2);
  if(g("f-area"))p.area=g("f-area").value;if(g("f-other"))p.other=g("f-other").value;if(g("f-diet"))p.diet=g("f-diet").value}
 function vOnboard(){
  const p=draft.p||(draft.p=profile?JSON.parse(JSON.stringify(profile)):{role:"athlete",name:"",sport:"",position:"",title:"",area:"",allergies:[],other:"",diet:"No restrictions",ack:false});
@@ -1098,7 +1155,7 @@ function vOnboard(){
   ${isStandalone()||draft.editingProfile?"":`<p class="small a2tip"><span class="pdot"></span> After you sign up, add the app to your Home Screen. We'll show you how.</p>`}
   <form class="card stack" id="f-onboard">
    <div class="stack" style="gap:6px"><span class="eyebrow">I'm</span><div class="choice" data-pick="role">${[["athlete","An athlete"],["staff","Staff"]].map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${p.role===v}">${l}</button>`).join("")}</div></div>
-   <label for="f-name">Your name<input id="f-name" required autocomplete="name" value="${esc(p.name)}" placeholder="First and last"></label>
+   <div class="row" style="gap:8px"><label class="grow" for="f-first">First name<input id="f-first" required autocomplete="given-name" value="${esc(p.first||(p.name||"").split(" ")[0]||"")}"></label><label class="grow" for="f-last">Last name<input id="f-last" required autocomplete="family-name" value="${esc(p.last||(p.name||"").split(" ").slice(1).join(" "))}"></label></div>
    ${staff?`<label for="f-title">Your role<select id="f-title"><option value="">Choose your role</option>${STAFF_ROLES.map(r=>`<option ${p.title===r?"selected":""}>${r}</option>`).join("")}</select></label>`:""}
    <label for="f-sport">${staff?"Team you work with":"Sport"}<select id="f-sport" required><option value="">${staff?"Choose a team":"Choose your team"}</option>${staff?`<option value="all" ${p.sport==="all"?"selected":""}>All teams</option>`:""}${SPORTS.map(s=>`<option value="${s.id}" ${p.sport===s.id?"selected":""}>${esc(sportLabel(s))}</option>`).join("")}</select></label>
    ${!staff&&sp&&sp.pos.length?`<label for="f-pos">Position / event<select id="f-pos"><option value="">Optional</option>${sp.pos.map(x=>`<option ${p.position===x?"selected":""}>${esc(x)}</option>`).join("")}</select></label>`:""}
@@ -1107,9 +1164,9 @@ function vOnboard(){
    <div class="stack" style="gap:6px"><span class="eyebrow">Food allergies</span><div class="choice" data-pick="allergies">${ALLERGENS.map(a=>`<button type="button" data-v="${a}" aria-pressed="${p.allergies.includes(a)}">${a}</button>`).join("")}</div></div>
    <label for="f-other">Other allergy or medical diet<input id="f-other" value="${esc(p.other)}" placeholder="e.g. celiac, kiwi, diabetes"></label>
    <label for="f-diet">Eating style<select id="f-diet">${DIETS.map(d=>`<option ${p.diet===d?"selected":""}>${d}</option>`).join("")}</select></label>
+   ${draft.editingProfile?"":`<div class="stack" style="gap:6px"><span class="eyebrow">Your data</span>${privacyHTML()}<label class="consent" for="f-consent"><input type="checkbox" id="f-consent" required ${p.consentAt?"checked":""}> <span>I understand what's shared with staff</span></label></div>`}
    <button class="btn block" type="submit">${draft.editingProfile?"Save changes":"Get started"}</button>
    ${draft.editingProfile?`<button type="button" class="btn ghost block" data-cancelprofile="1">Cancel</button>`:""}
-   <p class="stamp">Saved on this phone only.</p>
   </form></div>`;
 }
 function vStop(){
@@ -1140,8 +1197,8 @@ function vHome(){
    
   </div>
   ${c.type==="game"?vCountdown(c):""}
-  ${vMyPlan()}
-  ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.ann&&S().annSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.ann.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who)!=="Everyone")?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)!=="Everyone"?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
+  ${vProgSummary()}
+  ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   <section><h2>What's on deck?</h2>
    <div class="seg" data-daytype="1">${DAYTYPES.map(([id,l])=>`<button data-dt="${id}" aria-pressed="${c.type===id}">${l}</button>`).join("")}</div>
    <div class="card stack"><p><b>${esc(plan.plate)}</b></p>
@@ -1291,9 +1348,171 @@ function planType(iso){iso=iso||isoToday();if(PLANPREF.days[iso])return PLANPREF
 const BUDGET=new Set(["banana","apple","orange","fruit","veg","onion","broccoli","greenbeans","potatoes","slaw","eggs","chicken","turkeyground","tuna","tofu","oats","bread","tortflour","tortcorn","rice","pasta","bagels","pretzels","crackers","milk","yogurt","chocmilk","pb","honey","salsa","beans","lentils","tomato","soysauce","curry","spice","applesauce","oil","cheese"]);
 function mealOptions(bank){const al=myAllergens(),veg=PLANPREF.veg||["Vegetarian","Vegan"].includes(profile.diet);let L=(MEALBANK[bank]||[]).filter(x=>!x.a.some(a=>al.includes(a))&&(!veg||x.v));
  if(PLANPREF.budget&&L.length){const cost=x=>(x.g||[]).filter(k=>!BUDGET.has(k)).length;const min=Math.min(...L.map(cost));L=L.filter(x=>cost(x)===min)}
- if(PLANPREF.built){const P=PLANPREF.pick[bank]||[],M=L.filter(x=>P.includes(x.n));if(M.length)return M}return L}
+ if(PLANPREF.built){const P=PLANPREF.pick[bank]||[],M=L.filter(x=>P.includes(x.n));if(M.length)return M}
+ try{const R=L.filter(isRec);if(R.length)L=[...R,...L.filter(x=>!isRec(x))]}catch(e){}return L}
 function mealChoices(bank){const al=myAllergens(),veg=PLANPREF.veg||["Vegetarian","Vegan"].includes(profile.diet);let L=(MEALBANK[bank]||[]).filter(x=>!x.a.some(a=>al.includes(a))&&(!veg||x.v));
  if(PLANPREF.budget&&L.length){const cost=x=>(x.g||[]).filter(k=>!BUDGET.has(k)).length;L=[...L].sort((a,b)=>cost(a)-cost(b))}return L}
+
+/* ===== Meal prep (store batch recipes) + Grocery List, ported from the Orbit app ===== */
+const tr=x=>x;
+function isVeg(){return !!PLANPREF.veg||["Vegetarian","Vegan"].includes(profile&&profile.diet)}
+/* Dietitian meal recommendations: Meal 1-3 columns on the Nutrition tab name meals already in the app (exact names) */
+function recSet(){const L=S().nutSheet&&SHEET.nut?rowsFor("nut"):[];const s=new Set();L.filter(a=>forMe(a.who)).forEach(a=>(a.meals||[]).forEach(m=>s.add(m.toLowerCase())));return s}
+let REC_CACHE=null,REC_KEY=null;
+function isRec(m){const k=(SHEET.nut?SHEET.nut.fetched:"none")+"|"+(profile&&profile.sport)+"|"+clinicCode();if(k!==REC_KEY||!REC_CACHE){REC_KEY=k;try{REC_CACHE=recSet()}catch(e){REC_CACHE=new Set()}}return !!m&&REC_CACHE.has(String(m.n).toLowerCase())}
+function mealFind(name){const q=String(name||"").trim().toLowerCase();if(!q)return null;
+  for(const b in MEALBANK){const x=MEALBANK[b].find(m=>m.n.toLowerCase()===q);if(x)return {kind:"bank",bank:b,x}}
+  for(const st of MEALPREP){const x=st.r.find(m=>m.n.toLowerCase()===q);if(x)return {kind:"prep",store:st.k,storeName:st.n,x}}return null}
+function nutPostsHTML(){const L=S().nutSheet&&SHEET.nut?rowsFor("nut").slice(0,3):[];if(!L.length)return "";
+ return `<section><div class="row"><h2 class="grow">From ${esc(S().rdName||"the dietitian")}</h2><span class="stamp">Synced ${esc(syncAgo(SHEET.nut.fetched))}</span></div><div class="stack">${L.map(a=>{const l=forLabel(a.who);return `<div class="card stack" style="gap:6px"><div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${l?`<span class="chip gold">${esc(l)}</span>`:""}</div><b>${esc(a.t)}</b>${a.d?`<p class="small">${esc(a.d)}</p>`:""}
+  ${a.meals&&a.meals.length?`<div class="stack" style="gap:4px"><span class="eyebrow">Recommended meals</span>${a.meals.map(n=>{const f=mealFind(n);if(!f)return isStaff()?`<p class="chip stop" style="align-self:flex-start">${esc(n)}: not in the app, check the spelling</p>`:"";
+   const hit=f.x.a.filter(x=>myAllergens().includes(x));return `<details class="mdet"><summary>★ ${esc(f.x.n)} <span class="stamp">${f.kind==="prep"?"Meal prep · "+esc(f.storeName):"Meal plan"}</span></summary><div class="ans">${hit.length?`<p class="chip stop">Contains ${esc(hit.join(", "))}</p>`:""}<p class="small">${esc(f.x.r||f.x.p||"")}</p>${f.kind==="prep"?`<button class="btn sm" data-mpopen="${esc(f.store)}|${esc(f.x.n)}">Open in Meal prep</button>`:""}</div></details>`}).join("")}</div>`:""}</div>`}).join("")}</div></section>`}
+const MEALPREP=[
+ {k:"costco",n:"Costco",r:[
+  {n:"Teriyaki Chicken Rice Bowls",m:[860,119,61,15],a:["Soy","Wheat/Gluten","Sesame"],g:["2 lb chicken breast","3 cups dry jasmine rice","1 lb broccoli","3/4 cup teriyaki sauce","1 tbsp sesame oil"],p:"Cook chicken and rice; steam broccoli. Toss chicken with teriyaki sauce and portion."},
+  {n:"Sous Vide Steak & Rice Bowls",m:[775,111,51,15],a:[],g:["1 1/2 lb fully cooked sous vide sliced sirloin (Cuisine Solutions, refrigerated deli)","2 1/2 cups dry jasmine rice","1 lb broccoli","2 bell peppers","1 tbsp olive oil","1 cup salsa verde"],p:"Cook rice. Roast broccoli and sliced peppers with the oil at 425°F for 20 minutes. The steak is already cooked: sear the slices 1 minute per side in a hot pan, or just warm them with the bowl. Portion and top with salsa verde.",tip:"The fastest protein at Costco: no raw meat to cook. Label is about 120 kcal and 19 g protein per 3 oz; check yours. Unopened, it keeps to the package date."},
+  {n:"Chicken Pesto Pasta",m:[800,91,60,22],a:["Wheat/Gluten","Dairy","Tree nut"],g:["1 1/2 lb chicken breast","1 lb dry penne pasta","6 tbsp basil pesto","1 pint cherry tomatoes","4 cups spinach","1/2 cup Parmesan"],p:"Cook pasta and chicken. Toss with pesto, tomatoes, spinach and Parmesan."},
+  {n:"Beef & Sweet Potato Power Bowls",m:[740,90,55,21],a:[],g:["2 lb 93% lean ground beef","2 lb sweet potatoes","1 cup dry brown rice","1 lb green beans","1 tbsp olive oil","Garlic and preferred seasoning"],p:"Roast sweet potatoes and green beans; brown beef and serve over cooked rice."},
+  {n:"Rotisserie Chicken Burrito Bowls",m:[750,78,58,22],a:["Dairy"],g:["1 rotisserie chicken (skin removed)","1 1/2 cups dry white rice","1 can black beans","1 cup salsa","1/2 cup shredded Mexican-blend cheese","1 avocado"],p:"Pull the meat off the chicken and discard the skin. Cook rice and warm the beans. Portion rice, beans and chicken; top with salsa and cheese.",tip:"Add avocado when you eat so it stays green."},
+  {n:"Lemon Salmon, Quinoa & Broccoli",m:[790,70,56,34],a:["Fish"],g:["4 frozen salmon portions (6 oz)","2 cups dry quinoa","2 lb broccoli","2 tbsp olive oil","1 lemon"],p:"Bake salmon at 400°F for 12–15 min. Cook quinoa. Roast broccoli with oil at 425°F for 20 min. Squeeze lemon over before eating."},
+  {n:"Cajun Shrimp, Rice & Corn Bowls",m:[785,119,57,10],a:["Shellfish"],g:["2 lb frozen raw peeled shrimp (Kirkland, tail-off)","2 1/2 cups dry jasmine rice","2 cups frozen corn","3 bell peppers","2 tbsp olive oil","Cajun seasoning","2 limes"],p:"Thaw shrimp in a colander under cold running water for 5-10 minutes; pat dry and toss with half the oil and the Cajun seasoning. Cook rice. Sauté sliced peppers and corn in the rest of the oil for 6 minutes. Cook shrimp in a hot pan 2 minutes per side, until pink and opaque. Portion over rice and squeeze lime over the top.",tip:"Shrimp cooks in 4 minutes and has almost no fat, so this is one of the leanest bowls in the app. Reheat gently (1 minute, then stir) so it doesn't go rubbery. Cajun blends vary a lot in salt: pick a lower-sodium one if you've been told to watch salt."},
+  {n:"Turkey Bolognese with Spaghetti",m:[810,102,78,12],a:["Wheat/Gluten","Dairy"],g:["2 lb 99% lean ground turkey breast","1 lb dry spaghetti","1 jar marinara sauce (24 oz)","1 onion","4 cups spinach","1/2 cup Parmesan"],p:"Brown turkey with diced onion, add marinara and simmer 10 min; stir in spinach. Cook spaghetti, toss with sauce and portion. Top with Parmesan."},
+  {n:"Chicken Egg Fried Rice",m:[745,86,57,16],a:["Egg","Soy","Wheat/Gluten"],g:["2 cups dry jasmine rice","1 1/2 lb chicken breast","6 eggs","2 cups frozen peas and carrots","3 tbsp low-sodium soy sauce","1 tbsp vegetable oil"],p:"Cook rice a day ahead if you can (day-old rice fries best). Cook diced chicken, push aside, scramble eggs, then add rice, peas and carrots and soy sauce. Stir-fry 5 min and portion."},
+  {n:"Black Bean & Sweet Potato Quinoa Bowls (vegetarian)",v:1,m:[865,120,42,23],a:["Dairy","Egg"],g:["2 cans black beans","2 lb sweet potatoes","1 1/2 cups dry quinoa","8 eggs","1 cup shredded Mexican-blend cheese","1 cup salsa"],p:"Roast cubed sweet potatoes at 425°F for 25 min. Cook quinoa and warm the beans. Hard-boil the eggs (2 per bowl). Portion; top with cheese and salsa.",tip:"The eggs and cheese bring the protein. Skip them and protein drops to about 30 g."},
+  {n:"Tofu & Edamame Teriyaki Stir-Fry (vegetarian)",v:1,m:[820,106,46,23],a:["Soy","Wheat/Gluten"],g:["3 blocks extra-firm tofu","2 cups shelled edamame","2 cups dry jasmine rice","1 lb frozen stir-fry vegetables","1/2 cup teriyaki sauce","1 tbsp vegetable oil"],p:"Press and cube tofu; bake at 425°F for 25 min or pan-fry until golden. Stir-fry vegetables and edamame 5 min, add tofu and teriyaki and toss. Portion over rice."},
+  {n:"Egg & Black Bean Burritos (vegetarian)",v:1,m:[785,82,44,32],a:["Egg","Wheat/Gluten","Dairy"],g:["12 eggs","2 cans black beans","8 large flour tortillas","1 cup shredded Mexican-blend cheese","1 cup salsa"],p:"Scramble the eggs and warm the beans. Fill each tortilla with eggs, beans and cheese, roll tight and wrap in foil. Two burritos per portion. Reheat from the fridge in 2 min.",tip:"Freezes well: good for days 4 and later."}]},
+ {k:"tj",n:"Trader Joe's",r:[
+  {n:"Garlic Shrimp Orzo with Spinach",m:[727, 90, 66, 13],a:["Shellfish", "Wheat/Gluten", "Dairy"],g:["2 lb frozen raw peeled shrimp", "1 lb dry orzo", "4 cups spinach", "1 pint cherry tomatoes", "2 tbsp olive oil", "1/2 cup grated Parmesan", "6 cloves garlic", "1 lemon"],p:"Thaw shrimp under cold running water. Cook orzo. Sauté sliced garlic in the oil 1 minute, add shrimp and cook 2 minutes per side. Stir in orzo, halved tomatoes and spinach until it wilts. Finish with lemon and Parmesan.",tip:"Trader Joe's frozen raw shrimp thaws in about 10 minutes, so this is a 25-minute batch."},
+  {n:"Tempeh & Black Bean Burrito Bowls (vegetarian)",v:1,m:[727, 98, 50, 18],a:["Soy", "Dairy"],g:["2 packages organic tempeh (8 oz)", "1 can black beans", "1 1/2 cups dry white rice", "1 cup frozen corn", "1 cup salsa", "2 cups plain Greek yogurt", "1/2 cup shredded cheese", "Taco seasoning"],p:"Crumble tempeh and brown with taco seasoning and a splash of water, 8 minutes. Cook rice and warm beans and corn. Portion; top with salsa, cheese and a big spoon of Greek yogurt when you eat.",tip:"Two cups of Greek yogurt as the topping bring this to about 50 g protein a portion."},
+  {n:"Mediterranean Chicken Shawarma Bowls",m:[795,84,57,24],a:["Wheat/Gluten","Sesame","Dairy"],g:["2 lb shawarma-marinated chicken thighs","1 1/2 cups dry basmati rice","1 cucumber","1 pint cherry tomatoes","1/2 cup hummus","2 pita breads","1/2 cup tzatziki sauce"],p:"Roast chicken, cook rice, and portion with chopped vegetables and half a pita each. Pack hummus and tzatziki separately."},
+  {n:"Korean Beef Bulgogi Bowls",m:[775,88,61,22],a:["Soy","Wheat/Gluten","Sesame"],g:["2 lb 93% lean ground beef","1 3/4 cups dry jasmine rice","2 cups shelled edamame","2 carrots","6 tbsp bulgogi sauce","1 tbsp sesame seeds"],p:"Brown beef with bulgogi sauce; portion with cooked rice, edamame and shredded carrots."},
+  {n:"Mandarin Orange Chicken & Fried Rice",m:[850,105,39,30],a:["Wheat/Gluten","Soy","Egg"],g:["2 bags frozen Mandarin Orange Chicken","2 bags frozen vegetable fried rice","1 bag shelled edamame","1 bag broccoli florets","Sesame seeds (optional)"],p:"Cook frozen items according to package directions and divide into four containers.",tip:"Lowest protein of the twelve. On heavy training days, add a Greek yogurt or a glass of milk."},
+  {n:"Chicken & Gnocchi Bake",m:[840,108,56,16],a:["Wheat/Gluten","Dairy"],g:["2 packages potato gnocchi (17.6 oz)","1 1/2 lb chicken breast","1 jar marinara sauce (24 oz)","1 cup shredded mozzarella","4 cups spinach"],p:"Brown diced chicken. Mix with uncooked gnocchi, marinara and spinach in a baking dish, top with mozzarella and bake at 400°F for 20–25 min.",tip:"Some gnocchi contain egg: check the label if that matters for you."},
+  {n:"Chicken Sausage & Pepper Pasta",m:[850,108,41,24],a:["Wheat/Gluten"],g:["2 packages fully cooked chicken sausage (4 links each)","1 lb dry penne pasta","2 bell peppers","1 onion","1 jar marinara sauce (24 oz)"],p:"Slice sausage and brown with sliced peppers and onion. Add marinara and simmer 5 min. Toss with cooked penne and portion."},
+  {n:"Lemon Pepper Salmon, Rice & Green Beans",m:[750,83,46,26],a:["Fish"],g:["4 salmon fillets (6 oz)","2 cups dry jasmine rice","1 lb green beans","1 lemon","1 tbsp olive oil","Lemon pepper seasoning"],p:"Season salmon and bake at 400°F for 12–15 min. Cook rice. Roast green beans with oil for 15 min. Add lemon before eating."},
+  {n:"Tofu Peanut Noodles (vegetarian)",v:1,m:[880,107,51,32],a:["Soy","Peanut","Wheat/Gluten"],g:["2 blocks extra-firm tofu","1 lb dry spaghetti","1/2 cup peanut butter","1/4 cup low-sodium soy sauce","2 cups shelled edamame","2 carrots","1 cucumber"],p:"Press and cube tofu, bake at 425°F for 25 min. Whisk peanut butter, soy sauce and hot water into a sauce. Toss with cooked noodles, edamame and shredded carrot. Add cucumber when you eat."},
+  {n:"Tempeh & Veggie Fried Rice (vegetarian)",v:1,m:[690,72,44,27],a:["Soy","Egg","Wheat/Gluten"],g:["2 packages organic tempeh (8 oz)","2 bags frozen vegetable fried rice","4 eggs","2 cups shelled edamame","2 tbsp low-sodium soy sauce"],p:"Crumble tempeh and brown in a pan 6–8 min. Add the frozen fried rice and edamame and cook 8 min. Push aside, scramble the eggs, stir together and finish with soy sauce."},
+  {n:"Spinach Ravioli with Lentils & Marinara (vegetarian)",v:1,m:[770,104,44,20],a:["Wheat/Gluten","Dairy","Egg"],g:["2 packages spinach & ricotta ravioli","2 packages steamed lentils (17.6 oz)","1 jar marinara sauce (24 oz)","4 cups spinach","1/2 cup Parmesan"],p:"Warm marinara with the lentils for 5 min and stir in spinach. Cook ravioli 4–5 min, drain and toss with the sauce. Top with Parmesan.",tip:"Most fresh ravioli contain egg."}]},
+ {k:"wf",n:"Whole Foods",r:[
+  {n:"Maple Dijon Salmon with Sweet Potatoes",m:[785,84,45,29],a:["Fish","Wheat/Gluten"],g:["Four 6 oz salmon fillets","2 lb sweet potatoes","1 lb asparagus","2 tbsp maple syrup","2 tbsp Dijon mustard","1 tbsp olive oil","4 whole-grain rolls"],p:"Roast sweet potatoes and asparagus; brush salmon with maple-Dijon glaze and bake until cooked."},
+  {n:"Kevin's Korean BBQ Chicken Rice Bowls",m:[740,102,53,11],a:["Soy"],g:["2 packs Kevin's Natural Foods Korean BBQ-Style Chicken (16 oz, sous vide)","2 cups dry jasmine rice","2 cups shelled edamame","1 lb snap peas or broccoli","2 carrots"],p:"Cook rice and edamame; steam the snap peas and slice the carrots. Kevin's chicken is fully cooked: warm it in a pan with its sauce for 5 minutes, then portion over rice with the vegetables.",tip:"Kevin's sous vide proteins are fully cooked, so this is about 20 minutes start to finish. Label is about 160 kcal and 22 g protein per 5 oz; check yours. Most flavors use coconut aminos instead of soy, so the soy tag here is for the edamame."},
+  {n:"Chicken Tikka Masala with Rice & Naan",m:[845,96,68,18],a:["Dairy","Wheat/Gluten"],g:["2 lb chicken breast","1 1/2 cups dry basmati rice","1 jar tikka masala simmer sauce","1 lb cauliflower","2 naan breads","1/2 cup plain Greek yogurt"],p:"Simmer chicken in sauce; cook rice and roast cauliflower. Serve with half a naan each and a spoon of yogurt."},
+  {n:"Mediterranean Salmon & Couscous Bowls",m:[790,68,49,34],a:["Fish","Wheat/Gluten","Dairy"],g:["Four 6 oz salmon fillets","1 1/2 cups dry pearl couscous","1 can chickpeas","1 cucumber","1 pint cherry tomatoes","1/4 cup feta","2 tbsp olive oil","1 lemon"],p:"Bake salmon at 400°F for 12–15 min; cook couscous. Combine with chickpeas, cucumber, tomatoes and feta; dress with olive oil and lemon."},
+  {n:"Beef & Bean Chili with Brown Rice",m:[785,97,64,18],a:[],g:["2 lb 93% lean ground beef","2 cans kidney beans","1 can crushed tomatoes (28 oz)","1 onion","1 1/2 cups dry brown rice","Chili powder and cumin"],p:"Brown beef with diced onion and spices. Add beans and tomatoes and simmer 20 min. Serve over cooked brown rice.",tip:"Chili freezes well, so it's a good pick for days 4 and later."},
+  {n:"Greek Chicken & Potatoes Sheet Pan",m:[700,67,52,25],a:["Dairy"],g:["2 lb boneless chicken thighs","3 lb baby potatoes","1 red onion","1 pint cherry tomatoes","2 tbsp olive oil","1/2 cup tzatziki","Oregano and lemon"],p:"Toss chicken, halved potatoes, onion and tomatoes with oil, oregano and lemon. Roast at 425°F for 30–35 min. Portion; add tzatziki when you eat."},
+  {n:"Shrimp & Pineapple Rice Bowls",m:[840,137,56,6],a:["Shellfish","Soy"],g:["2 lb peeled shrimp","3 cups dry jasmine rice","2 cups pineapple chunks","2 bell peppers","1/2 cup teriyaki sauce","1 tbsp vegetable oil"],p:"Cook rice. Sear shrimp 2 min per side; remove. Stir-fry peppers and pineapple, add shrimp and teriyaki and toss. Portion over rice."},
+  {n:"Lentil & Sweet Potato Curry (vegetarian)",v:1,m:[790,145,34,9],a:[],g:["2 cups dry red lentils","2 lb sweet potatoes","1 can light coconut milk","2 tbsp red curry paste","1 cup dry basmati rice","4 cups spinach"],p:"Simmer lentils, cubed sweet potato, coconut milk, curry paste and 4 cups water for 25 min. Stir in spinach. Serve over cooked rice.",tip:"Lower in protein than the others: add Greek yogurt on top or a glass of milk."},
+  {n:"Tofu Tikka Masala with Rice (vegetarian)",v:1,m:[705,79,41,25],a:["Soy","Dairy"],g:["3 blocks extra-firm tofu","1 jar tikka masala simmer sauce","1 1/2 cups dry basmati rice","1 lb cauliflower","1/2 cup plain Greek yogurt"],p:"Press and cube tofu; bake at 425°F for 20 min. Simmer with the sauce and cauliflower florets 10 min. Serve over rice with a spoon of yogurt."},
+  {n:"Veggie Frittata with Roasted Potatoes (vegetarian)",v:1,m:[750,69,43,34],a:["Egg","Dairy"],g:["16 eggs","1 cup cottage cheese","1 cup crumbled feta","4 cups spinach","2 bell peppers","3 lb baby potatoes","1 tbsp olive oil"],p:"Roast halved potatoes with oil at 425°F for 30 min. Whisk eggs with cottage cheese, stir in spinach, diced peppers and feta, pour into a baking dish and bake at 375°F for 30–35 min. Cut into 4 and portion with potatoes."}]},
+ {k:"sprouts",n:"Sprouts",r:[
+  {n:"Shrimp Fajita Bowls",m:[779, 119, 60, 6],a:["Shellfish"],g:["2 lb frozen raw peeled shrimp", "2 1/2 cups dry white rice", "3 bell peppers", "1 onion", "1 can pinto beans", "1 tbsp olive oil", "1 cup salsa", "Fajita seasoning", "2 limes"],p:"Thaw shrimp under cold running water and toss with fajita seasoning. Cook rice. Sauté sliced peppers and onion in the oil 6 minutes, push aside and cook shrimp 2 minutes per side. Warm beans. Portion; add salsa and lime when you eat.",tip:"Very lean: almost all the fat is the tablespoon of oil, so add avocado on the day if you want more."},
+  {n:"Tofu & Edamame Sesame Soba Bowls (vegetarian)",v:1,m:[720, 92, 49, 21],a:["Soy", "Wheat/Gluten", "Sesame"],g:["2 blocks extra-firm tofu", "2 cups shelled edamame", "12 oz dry soba noodles", "1 lb frozen stir-fry vegetables", "1/4 cup low-sodium soy sauce", "1 tbsp sesame oil", "2 tbsp honey", "Ginger and garlic"],p:"Press and cube tofu; bake at 425°F for 25 minutes. Cook soba and rinse cold. Stir-fry vegetables and edamame 5 minutes. Whisk soy sauce, sesame oil, honey, ginger and garlic; toss everything together and portion.",tip:"Most soba contains wheat; 100% buckwheat soba is gluten-free if you need it."},
+  {n:"Turkey Taco Burrito Bowls",m:[750,86,72,14],a:["Dairy"],g:["2 lb 99% lean ground turkey breast","1 1/2 cups dry rice","1 can black beans","1 cup corn","1/2 cup shredded cheese","Salsa","1 avocado","Taco seasoning"],p:"Brown turkey with seasoning; portion with rice, beans, corn and cheese. Add avocado when serving."},
+  {n:"Kevin's Chicken Burrito Bowls",m:[755,105,49,13],a:[],g:["2 packs Kevin's Natural Foods sous vide chicken, any flavor (16 oz)","1 1/2 cups dry white rice","1 can black beans","1 cup frozen corn","3 bell peppers","1 onion","1 cup salsa","1 avocado"],p:"Cook rice. Sauté sliced peppers and onion 8 minutes, then add the beans and corn to warm through. Warm Kevin's chicken in its sauce (it's fully cooked). Portion over rice and add salsa; add avocado on the day you eat it.",tip:"Kevin's chicken is already sous vide cooked, so there's no raw chicken to handle. Label is about 160 kcal and 22 g protein per 5 oz; check yours."},
+  {n:"Honey Garlic Chicken & Roasted Potatoes",m:[850,99,51,28],a:["Soy","Wheat/Gluten"],g:["2 lb boneless chicken thighs","3 lb baby potatoes","1 lb carrots","1/4 cup honey","1/4 cup low-sodium soy sauce","3 garlic cloves","2 tbsp olive oil"],p:"Roast potatoes and carrots. Bake chicken with honey-garlic sauce and portion."},
+  {n:"Turkey Meatballs with Marinara & Pasta",m:[880,97,61,27],a:["Wheat/Gluten","Egg","Dairy"],g:["2 lb lean ground turkey","1 lb dry pasta","1 jar marinara","1 egg","1/2 cup breadcrumbs","1/2 cup Parmesan","1 lb zucchini"],p:"Mix turkey, egg and breadcrumbs; form and bake meatballs. Cook pasta, sauté zucchini, add marinara."},
+  {n:"BBQ Chicken & Sweet Potato Bowls",m:[660,82,59,10],a:[],g:["2 lb chicken breast","2 1/2 lb sweet potatoes","1/2 cup BBQ sauce","1 lb broccoli","1 tbsp olive oil"],p:"Bake chicken at 400°F for 20–25 min, then toss with BBQ sauce. Roast cubed sweet potatoes and broccoli with oil at 425°F for 25 min. Portion."},
+  {n:"Salmon Rice Bowls with Edamame",m:[850,86,54,32],a:["Fish","Soy","Sesame"],g:["4 salmon fillets (6 oz)","2 cups dry sushi rice","2 cups shelled edamame","1 cucumber","1 avocado","1/4 cup low-sodium soy sauce","Sesame seeds"],p:"Bake salmon at 400°F for 12–15 min and flake. Cook rice. Portion rice, salmon and edamame; drizzle with soy sauce and sesame seeds. Add cucumber and avocado when you eat."},
+  {n:"Steak Fajita Bowls",m:[800,98,54,18],a:[],g:["2 lb flank steak","2 cups dry white rice","3 bell peppers","1 onion","1 can pinto beans","1 tbsp olive oil","Fajita seasoning and salsa"],p:"Season and sear steak 4–5 min per side; rest and slice thin. Sauté sliced peppers and onion. Portion over rice with warmed beans; add salsa when you eat."},
+  {n:"Chickpea Shawarma Bowls (vegetarian)",v:1,m:[760,99,32,26],a:["Wheat/Gluten","Dairy","Sesame"],g:["3 cans chickpeas","1 1/2 cups dry pearl couscous","1 cucumber","1 pint cherry tomatoes","1 cup hummus","1 cup crumbled feta","2 tbsp olive oil","Shawarma or cumin-paprika seasoning"],p:"Toss drained chickpeas with oil and seasoning; roast at 425°F for 25 min. Cook couscous. Portion; add cucumber, tomatoes, hummus and feta when you eat.",tip:"Hummus is made with tahini (sesame)."},
+  {n:"Tempeh Taco Bowls (vegetarian)",v:1,m:[685,94,40,17],a:["Soy","Dairy"],g:["2 packages tempeh (8 oz)","1 1/2 cups dry white rice","1 can black beans","1 cup corn","1/2 cup shredded cheese","1/2 cup plain Greek yogurt","Salsa and taco seasoning"],p:"Crumble tempeh and brown with taco seasoning and a splash of water, 8 min. Portion over rice with beans and corn; top with cheese, and add salsa and yogurt when you eat."},
+  {n:"Lentil Bolognese with Whole-Wheat Pasta (vegetarian)",v:1,m:[720,124,37,10],a:["Wheat/Gluten","Dairy"],g:["1 1/2 cups dry brown or green lentils","12 oz dry whole-wheat pasta","1 jar marinara sauce (24 oz)","1 onion","1/2 cup Parmesan"],p:"Simmer lentils in water 20–25 min until tender; drain. Sauté diced onion, add marinara and lentils and simmer 10 min. Toss with cooked pasta; top with Parmesan."}]},
+ {k:"vonsralphs",n:"Vons / Ralphs",r:[
+  {n:"Chicken Fajita Rice Bowls",m:[860, 119, 66, 10],a:[],g:["2 lb chicken breast", "2 1/2 cups dry jasmine rice", "3 bell peppers", "1 onion", "1 can black beans", "1 tbsp olive oil", "1 cup salsa", "Fajita seasoning"],p:"Slice chicken, peppers and onion; toss with oil and fajita seasoning and roast at 425°F for 20 minutes. Cook rice and warm the beans. Portion and top with salsa when you eat.",tip:"Roasting everything on one pan keeps cleanup to one tray."},
+  {n:"Honey Garlic Pork Tenderloin with Potatoes",m:[690, 86, 58, 14],a:["Soy", "Wheat/Gluten"],g:["2 lb pork tenderloin (2 packs)", "3 lb baby potatoes", "1 lb green beans", "1/4 cup honey", "1/4 cup low-sodium soy sauce", "1 1/2 tbsp olive oil", "4 cloves garlic"],p:"Roast halved potatoes with 1 tbsp oil at 425°F for 30 minutes. Whisk honey, soy sauce and minced garlic; brush on the tenderloins and roast at 425°F for 20–25 minutes to 145°F inside, then rest 5 minutes and slice. Roast green beans with the rest of the oil for the last 12 minutes.",tip:"Pork tenderloin is one of the leanest meats in the case and often on sale at both stores."},
+  {n:"Turkey Taco Pasta",m:[745, 90, 54, 20],a:["Wheat/Gluten", "Dairy"],g:["1 1/2 lb 93% lean ground turkey", "12 oz dry pasta (shells or rotini)", "1 can black beans", "1 cup frozen corn", "1 cup salsa", "1/2 cup shredded Mexican-blend cheese", "Taco seasoning"],p:"Brown turkey with taco seasoning. Cook pasta. Stir pasta, beans, corn and salsa into the turkey and heat through. Portion and top with cheese.",tip:"Kid-simple and reheats well; add hot sauce or jalapeños when you eat."},
+  {n:"Sheet-Pan Salmon, Sweet Potatoes & Broccoli",m:[835, 101, 45, 26],a:["Fish"],g:["4 salmon fillets (6 oz)", "2 1/2 lb sweet potatoes", "1 lb broccoli", "1 tbsp olive oil", "1 cup dry jasmine rice", "1 lemon"],p:"Roast cubed sweet potatoes with half the oil at 425°F for 15 minutes. Add salmon and broccoli tossed in the rest of the oil and roast 12–15 minutes more. Cook rice. Squeeze lemon over the salmon before eating.",tip:"Salmon keeps about 3 days in the fridge: eat these portions first and freeze the rest."},
+  {n:"Beef & Broccoli Stir-Fry",m:[850, 121, 53, 17],a:["Soy", "Wheat/Gluten", "Sesame"],g:["1 1/2 lb flank steak", "2 1/2 cups dry jasmine rice", "2 lb broccoli", "1/3 cup low-sodium soy sauce", "2 tbsp honey", "1 tbsp sesame oil", "2 tbsp cornstarch", "Garlic and ginger"],p:"Slice steak thin against the grain and toss with 1 tbsp cornstarch. Sear in hot sesame oil 2 minutes; remove. Stir-fry broccoli with a splash of water 3 minutes. Whisk soy sauce, honey, garlic, ginger and the rest of the cornstarch with 1/2 cup water; add with the beef and simmer 1 minute until glossy. Serve over rice.",tip:"Partly freezing the steak for 20 minutes makes thin slicing easy."},
+  {n:"Shrimp Pesto Pasta",m:[745, 91, 66, 15],a:["Shellfish", "Wheat/Gluten", "Dairy", "Tree nut"],g:["2 lb frozen raw peeled shrimp", "1 lb dry pasta", "1/3 cup basil pesto", "1 pint cherry tomatoes", "4 cups spinach", "1/4 cup grated Parmesan"],p:"Thaw shrimp under cold running water. Cook pasta. Sear shrimp 2 minutes per side. Toss pasta with pesto, shrimp, halved tomatoes and spinach until it wilts. Portion and top with Parmesan.",tip:"Most pestos contain pine nuts or cashews; nut-free pesto is available at both stores."},
+  {n:"Chicken Tortilla Soup with Rice",m:[860, 116, 69, 12],a:[],g:["2 lb chicken breast", "1 can black beans", "1 can diced tomatoes (14.5 oz)", "1 cup frozen corn", "1 onion", "4 cups low-sodium chicken broth", "2 cups dry white rice", "1 tbsp olive oil", "4 corn tortillas", "Cumin and chili powder"],p:"Sauté diced onion in oil, add chicken, broth, tomatoes and spices and simmer 20 minutes. Shred the chicken, add beans and corn and simmer 5 minutes. Cook rice separately. Bake tortilla strips at 400°F for 8 minutes. Serve soup over rice with the strips on top.",tip:"Freezes well, so it's a good pick for days 4 and later. Keep rice and strips separate until you eat."},
+  {n:"Black Bean & Sweet Potato Enchilada Bake (vegetarian)",v:1,m:[810, 122, 41, 20],a:["Dairy"],g:["2 cans black beans", "2 lb sweet potatoes", "8 corn tortillas", "1 can red enchilada sauce (19 oz)", "1 1/2 cups shredded Mexican-blend cheese", "1 cup frozen corn", "2 cups plain Greek yogurt"],p:"Roast cubed sweet potatoes at 425°F for 25 minutes. Mash half the beans with 1 cup of the yogurt and mix in the rest of the beans, corn and sweet potato. Layer sauce, tortillas and filling in a 9x13 dish, top with cheese and bake at 375°F for 25 minutes. Serve with the rest of the yogurt.",tip:"Greek yogurt in the filling and on top brings protein up to about 40 g a portion."},
+  {n:"Tofu Veggie Fried Rice (vegetarian)",v:1,m:[825, 92, 51, 27],a:["Soy", "Egg", "Wheat/Gluten", "Sesame"],g:["2 blocks extra-firm tofu", "6 eggs", "2 cups dry jasmine rice", "1 lb frozen stir-fry vegetables", "1 1/2 cups shelled edamame", "1/4 cup low-sodium soy sauce", "1 tbsp sesame oil"],p:"Cook rice a day ahead if you can. Press and cube tofu and pan-fry in sesame oil until golden; push aside and scramble the eggs. Add rice, vegetables and edamame and stir-fry 6 minutes. Finish with soy sauce.",tip:"Day-old rice fries best and doesn't clump."},
+  {n:"Chickpea, Tofu & Spinach Curry (vegetarian)",v:1,m:[815, 123, 41, 16],a:["Soy", "Dairy"],g:["2 cans chickpeas", "1 block extra-firm tofu", "1 can light coconut milk", "1 can diced tomatoes (14.5 oz)", "1 onion", "4 cups spinach", "2 tbsp curry paste or powder", "2 cups dry basmati rice", "1 1/2 cups plain Greek yogurt"],p:"Sauté diced onion, add curry paste for 1 minute, then chickpeas, cubed tofu, tomatoes and coconut milk; simmer 15 minutes. Stir in spinach until it wilts. Cook rice. Serve with a spoon of yogurt.",tip:"Tofu and Greek yogurt lift a classic chickpea curry to about 40 g protein a portion."}]}
+];
+let MPB=store.get("mpb",{store:"costco",sel:null,days:5,mpd:1,got:[]});
+MPB.size="train";
+function mpbSave(){store.set("mpb",MPB)}
+const MPWORDS={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,twelve:12};
+function mpQty(s){let m=s.match(/^(\d+)\s+(\d+)\/(\d+)\s+(.*)$/);if(m)return [+m[1]+m[2]/m[3],m[4]];
+  m=s.match(/^(\d+)\/(\d+)\s+(.*)$/);if(m)return [m[1]/m[2],m[3]];m=s.match(/^(\d+(?:\.\d+)?)\s+(.*)$/);if(m)return [+m[1],m[2]];
+  m=s.match(/^([A-Za-z]+)\s+(.*)$/);if(m&&MPWORDS[m[1].toLowerCase()])return [MPWORDS[m[1].toLowerCase()],m[2]];return [null,s]}
+function mpFmt(q){const w=Math.floor(q+1e-9),f=Math.round((q-w)*4)/4,fr={0.25:"1/4",0.5:"1/2",0.75:"3/4"}[f]||"";if(f===1)return String(w+1);return w&&fr?w+" "+fr:w?String(w):fr||String(Math.round(q*100)/100)}
+function mpStoreObj(){const ok=r=>(!isVeg()||r.v)&&true;if(MPB.store==="mix")return {k:"mix",n:"Mix stores",r:MEALPREP.flatMap(x=>x.r.filter(ok).map(r=>({...r,st:x.n})))};const S=MEALPREP.find(x=>x.k===MPB.store)||MEALPREP[0];return {...S,r:S.r.filter(ok).map(r=>({...r,st:S.n}))}}
+function mpPlan(){const S=mpStoreObj(),al=myAllergens();
+  if(MPB.one==null||!S.r[MPB.one]){const fits=r=>!r.a.some(a=>al.includes(a));let ok=S.r.findIndex(r=>fits(r)&&isRec(r));if(ok<0)ok=S.r.findIndex(fits);MPB.one=ok<0?0:ok}
+  const sel=[MPB.one],need=MPB.days*MPB.mpd;if(!sel.length)return {S,sel,need,batches:[],days:[],spare:0,list:[]};
+  const per=MPB.size==="rest"?5:4,B=Math.ceil(need/per),batches=sel.map(()=>0);for(let i=0;i<B;i++)batches[i%sel.length]++;
+  const left=batches.map(b=>b*per),t=isoToday(),days=[];let prev=-1;
+  for(let d=0;d<MPB.days;d++){const meals=[];for(let m=0;m<MPB.mpd;m++){
+      const avoid=new Set([prev,...meals.map(x=>sel.indexOf(x))]);let best=-1;
+      sel.forEach((_,j)=>{if(left[j]>0&&!avoid.has(j)&&(best<0||left[j]>left[best]))best=j});
+      if(best<0)sel.forEach((_,j)=>{if(left[j]>0&&(best<0||left[j]>left[best]))best=j});
+      left[best]--;meals.push(sel[best]);prev=best}
+    days.push({iso:isoShift(t,d),meals,freeze:d>=3})}
+  const agg={},order=[];sel.forEach((ri,j)=>{if(!batches[j])return;S.r[ri].g.forEach(line=>{const [q,rest]=mpQty(line),key=rest.toLowerCase();
+    if(!agg[key]){agg[key]={rest,q:0,plain:q==null};order.push(key)}if(q!=null)agg[key].q+=q*batches[j];else agg[key].plain=true})});
+  const plur=(q,r)=>q>1?r.replace(/^(cup|pint|jar|bag|can|clove|bunch|head|block|package|box|bottle)\b/i,"$1s").replace(/^(rotisserie chicken|onion|red onion|lemon|lime|cucumber|carrot|avocado|bell pepper|egg|whole-grain roll|pita bread|naan bread)(?=$| \()/i,"$1s"):r;
+  order.forEach(k=>{const a=agg[k];if(a.q>=4&&a.q%4===0&&/^tbsp /.test(a.rest)){a.q=a.q/16;a.rest=a.rest.replace(/^tbsp/,"cup")}});
+  const list=order.map(k=>{const a=agg[k];return a.q?`${mpFmt(a.q)}${/^\d/.test(a.rest)?" ×":""} ${plur(a.q,a.rest)}`:a.rest});
+  return {S,sel,need,batches,days,spare:B*per-need,list,per}}
+function mealPrepHTML(){const P=mpPlan(),S=P.S,al=myAllergens(),got=MPB.got||[];
+  const name=i=>S.r[i].n,kc=P.days.length?Math.round(P.days[0].meals.reduce((a,i)=>a+S.r[i].m[0],0)):0;
+  const text=[`Batch cook · ${S.r[P.sel[0]]?S.r[P.sel[0]].st:S.n} · ${MPB.days} days · ${MPB.mpd===2?"lunch + dinner":"dinner"}`,"","GROCERY LIST",...P.list.map(x=>"- "+x)].join("\n");
+  return `<p class="muted">Pick your store, one meal and how many days. The app builds your plan and grocery list.</p>
+   <section><h2>Store</h2><div class="choice">${MEALPREP.map(x=>`<button type="button" data-mpstore="${x.k}" aria-pressed="${S.k===x.k}">${esc(x.n)}</button>`).join("")}<button type="button" data-mpstore="mix" aria-pressed="${S.k==="mix"}">Mix stores</button></div></section>
+   <section><div class="row sec-head"><h2>Meal</h2><span class="stamp">${MPB.one+1} of ${S.r.length}</span></div>${isVeg()?`<p class="stamp" style="margin:-4px 0 8px">Showing vegetarian meals (your eating style).</p>`:""}
+    <div class="row" style="gap:8px;align-items:stretch"><button class="btn ghost mpnav" data-mpstep="-1" aria-label="Previous meal" ${S.r.length<2?"disabled":""}>‹</button><div style="flex:1;min-width:0">${(r=>{const k=MPB.size==="rest"?0.8:1,hit=r.a.filter(a=>al.includes(a));return `<div class="card stack" style="gap:6px;height:100%"><b>${esc(r.n)}</b>${isRec(r)?`<span class="chip accent" style="align-self:flex-start">★ ${tr("From your dietitian")}</span>`:""}${S.k==="mix"?`<span class="stamp">Buy at ${esc(r.st)}</span>`:""}<div class="row" style="flex-wrap:wrap;gap:6px"><span class="chip">${Math.round(r.m[0]*k/5)*5} kcal</span><span class="chip accent">${Math.round(r.m[1]*k)}g carbs</span><span class="chip violet">${Math.round(r.m[2]*k)}g protein</span><span class="chip">${Math.round(r.m[3]*k)}g fat</span></div><span class="stamp">${MPB.size==="rest"?"Per rest-day portion (1/5 of a batch)":"Per portion (1/4 of a batch)"}</span>${hit.length?`<p class="chip warn" style="align-self:flex-start">Contains ${esc(hit.join(", "))}, which is on your allergy list</p>`:""}</div>`})(S.r[P.sel[0]])}</div><button class="btn ghost mpnav" data-mpstep="1" aria-label="Next meal" ${S.r.length<2?"disabled":""}>›</button></div></section>
+   <section><h2>How many days?</h2><div class="card stack">
+    <div class="choice mini" data-mpdays="1">${[3,4,5,6,7].map(n=>`<button type="button" data-v="${n}" aria-pressed="${MPB.days===n}">${n} days</button>`).join("")}</div>
+    <span class="eyebrow" style="margin-top:4px">Meals a day</span>
+    <div class="choice mini" data-mpmeals="1"><button type="button" data-v="1" aria-pressed="${MPB.mpd===1}">Dinner</button><button type="button" data-v="2" aria-pressed="${MPB.mpd===2}">Lunch + dinner</button></div>
+</div></section>
+   ${P.sel.length?`<section><div class="row sec-head"><h2>Your plan</h2><span class="stamp">${P.need} portions</span></div>
+     <div class="card stack" style="gap:6px"><p style="font-size:.92rem">Cook ${P.sel.map((i,j)=>P.batches[j]?`<b>${esc(name(i))}</b> ×${P.batches[j]}`:"").filter(Boolean).join(", ")}. Each batch makes ${P.per} portions.${P.spare?` That's ${P.spare} spare portion${P.spare>1?"s":""}: freeze them or share.`:""}</p></div>
+     ${MPB.days>3?`<p class="stamp" style="margin-top:8px">Cooked food keeps 3–4 days in the fridge, so freeze the portions you'll eat on day 4 and later, and move each one to the fridge the night before.</p>`:""}</section>
+    <section id="mp-groc"><div class="row sec-head"><h2>Grocery list</h2><span class="stamp">${got.filter(x=>P.list.includes(x)).length}/${P.list.length}</span></div>
+     <div class="card stack groc"><div class="choice mini">${P.list.map(x=>`<button type="button" data-mpbgot="${esc(x)}" aria-pressed="${got.includes(x)}">${esc(x)}</button>`).join("")}</div>
+      <div class="copybox" id="mp-copy" style="display:none">${esc(text)}</div>
+      <div class="row" style="flex-wrap:wrap"><button class="btn sm" data-glistmp="1">${tr("Add to Grocery List")}</button><button class="btn ghost sm" data-copymp="1">Copy grocery list</button><button class="btn ghost sm" data-mpreset="1">Clear ticks</button></div>
+      <p class="stamp">Brands vary: check labels for your allergens.</p></div></section>
+    <section><h2>Cook it</h2><div class="stack" style="gap:10px">${P.sel.map((i,j)=>{const r=S.r[i],b=P.batches[j];if(!b)return "";return `<div class="card stack"><div class="meal-top"><h3>${esc(r.n)}</h3><span class="chip accent">×${b} · ${b*P.per} portions${P.per===5?" (split into 5)":""}</span></div><p style="font-size:.9rem">${esc(r.p)}</p>${r.tip?`<p class="muted" style="font-size:.86rem">${esc(r.tip)}</p>`:""}</div>`}).join("")}</div></section>`
+   :`<div class="card muted">Choose at least one meal to build your plan.</div>`}
+   <p class="stamp">Macros are approximate per portion, not label-verified. Cool food within 2 hours, refrigerate and eat within 3–4 days, or freeze. Keep cold toppings (avocado, tzatziki, hummus, feta) separate until you eat.</p>`}
+function mpClick(b){const ds=b.dataset;
+  if(ds.mpstore){MPB.store=ds.mpstore;MPB.one=null;MPB.got=[];mpbSave();render();return true}
+  const mo=b.closest("[data-mpone]");if(mo){MPB.one=+ds.v;mpbSave();render();return true}
+  if(ds.mpstep){const n=mpStoreObj().r.length;if(n){MPB.one=((MPB.one||0)+(+ds.mpstep)+n)%n;MPB.got=[];mpbSave();render()}return true}
+  const dd=b.closest("[data-mpdays]");if(dd){MPB.days=+ds.v;mpbSave();render();return true}
+  const mm=b.closest("[data-mpmeals]");if(mm){MPB.mpd=+ds.v;mpbSave();render();return true}
+  const ms=b.closest("[data-mpsize]");if(ms){MPB.size=ds.v;mpbSave();render();return true}
+  if(ds.mpbgot!==undefined){const L=MPB.got||[];MPB.got=L.includes(ds.mpbgot)?L.filter(x=>x!==ds.mpbgot):[...L,ds.mpbgot];mpbSave();render();return true}
+  return false}
+let GLIST=store.get("glist",[]);
+function glistSave(){store.set("glist",GLIST)}
+function glistAdd(items,src){const have=new Set(GLIST.filter(x=>!x.done).map(x=>x.t.toLowerCase()));let n=0;
+  items.map(t=>String(t).trim()).filter(Boolean).forEach(t=>{if(have.has(t.toLowerCase()))return;have.add(t.toLowerCase());GLIST.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),t,src,done:false});n++});glistSave();return n}
+function glistHTML(){const open=GLIST.filter(x=>!x.done),done=GLIST.filter(x=>x.done);
+  const row=x=>`<li class="gl ${x.done?"done":""}"><button class="gl-chk" data-gltoggle="${x.id}" aria-pressed="${x.done}" aria-label="${x.done?"Uncheck":"Check off"} ${esc(x.t)}">${x.done?"✓":""}</button><span class="gl-t"><b>${esc(x.t)}</b>${x.src?`<span>${esc(x.src)}</span>`:""}</span><button class="gl-ic" data-gledit="${x.id}" aria-label="Edit ${esc(x.t)}">✎</button><button class="gl-ic" data-gldel="${x.id}" aria-label="Delete ${esc(x.t)}">✕</button></li>`;
+  const text=["My grocery list · At the Clinic",...open.map(x=>"- "+x.t)].join("\n");
+  return `<p class="muted">One running list for the week. Add meal prep or meal plan lists with one tap, then add anything else you need.</p>
+   <form id="glist-form" class="row" style="gap:8px"><input id="gl-new" placeholder="${tr("Add an item, e.g. paper towels")}" aria-label="Add a grocery item" style="flex:1" autocomplete="off"><button class="btn sm" type="submit">${tr("Add")}</button></form>
+   ${GLIST.length?`<section><div class="row sec-head"><h2>${tr("To buy")}</h2><span class="stamp">${open.length} ${tr("left")}</span></div>
+    ${open.length?`<ul class="glist card groc">${open.map(row).join("")}</ul>`:`<p class="muted">${tr("All done. Nice shop.")}</p>`}</section>
+    ${done.length?`<section><div class="row sec-head"><h2>${tr("In the cart")}</h2><span class="stamp">${done.length}</span></div><ul class="glist card groc">${done.map(row).join("")}</ul></section>`:""}
+    <div class="copybox" id="gl-copy" style="display:none">${esc(text)}</div>
+    <div class="row" style="flex-wrap:wrap"><button class="btn sm" data-glcopy="1">${tr("Copy list")}</button>${done.length?`<button class="btn ghost sm" data-glcleardone="1">${tr("Remove checked")}</button>`:""}<button class="btn ghost sm" data-glclear="1">${tr("Clear all")}</button></div>`
+   :`<div class="card stack"><b>${tr("Your list is empty")}</b><p class="muted" style="font-size:.88rem">${tr("Open Meal prep or your plan's grocery list and tap Add to Grocery List, or type items above.")}</p><button class="btn ghost sm" style="align-self:flex-start" data-segjump="mealprep">${tr("Go to Meal prep")}</button></div>`}`}
+function glistClick(b){const ds=b.dataset;
+  if(ds.gltoggle){const x=GLIST.find(i=>i.id===ds.gltoggle);if(x){x.done=!x.done;glistSave();render()}return true}
+  if(ds.gldel){GLIST=GLIST.filter(i=>i.id!==ds.gldel);glistSave();render();return true}
+  if(ds.gledit){const x=GLIST.find(i=>i.id===ds.gledit);if(!x)return true;const v=prompt(tr("Edit item"),x.t);if(v!=null){const t=v.trim();if(t){x.t=t}else GLIST=GLIST.filter(i=>i.id!==x.id);glistSave();render()}return true}
+  if(ds.glcleardone){GLIST=GLIST.filter(i=>!i.done);glistSave();render();return true}
+  if(ds.glclear){if(confirm(tr("Clear your whole grocery list?"))){GLIST=[];glistSave();render()}return true}
+  if(ds.glcopy){const txt=document.getElementById("gl-copy").textContent;try{navigator.clipboard.writeText(txt).then(()=>toast("Grocery list copied"),()=>toast("Couldn't copy on this phone"))}catch(e){toast("Couldn't copy on this phone")}return true}
+  if(ds.segjump){eatSeg=ds.segjump;render();scrollTo({top:0});return true}
+  if(ds.glistmp){const P=mpPlan();const n=glistAdd(P.list,"Meal prep · "+P.sel.map(i=>P.S.r[i].n).join(", "));toast(n?`Added ${n} item${n>1?"s":""} to your Grocery List`:"Already on your Grocery List");render();return true}
+  if(ds.glistplan){const {by}=groceryList(),sh=myShop();const items=ING_SECTIONS.filter(sx=>by[sx]).flatMap(sx=>by[sx].map(x=>x.label));const n=glistAdd(items,"Meal plan · "+(PLANPREF.ndays||7)+" days"+(sh?" · "+sh.n:""));toast(n?`Added ${n} item${n>1?"s":""} to your Grocery List`:"Already on your Grocery List");render();return true}
+  return false}
 /* Build my week: athletes pick how many days, then their meals one type at a time. The picks drive the day plan, grocery list and batch prep. */
 const PICK_GROUPS=[["breakfast","Breakfast",[["breakfast",""]]],["main","Lunch & dinner",[["main",""]]],["recovery","Recovery",[["recovery",""]]],["snack","Snacks",[["pre","Before practice"],["snack","Between meals"],["prebed","Before bed"]]]];
 let pickSeg="breakfast";
@@ -1317,7 +1536,7 @@ function builderHTML(){const P=PLANPREF.pick,cnt=g=>g[2].reduce((a,[b])=>a+(P[b]
   <span class="eyebrow" style="margin-top:6px">2 · Where do you shop?</span><div class="choice">${SHOPS.map(s=>`<button type="button" data-shop="${s.id}" aria-pressed="${PLANPREF.shop===s.id}">${esc(s.n)}</button>`).join("")}</div>
   <span class="eyebrow" style="margin-top:6px">3 · Pick your meals</span><p class="muted small">Pick 1–3 of each. Fewer picks = shorter grocery list and easier batch cooking.</p>
   <div class="choice">${PICK_GROUPS.map(g=>`<button type="button" data-pickseg="${g[0]}" aria-pressed="${g===cur}">${g[1]}${cnt(g)?` · ${cnt(g)}`:""}</button>`).join("")}</div>
-  ${cur[2].map(([b,lab])=>{const L=mealChoices(b);return `${lab?`<span class="eyebrow">${lab}</span>`:""}<div class="stack" style="gap:6px">${L.length?L.map(x=>{const on=(P[b]||[]).includes(x.n);return `<button type="button" class="pickopt" data-pickmeal="${esc(b)}" data-pickname="${esc(x.n)}" aria-pressed="${on}"><span class="pk">${on?"✓":"+"}</span>${esc(x.n)}</button>`}).join(""):`<p class="muted small">Nothing here fits your allergies. Ask ${esc(S().rdName||"the dietitian")} for swaps.</p>`}</div>`}).join("")}
+  ${cur[2].map(([b,lab])=>{const L=mealChoices(b);return `${lab?`<span class="eyebrow">${lab}</span>`:""}<div class="stack" style="gap:6px">${L.length?L.map(x=>{const on=(P[b]||[]).includes(x.n);return `<button type="button" class="pickopt" data-pickmeal="${esc(b)}" data-pickname="${esc(x.n)}" aria-pressed="${on}"><span class="pk">${on?"✓":"+"}</span>${esc(x.n)}${isRec(x)?` <span class="chip gold">★ From ${esc(S().rdName||"the dietitian")}</span>`:""}</button>`}).join(""):`<p class="muted small">Nothing here fits your allergies. Ask ${esc(S().rdName||"the dietitian")} for swaps.</p>`}</div>`}).join("")}
   <button class="btn block" data-buildweek="1" ${PICK_GROUPS.some(g=>cnt(g))?"":"disabled"}>Build my plan and grocery list</button>
   ${PLANPREF.built?`<button class="linkbtn" data-buildcancel="1">Cancel</button>`:`<button class="linkbtn" data-buildskip="1">Skip and show a sample week</button>`}
   <p class="stamp">Skipped a type? The plan fills it with simple options.</p></div>`}
@@ -1339,7 +1558,7 @@ function groceryHTML(){const {by,meals}=groceryList(),wk=planWeek()[0],got=PLANP
    ${sh?`<div class="card stack" style="background:color-mix(in srgb,var(--gold) 12%,transparent);box-shadow:none"><b>${esc(sh.n)}</b><p class="small">${esc(sh.tip)}</p>${sh.free?`<p class="stamp">★ = often at the pantry. Check there first.</p>`:""}</div>`:""}
    ${ING_SECTIONS.filter(s=>by[s]).map(s=>`<div class="stack" style="gap:6px"><span class="eyebrow">${s}</span><div class="choice">${by[s].map(x=>`<button type="button" data-groc="${x.k}" aria-pressed="${got.includes(x.k)}">${x.pantry?"★ ":""}${esc(x.label)}${x.c>1&&!(sh&&sh.bulk)?` ×${x.c}`:""}</button>`).join("")}</div></div>`).join("")}
    <div class="copybox" id="groc-copy" hidden>${esc(text)}</div>
-   <div class="row" style="flex-wrap:wrap"><button class="btn sm" data-copy="groc-copy">Copy list</button><button class="btn ghost sm" data-grocreset="1">Clear ticks</button></div>
+   <div class="row" style="flex-wrap:wrap"><button class="btn sm" data-glistplan="1">Add to Grocery List</button><button class="btn ghost sm" data-copy="groc-copy">Copy list</button><button class="btn ghost sm" data-grocreset="1">Clear ticks</button></div>
    <p class="stamp">Staples that last (rice, oats, beans, frozen vegetables) can be bought in bulk. Check labels against your allergies.</p></div>`}
 /* Batch-cook plan from the week's planned meals. Leftover guidance: USDA FoodKeeper (cooked leftovers 3-4 days refrigerated). */
 /* Batch prep: one meal type per session (breakfasts, then lunches and dinners, then recovery, then grab-and-go). */
@@ -1471,16 +1690,18 @@ function vStash(){
 }
 let eatSeg="plan";
 function vEat(){
- const segs=[["plan","Plan"],["campus","Campus"],["out","Eat out"],["pack","Pack"],["shop","Groceries"]];
- if(!segs.some(x=>x[0]===eatSeg))eatSeg=({near:"campus",home:"out",chain:"out",stash:"pack",bag:"pack",road:"pack",grocery:"shop",free:"shop"})[eatSeg]||"plan";
+ const segs=[["plan","Plan"],["prep","Meal prep"],["campus","Campus"],["out","Eat out"],["pack","Pack"],["shop","Groceries"]];
+ if(eatSeg!=="glist"&&!segs.some(x=>x[0]===eatSeg))eatSeg=({near:"campus",home:"out",chain:"out",stash:"pack",bag:"pack",road:"pack",grocery:"shop",free:"shop"})[eatSeg]||"plan";
  const placeCard=p=>{const h=hits(p.a);return `<details class="fold ${h.length?"flag":""}"><summary><span class="fsum"><b>${esc(p.n)}</b>${p.where?`<span class="stamp">${esc(p.where)}</span>`:""}</span>${h.length?`<span class="chip stop">Allergen</span>`:""}</summary>
    <div class="ans"><div class="order"><span class="eyebrow">Train day</span><span>${esc(p.train)}</span><span class="eyebrow">Light day</span><span>${esc(p.light)}</span></div>
    ${p.a&&p.a.length?`<div class="tags">${p.a.map(a=>`<span class="chip ${myAllergens().includes(a)?"stop":""}">${esc(a)}</span>`).join("")}</div>`:""}</div></details>`};
  const places=g=>DATA.places.filter(p=>p.g===g).map(placeCard).join("")||`<p class="muted">Nothing listed yet.</p>`;
  const A=myArea();
  let body="";
- if(eatSeg==="plan"){
-  body=planHTML();
+ if(eatSeg==="glist"){body=glistHTML()}
+ else if(eatSeg==="prep"){body=mealPrepHTML()}
+ else if(eatSeg==="plan"){
+  body=nutPostsHTML()+planHTML();
  }else if(eatSeg==="campus"){
   body=vCampus()+`<section><h2>Near campus</h2>${places("Near campus")}</section>`;
  }else if(eatSeg==="out"){
@@ -1499,7 +1720,7 @@ function vEat(){
    <p class="small"><b>Short on food?</b> Tell us. It's confidential.</p>`}</section>`+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+`<section><h2>Store lists</h2><div class="stack" style="gap:8px">`+GROCERY.map(s=>`<details class="fold"><summary><span class="fsum"><b>${esc(s.n)}</b><span class="stamp">${esc(s.where)}</span></span></summary><div class="ans"><p class="stamp">${esc(s.tip)}</p><ul class="clean small">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div></details>`).join("")+`</div></section>`+
    `<section><h2>Quick recipes</h2><div class="stack" style="gap:8px">${RECIPES.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b><span class="stamp">${esc(r.t)}</span></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }
- return `<div class="view"><div><p class="eyebrow">No dining hall. No excuses.</p><h1 style="margin-top:6px">Eat</h1></div>
+ return `<div class="view"><div class="row" style="align-items:flex-end"><div class="grow"><p class="eyebrow">No dining hall. No excuses.</p><h1 style="margin-top:6px">Eat</h1></div>${(n=>`<button class="cartbtn" data-segjump="${eatSeg==="glist"?"plan":"glist"}" aria-pressed="${eatSeg==="glist"}" aria-label="${eatSeg==="glist"?"Close":"Open"} my Grocery List${n?`, ${n} items`:""}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.5" fill="currentColor"/><circle cx="17" cy="20" r="1.5" fill="currentColor"/></svg>${n?`<span class="cartn">${n}</span>`:""}</button>`)(GLIST.filter(x=>!x.done).length)}</div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
   ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> = your allergens</p>`:""}
   <div class="stack">${body}</div></div>`;
@@ -1559,7 +1780,7 @@ function partPicker(){
   <p class="stamp"><span class="pdot"></span> Common in ${esc(sp?sp.n.toLowerCase():"your sport")}</p>`;
 }
 const moveList=list=>`<div class="card stack" style="gap:2px">${list.map(([n,h],i)=>`<div class="basic"><span class="bnum">${i+1}</span><div><b>${esc(n)}</b><p class="muted small">${esc(h)}</p></div></div>`).join("")}</div>`;
-let trainSeg="at";
+let trainSeg="room";
 /* Walk-up: a one-time player intro after setup, like a ballpark introduction. Replay from the profile. */
 function introLine(sp){if(!sp)return "Now entering";const id=sp.id;if(id==="baseball"||id==="softball")return "Now batting";if(id.includes("soc"))return "Taking the pitch";if(id==="flag")return "Taking the field";if(id.includes("swim"))return "In lane four";if(id.includes("wp"))return "In the cap";if(id==="golf")return "Now on the tee";if(id==="bvb")return "On the sand";return "In the starting lineup"}
 function walkup(){
@@ -1613,15 +1834,20 @@ function atCard(){const s=S();return `<div class="card stack"><p class="eyebrow"
     ${!s.atPhone&&!s.atEmail?`<p class="muted small">Contact info and training-room hours are coming soon. Until then, find your athletic trainer at practice.</p>`:!s.atRoom?`<p class="stamp">Training-room hours coming soon.</p>`:""}</div>`}
 function vTraining(){
  const sp=sportById(profile.sport), s=S();
- const mine=myRx(["AT","PT"]);
- const segs=[...(isStaff()?[["rx","Prescriptions"]]:mine.length?[["rx","My plan"]]:[]),["at","Report an injury"],["warm","Warm-ups"],["prehab","Prehab"],["rehab","Rehab"],["red","Warning signs"]];
- if(trainSeg==="rx"&&!segs.some(x=>x[0]==="rx"))trainSeg="at";
- if(!draft.rxSeen&&mine.length){trainSeg="rx";draft.rxSeen=1}
+ const segs=[["room","Training room"],["warm","Warm-ups"],["prehab","Prehab"],["rehab","Rehab"],["red","Warning signs"],["at","Report an injury"]];
+ if(!segs.some(x=>x[0]===trainSeg))trainSeg="room";
  let body="";
- if(trainSeg==="rx"){
-  body=isStaff()?vRxStaff():`<section><h2>From your athletic trainers</h2><div class="stack">${mine.map(p=>rxCard(p)).join("")}</div><p class="stamp">Pain gets worse or something feels off? Stop and tell ${esc(atNames(" or "))}.</p></section>`;
+ if(trainSeg==="room"){
+  const P=myPrograms(),A=S().atSheet&&SHEET.at?rowsFor("at"):[];
+  body=`<section><h2>${isStaff()?"All programs":"Your programs"}</h2>${P.length?`<div class="stack">${P.map(progCard).join("")}</div><p class="stamp">Pain gets worse or something feels off? Stop and tell ${esc(atNames(" or "))}.</p>`
+    :`<div class="card stack"><p class="muted small">${isStaff()?"No programs live yet. Add rows on the Programs tab of the Google Sheet.":"No programs yet. When "+esc(atNames(" or "))+" post one for you, it shows here."}</p></div>`}
+   ${isStaff()?"":`<p class="muted small" style="margin-top:10px">Your code <b class="tapecode">${esc(clinicCode())}</b> · the ATs use it to post a program just for you.</p>`}</section>
+   <section><div class="row"><h2 class="grow">From the ATs</h2>${SHEET.at&&S().atSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.at.fetched))}</span>`:""}</div>
+    ${A.length?`<div class="cork">${A.map((a,i)=>{const l=forLabel(a.who);return `<div class="sticky" style="--r:${[-1.5,1.2,-.8,1.6][i%4]}deg"><div class="row"><span class="chip">${esc(a.tag||"Training room")}</span><span class="grow"></span><span class="stamp">${a.when?esc(fmtDate(a.when)):""}</span></div>${l?`<span class="stamp">${esc(l)}</span>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="small">${esc(a.d)}</p>`:""}</div>`}).join("")}</div>`
+     :`<div class="cork"><div class="sticky" style="--r:-1deg"><b>No notes from the ATs yet.</b><p class="small">Check back before practice and road trips.</p></div></div>`}</section>
+   <section><h2>See the ATs</h2>${atCard()}</section>`;
  }else if(trainSeg==="at"){
-  body=atCard()+`<section><h2>Report an injury</h2><p class="muted small">Every injury, even small ones.</p>
+  body=`<section><h2>Report an injury</h2><p class="muted small">Every injury, even small ones.</p>
    ${draft.atSent?`<div class="card stack"><span class="chip ok" style="align-self:flex-start">Ready to send</span><div class="copybox" id="at-copy">${esc(draft.atSent)}</div><div class="row" style="flex-wrap:wrap">${s.atEmail?`<a class="btn" href="mailto:${esc(s.atEmail)}?subject=${encodeURIComponent("Injury report: "+profile.name)}&body=${encodeURIComponent(draft.atSent)}">Email</a>`:""}<button class="btn ghost" data-copy="at-copy">Copy</button>${s.atPhone?`<a class="btn ghost" href="sms:${esc(s.atPhone)}?&body=${encodeURIComponent(draft.atSent)}">Text</a>`:""}<button class="btn ghost" data-reset="atSent">New</button></div><p class="stamp">If Email or Text doesn't open, copy the message instead.</p></div>`:
    `<form class="card stack" id="f-at">
      <label for="at-where">What hurts?<input id="at-where" required placeholder="e.g. right ankle"></label>
@@ -1650,7 +1876,7 @@ function vTraining(){
    <div class="goldbox"><b>Stop and see ${esc(atNames(" or "))} today</b><ul class="clean small"><li>Any hit to the head followed by headache, dizziness, feeling foggy or bothered by light. When in doubt, sit out.</li><li>Pain that changes how you move, swelling, or you can't put weight on it.</li><li>Cramps, nausea, headache or dizziness in the heat.</li><li>Pain in one spot on a bone that gets worse with running or jumping (possible stress fracture).</li><li>Dark brown pee after a very hard workout (possible rhabdo).</li></ul></div>
    <p class="src">Sources: Casa et al., NATA Position Statement on Exertional Heat Illnesses, J Athl Train 2015; Patricios et al., Consensus on Concussion in Sport, Br J Sports Med 2023; Andersen et al., NATA Position Statement on Emergency Planning, 2002</p>`;
  }
- return `<div class="view"><div><p class="eyebrow">Athletic training · Warm-up · Prehab · Rehab</p><h1 style="margin-top:6px">Training</h1></div>
+ return `<div class="view"><div><p class="eyebrow">The training room · ${esc(atNames(" & "))}</p><h1 style="margin-top:6px">Training</h1></div>
   <div class="seg">${segs.map(([id,l])=>`<button data-trainseg="${id}" aria-pressed="${trainSeg===id}">${l}</button>`).join("")}</div><div class="stack">${body}</div></div>`;
 }
 /* Quick log: tap a meal, tap foods, tap how it felt, done */
@@ -1783,6 +2009,7 @@ function vMe(){
    <p class="muted small">Give this to ${isStaff()?"Nick":esc(atNames(" or "))+" or Nick"} so they can send a plan or a message just for you.</p>
    ${S().atEmail?`<a class="btn block" href="mailto:${esc(S().atEmail)}?subject=${encodeURIComponent("My Clinic code: "+profile.name)}&body=${encodeURIComponent("Hi "+atNames(" and ")+",\n\nMy At the Clinic code is "+clinicCode()+".\n\n"+profile.name+(isStaff()?"":"\n"+teamLabel()))}">Send my code to ${esc(atNames(" & "))}</a>`:""}`}
   </div></section>
+  <section><h2>Your data</h2>${privacyHTML()}</section>
   <section><h2>Color scheme</h2><div class="card stack">
    
    <div class="themes">${THEMES.map(([v,l,c])=>`<button class="theme" data-theme="${v}" aria-pressed="${prefs.theme===v}"><span class="sw">${c.map(x=>`<i style="background:${x}"></i>`).join("")}</span>${l}</button>`).join("")}</div>
@@ -1874,8 +2101,12 @@ document.addEventListener("click",async ev=>{
  if(d.cancelprofile){draft.editingProfile=false;draft.p=null;render();return}
  if(d.codeedit){draft.codeEdit=true;render();return}
  if(d.codecancel){draft.codeEdit=false;render();return}
- if(d.rx!==undefined){const iso=isoToday(),day=RXDONE[iso]||(RXDONE[iso]={}),L=day[d.rx]||(day[d.rx]=[]),i=+d.rxi,k=L.indexOf(i);k<0?L.push(i):L.splice(k,1);
-  for(const x of Object.keys(RXDONE))if(new Date(iso)-new Date(x)>14*864e5)delete RXDONE[x];store.set("rxdone",RXDONE);render();return}
+ if(d.progday!==undefined){progDay[d.progday]=d.day;render();return}
+ if(d.prog!==undefined){const iso=isoToday(),day=PROGDONE[iso]||(PROGDONE[iso]={}),L=day[d.prog]||(day[d.prog]=[]),i=+d.progi,k=L.indexOf(i),pg=myPrograms().find(x=>x.id===d.prog);k<0?L.push(i):L.splice(k,1);
+  for(const x of Object.keys(PROGDONE))if(new Date(iso)-new Date(x)>21*864e5)delete PROGDONE[x];store.set("progdone",PROGDONE);
+  if(pg){const x=pg.ex[i];staffSend({t:k<0?"prog":"progdel",date:iso,program:pg.name,ptype:pg.type,day:x.day,ex:x.n,dose:[x.sets,x.reps].filter(Boolean).join(" x "),key:iso+"|"+pg.id+"|"+i})}
+  render();return}
+ if(d.consent){profile.consentAt=new Date().toISOString();store.set("profile",profile);rosterSync();shareDays();render();return}
  if(d.editprofile){draft.editingProfile=true;draft.p=null;render();return}
  if(d.ack){profile.ack=true;store.set("profile",profile);render();return}
  if(d.ackgo){profile.ack=true;store.set("profile",profile);draft.session="Onboarding & allergy review";go("rd");return}
@@ -1908,6 +2139,8 @@ document.addEventListener("click",async ev=>{
  if(d.learnseg){learnSeg=d.learnseg;draft.guide=null;render();return}
  if(d.sexseg){sexSeg=d.sexseg;render();return}
  if(d.copy){const el=document.getElementById(d.copy);try{await navigator.clipboard.writeText(el.textContent);toast("Copied")}catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Selected. Copy it from the menu")}return}
+ if(tab==="eat"){if(glistClick(b))return;if(eatSeg==="prep"&&mpClick(b))return;
+  if(d.mpopen){const [k,n]=d.mpopen.split("|");MPB.store=k;const S2=mpStoreObj();const i=S2.r.findIndex(r=>r.n===n);if(i>=0)MPB.one=i;mpbSave();eatSeg="prep";render();scrollTo(0,0);return}}
  if(tab==="eat"&&eatSeg==="plan"&&planClick(b))return;
  if(d.teamtalk){teamTalk(d.teamtalk);return}
  if(d.print){printOnePager(d.print);return}
@@ -1973,10 +2206,11 @@ document.addEventListener("submit",ev=>{
   const isNew=!profile;
   readOnboard();const p=draft.p;p.name=(p.name||"").trim();p.other=(p.other||"").trim();
   if(p.role==="staff"){p.position="";p.num=""}else p.title="";
-  if(!p.name||!p.sport){toast(p.role==="staff"?"Add your name and team":"Add your name and sport");return}
+  if(!p.first||!p.last||!p.sport){toast(p.role==="staff"?"Add your first and last name and team":"Add your first and last name and sport");return}
+  if(!p.consentAt){toast("Check the box to continue");return}
   const changedAllergy=!profile||JSON.stringify(profile.allergies)!==JSON.stringify(p.allergies)||(profile.other||"")!==p.other;
   if(changedAllergy)p.ack=false;
-  profile=p;store.set("profile",profile);pushCharge();draft.editingProfile=false;draft.p=null;tab="home";render();window.scrollTo(0,0);if(isNew)walkup();return;
+  profile=p;store.set("profile",profile);pushCharge();rosterSync();draft.editingProfile=false;draft.p=null;tab="home";render();window.scrollTo(0,0);if(isNew)walkup();return;
  }
  if(f.id==="f-rd"){
   const sp=sportById(profile.sport);const note=document.getElementById("rd-note").value.trim();
@@ -1988,7 +2222,8 @@ document.addEventListener("submit",ev=>{
   draft.atSent=`Injury report\n\nName: ${profile.name}\n${isStaff()?"Role: "+(profile.title||"Staff")+"\nTeam: "+teamLabel():"Sport: "+sportLabel(sp)}${profile.position?` (${profile.position})`:""}\nWhat hurts: ${document.getElementById("at-where").value.trim()}\nWhen/how: ${document.getElementById("at-when").value.trim()||"-"}\nPain (0-10): ${draft.pain||"-"}\nOther: ${document.getElementById("at-note").value.trim()||"-"}`;
   render();return;
  }
- if(f.id==="f-code"){const v=document.getElementById("code-in").value.toUpperCase().replace(/[^A-Z0-9]/g,"");if(v&&(v.length<3||v.length>6)){toast("Codes are 3 to 6 letters or numbers.");return}if(!v||v===nameCode())delete profile.codeOverride;else profile.codeOverride=v;store.set("profile",profile);draft.codeEdit=false;render();toast("Code saved.");return}
+ if(f.id==="glist-form"){const i=document.getElementById("gl-new"),v=(i.value||"").trim();if(!v){i.focus();return}glistAdd(v.split(/\s*[,;]\s*|\n/),"Added by you");render();const n=document.getElementById("gl-new");if(n)n.focus();return}
+ if(f.id==="f-code"){const v=document.getElementById("code-in").value.toUpperCase().replace(/[^A-Z0-9]/g,"");if(v&&(v.length<3||v.length>6)){toast("Codes are 3 to 6 letters or numbers.");return}if(!v||v===nameCode())delete profile.codeOverride;else profile.codeOverride=v;store.set("profile",profile);draft.codeEdit=false;rosterSync();render();toast("Code saved.");return}
  if(f.id==="f-game"){const date=document.getElementById("g-date").value,time=document.getElementById("g-time").value,opp=document.getElementById("g-opp").value.trim();if(!date||!time)return;
   GAMES.push({date,time,opp,away:!!draft.gAway});store.set("games",GAMES);draft.addGame=false;
   if(date===isoToday()){const c=charge[date]||(charge[date]={type:"game",done:[]});c.type="game";c.gameTime=time;store.set("charge",charge)}
