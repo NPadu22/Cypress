@@ -748,7 +748,7 @@ const FAQ=[
  {q:"What should I eat before practice?",a:["Eat a meal with carbs and some protein 1–4 hours before. Go light on fat and fiber so it doesn't sit heavy.","Short on time? A banana, toast with honey or a sports drink 30–60 minutes before is better than nothing."],s:"ACSM/AND/DC Joint Position Statement, 2016"},
  {q:"What should I eat after practice?",a:["Eat carbs plus 20–40 grams of protein. Chocolate milk and a sandwich work great.","This matters most when you practice again within 8 hours."],s:"ISSN Position Stand: Nutrient Timing, 2017"},
  {q:"How do I fuel a two-a-day?",a:["Right after the first practice, eat a real meal with carbs, protein and fluids.","Then have a light carb snack 30–60 minutes before the second practice."],s:"ISSN Position Stand: Nutrient Timing, 2017"},
- {q:"I'm on a tight budget. How do I eat enough?",a:["Cheap foods that fuel you: rice, oats, pasta, potatoes, tortillas, beans, eggs, peanut butter, frozen vegetables, bananas and canned tuna or chicken.","The Cypress College Food Pantry has free groceries for students. Go to Eat › Free food."],s:"USDA Thrifty Food Plan, 2021; Cypress College Basic Needs"},
+ {q:"I'm on a tight budget. How do I eat enough?",a:["Cheap foods that fuel you: rice, oats, pasta, potatoes, tortillas, beans, eggs, peanut butter, frozen vegetables, bananas and canned tuna or chicken.","The Cypress College Food Pantry has free groceries for students. See the bottom of the Eat tab."],s:"USDA Thrifty Food Plan, 2021; Cypress College Basic Needs"},
  {q:"How do I know how much I sweat?",a:["Weigh yourself before and after practice in little clothing. Each pound you lose is about 16 oz of sweat. Add what you drank during practice.","To catch up, drink about 20–24 oz for every pound lost over the next few hours."],s:"ACSM Position Stand: Exercise and Fluid Replacement, 2007"},
  {q:"Do swimmers and water polo players need to drink?",a:["Yes. You sweat in the pool even though you can't feel it.","Keep a bottle on the pool deck and drink at every break."],s:"ACSM/AND/DC Joint Position Statement, 2016"},
  {q:"Water or sports drink?",a:["Water is fine for most practices under an hour. Use a sports drink when practice is long, hot or really hard, or if you sweat a lot.","White salt marks on your clothes or cramps? You may need more salt."],s:"ACSM/AND/DC Joint Position Statement, 2016"},
@@ -1672,8 +1672,7 @@ const SHOPS=[
  {id:"walmart",n:"Walmart",tip:"Store brand (Great Value) staples keep costs down.",swap:{}},
  {id:"aldi",n:"Aldi",tip:"Mostly store brands, so the basics cost less. Bring a quarter for the cart and your own bags.",swap:{}},
  {id:"target",n:"Target",tip:"Good & Gather store brand covers most of this list.",swap:{}},
- {id:"stater",n:"Stater Bros.",tip:"Check the weekly ad for meat and produce deals.",swap:{}},
- {id:"pantry",n:"Cypress College Food Pantry",free:1,tip:"Free for enrolled students, by appointment (Eat › Groceries). Get what's offered first, then buy the rest.",swap:{}}
+ {id:"stater",n:"Stater Bros.",tip:"Check the weekly ad for meat and produce deals.",swap:{}}
 ];
 const PANTRYISH=new Set(["rice","pasta","oats","beans","lentils","tuna","pb","bread","crackers","applesauce","tomato","milk","fruit","veg"]);
 function myShop(){return SHOPS.find(s=>s.id===PLANPREF.shop)||null}
@@ -1750,7 +1749,7 @@ function planHTML(){
     ${type==="practice"?`<span class="eyebrow" style="margin-top:4px">Practice time</span><div class="choice" data-planpt="1">${PRACTICE_TIMES.map(([k,l])=>`<button type="button" data-v="${k}" aria-pressed="${PLANPREF.pt===k}">${l}</button>`).join("")}</div>`:""}
     <div class="choice">${veg?"":`<button type="button" data-planvegbtn="1" aria-pressed="${!!PLANPREF.veg}">Vegetarian</button>`}<button type="button" data-planbudget="1" aria-pressed="${!!PLANPREF.budget}">Budget week</button></div>
     ${veg?`<p class="stamp">Showing vegetarian options (from your eating style).</p>`:""}
-    ${PLANPREF.budget?`<details class="mdet"><summary>Budget tips</summary><div class="ans"><ul class="clean small"><li>Store brands and bulk rice, oats, beans and pasta cost the least.</li><li>Frozen fruit and veggies are as nutritious as fresh and don't spoil.</li><li>Split Costco or Sam's packs with a teammate.</li><li>Free groceries: Cypress College Food Pantry (Eat › Groceries).</li></ul></div></details>`:""}
+    ${PLANPREF.budget?`<details class="mdet"><summary>Budget tips</summary><div class="ans"><ul class="clean small"><li>Store brands and bulk rice, oats, beans and pasta cost the least.</li><li>Frozen fruit and veggies are as nutritious as fresh and don't spoil.</li><li>Split Costco or Sam's packs with a teammate.</li><li>Free groceries: Cypress College Food Pantry (bottom of the Eat tab).</li></ul></div></details>`:""}
     ${myAllergens().length?`<p class="stamp">Hiding options with ${esc(myAllergens().join(", "))}.${profile.other?` Check every option against ${esc(profile.other)} yourself.`:""}</p>`:profile.other?`<p class="stamp">Check every option against ${esc(profile.other)} yourself.</p>`:""}</div>`;
   const grocery=`<button class="btn block ${showGrocery?"ghost":""}" data-grocery="1">${showGrocery?"Hide grocery list":"Build my grocery list for the week"}</button>${showGrocery?groceryHTML():""}
    <button class="btn ghost block" data-prep="1">${showPrep?"Hide prep plan":"Show my prep plan (batch-cook)"}</button>${showPrep?prepHTML():""}`;
@@ -1837,6 +1836,15 @@ function vStash(){
   <p class="src">Source: USDA FSIS, Shelf-Stable Food Safety; ACSM/AND/DC Joint Position Statement, 2016</p>`;
 }
 let eatSeg="plan";
+function pantryHTML(){return `<section class="pantry"><h2>Free groceries for students</h2><div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
+    <p class="small">Free for enrolled Cypress students. By appointment.</p>
+    <div class="order"><span class="eyebrow">Where</span><span>Building 8, Student Life & Leadership</span>
+    <span class="eyebrow">Contact</span><span>basicneeds@cypresscollege.edu · (714) 484-7309</span></div>
+    <a class="btn block" href="https://portal.soxbox.co/pantry/cypress-college" target="_blank" rel="noopener">Book a pantry visit</a>
+    <a class="linkbtn" href="https://www.cypresscollege.edu/student-life/student-activities/food-bank/" target="_blank" rel="noopener">Hours and details</a>
+    </div>
+   
+   <p class="small"><b>Short on food?</b> Tell us. It's confidential.</p></section>`}
 function vEat(){
  const segs=[["plan","Plan"],["prep","Meal prep"],["campus","Campus"],["out","Eat out"],["pack","Pack"],["shop","Groceries"]];
  if(eatSeg!=="glist"&&!segs.some(x=>x[0]===eatSeg))eatSeg=({near:"campus",home:"out",chain:"out",stash:"pack",bag:"pack",road:"pack",grocery:"shop",free:"shop"})[eatSeg]||"plan";
@@ -1857,22 +1865,14 @@ function vEat(){
  }else if(eatSeg==="pack"){
   body=vStash()+`<section><h2>Build your bag</h2>${vBag()}</section>${travelHTML()}<section><h2>Road trips</h2><div class="stack" style="gap:8px">${ROAD.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }else{
-  body=`<section><h2>Free groceries</h2>${`<div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
-    <p class="small">Free for enrolled Cypress students. By appointment.</p>
-    <div class="order"><span class="eyebrow">Where</span><span>Building 8, Student Life & Leadership</span>
-    <span class="eyebrow">Contact</span><span>basicneeds@cypresscollege.edu · (714) 484-7309</span></div>
-    <a class="btn block" href="https://portal.soxbox.co/pantry/cypress-college" target="_blank" rel="noopener">Book a pantry visit</a>
-    <a class="linkbtn" href="https://www.cypresscollege.edu/student-life/student-activities/food-bank/" target="_blank" rel="noopener">Hours and details</a>
-    </div>
-   <details class="fold"><summary><span class="fsum"><b>Make pantry food work for training</b></span></summary><div class="ans"><ul class="clean small"><li>Grab carbs (rice, pasta, oats, bread, cereal) and pair with protein (canned beans, tuna, peanut butter, eggs if offered).</li><li>Canned fruit and vegetables count. Rinse canned beans and vegetables to cut sodium.</li><li>Ask Basic Needs about CalFresh. Many college students qualify for monthly food benefits.</li></ul></div></details>
-   <p class="small"><b>Short on food?</b> Tell us. It's confidential.</p>`}</section>`+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+`<section><h2>Store lists</h2><div class="stack" style="gap:8px">`+GROCERY.map(s=>`<details class="fold"><summary><span class="fsum"><b>${esc(s.n)}</b><span class="stamp">${esc(s.where)}</span></span></summary><div class="ans"><p class="stamp">${esc(s.tip)}</p><ul class="clean small">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div></details>`).join("")+`</div></section>`+
+  body=``+(A?`<div class="card stack"><span class="eyebrow">Shopping near you · ${esc(A.short)}</span><p>${esc(A.shop)}</p></div>`:"")+`<section><h2>Store lists</h2><div class="stack" style="gap:8px">`+GROCERY.map(s=>`<details class="fold"><summary><span class="fsum"><b>${esc(s.n)}</b><span class="stamp">${esc(s.where)}</span></span></summary><div class="ans"><p class="stamp">${esc(s.tip)}</p><ul class="clean small">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div></details>`).join("")+`</div></section>`+
    `<section><h2>Quick recipes</h2><div class="stack" style="gap:8px">${RECIPES.map(r=>`<details class="fold"><summary><span class="fsum"><b>${esc(r.n)}</b><span class="stamp">${esc(r.t)}</span></span></summary><div class="ans"><p class="small">${esc(r.d)}</p></div></details>`).join("")}</div></section>`;
  }
  return `<div class="view"><div class="scene pro" aria-hidden="true"><div class="bn-txt"><span class="bn-l">Sports Nutrition</span><span class="bn-s">Fuel · Recover · Repeat</span></div><div class="bn-icons"><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-2-2-7-1.5-7 4 0 4 3 8 5 8 1 0 1.4-.6 2-.6s1 .6 2 .6c2 0 5-4 5-8 0-5.5-5-6-7-4z"/><path d="M12 7c0-2 1-3.5 3-4"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a8 7 0 0 1-16 0z"/><path d="M8 19h8"/><path d="M14 9l6-6M11 9l5-6"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v3l-2 3v11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9l-2-3V3"/><path d="M8 13h8"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c3-5 9-6 14-3l4-3v12l-4-3c-5 3-11 2-14-3z"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></g></svg><svg viewBox="0 0 24 24" class="bn-ic"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11a7 6 0 0 1 14 0v9z"/><path d="M9 13l2-1.5M13 14l2-1.5"/></g></svg></div></div>
  <div class="row" style="align-items:flex-end"><div class="grow"><h1>Eat</h1></div>${(n=>`<button class="cartbtn" data-segjump="${eatSeg==="glist"?"plan":"glist"}" aria-pressed="${eatSeg==="glist"}" aria-label="${eatSeg==="glist"?"Close":"Open"} my Grocery List${n?`, ${n} items`:""}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.5" fill="currentColor"/><circle cx="17" cy="20" r="1.5" fill="currentColor"/></svg>${n?`<span class="cartn">${n}</span>`:""}</button>`)(GLIST.filter(x=>!x.done).length)}</div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
   ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> = your allergens</p>`:""}
-  <div class="stack">${body}</div></div>`;
+  <div class="stack">${body}${eatSeg==="glist"?"":pantryHTML()}</div></div>`;
 }
 
 function vInjury(){
