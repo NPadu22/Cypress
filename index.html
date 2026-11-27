@@ -579,7 +579,7 @@ h3{font-weight:700}
 .sb-cell{background:#000F22;border-radius:10px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:2px}
 .sb-cell span{font:700 .58rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
 .sb-cell b{font:700 1.7rem/1 var(--display);color:#FED41F;font-variant-numeric:tabular-nums;letter-spacing:.04em}.sb-cell small{font-size:.9rem;color:rgba(254,212,31,.6)}
-.sb-plays{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sb-plays{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .sb-play{border:1.5px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.75);border-radius:10px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
 .sb-play i{font-style:normal;font-size:1.1rem;filter:grayscale(1);opacity:.6}.sb-play span{font:700 .56rem/1.1 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-align:center}
 .sb-play.on{background:#FED41F;border-color:#FED41F;color:#003876}.sb-play.on i{filter:none;opacity:1}
@@ -1415,14 +1415,13 @@ const PLAYS=[
  {k:"check",n:"Check-in",i:"✓",how:"Save today's check-in",go:"journal"},
  {k:"sleep",n:"Sleep 7+",i:"☾",how:"7+ hours in your check-in",go:"journal"},
  {k:"fuel",n:"Fuel log",i:"🍴",how:"Log 3+ meals or snacks",go:"journal"},
- {k:"water",n:"Hydrate",i:"💧",how:"Hit your water goal",go:"journal"},
- {k:"habits",n:"Habits",i:"★",how:"All 3 Start here habits",go:"home"}];
+ {k:"water",n:"Hydrate",i:"💧",how:"Hit your water goal",go:"journal"}];
 function playDone(k,d){const c=CK[d];if(k==="check")return !!c;if(k==="sleep")return !!c&&ckSlpNum(c.sleep)>=7;if(k==="fuel")return (J.days[d]||[]).length>=3;
  if(k==="water"){const h=H[d];return !!h&&h.n*BOTTLE>=hydroGoal(h)}if(k==="habits")return (HAB[d]||[]).length>=3;return false}
 function firstDay(){let f=store.get("firstday",null);if(!f){f=isoToday();store.set("firstday",f)}return f}
 function dayScore(d){return PLAYS.filter(p=>playDone(p.k,d)).length}
 const LEVELS=[[0,"Walk-on"],[100,"Rookie"],[300,"Starter"],[700,"All-Conference"],[1500,"All-State"],[3000,"All-American"],[6000,"Hall of Famer"]];
-function careerPts(){let pts=0;const days=new Set([...Object.keys(CK),...Object.keys(J.days||{}),...Object.keys(H),...Object.keys(HAB)]);days.forEach(d=>{const s=dayScore(d);pts+=s*10+(s===5?20:0)});return pts}
+function careerPts(){let pts=0;const days=new Set([...Object.keys(CK),...Object.keys(J.days||{}),...Object.keys(H),...Object.keys(HAB)]);days.forEach(d=>{const s=dayScore(d);pts+=s*10+(s===PLAYS.length?20:0)});return pts}
 function winStreak(){let n=0,d=isoToday();if(dayScore(d)<3)d=isoShift(d,-1);while(dayScore(d)>=3){n++;d=isoShift(d,-1)}return n}
 function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winStreak();
  let li=0;LEVELS.forEach((l,i)=>{if(pts>=l[0])li=i});const nxt=LEVELS[li+1],pct=nxt?Math.round((pts-LEVELS[li][0])/(nxt[0]-LEVELS[li][0])*100):100;
@@ -1430,9 +1429,9 @@ function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winSt
  const f0=firstDay(),W=wk.filter(d=>d<t&&dayScore(d)>=3).length+(s>=3?1:0),L=wk.filter(d=>d<t&&d>=f0&&dayScore(d)<3).length;
  return `<section><div class="row"><h2 class="grow">Charger Scoreboard</h2><span class="stamp">${st?`🔥 ${st}-day win streak`:"3 plays = a win"}</span></div>
  <div class="scoreboard">
-  <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/5</small></b></div><div class="sb-cell"><span>This week</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
+  <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/${PLAYS.length}</small></b></div><div class="sb-cell"><span>This week</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
   <div class="sb-plays">${PLAYS.map(p=>{const on=playDone(p.k,t);return `<button class="sb-play ${on?"on":""}" data-go="${p.go}" aria-label="${esc(p.n)}: ${on?"done":"not yet"}. ${esc(p.how)}"><i aria-hidden="true">${p.i}</i><span>${esc(p.n)}</span></button>`}).join("")}</div>
-  <div class="sb-week">${wk.map(d=>{const sc=dayScore(d),f=d>t||(d<f0&&sc<3);return `<div class="sb-day ${f?"fut":sc>=3?"w":d===t?"now":"l"}"><span>${"MTWTFSS"[wk.indexOf(d)]}</span><b>${f?"·":sc>=3?"W":d===t?sc+"/5":"L"}</b></div>`}).join("")}</div>
+  <div class="sb-week">${wk.map(d=>{const sc=dayScore(d),f=d>t||(d<f0&&sc<3);return `<div class="sb-day ${f?"fut":sc>=3?"w":d===t?"now":"l"}"><span>${"MTWTFSS"[wk.indexOf(d)]}</span><b>${f?"·":sc>=3?"W":d===t?sc+"/"+PLAYS.length:"L"}</b></div>`}).join("")}</div>
   <div class="sb-level"><div class="row"><b class="grow">${LEVELS[li][1]}</b><span class="stamp">${nxt?`${nxt[0]-pts} pts to ${nxt[1]}`:"Top level"}</span></div><div class="sb-bar"><i style="width:${pct}%"></i></div></div>
  </div>
  <p class="stamp">${s>=3?"Today's a W. Keep stacking them.":`${3-s} more play${3-s===1?"":"s"} for today's win. Tap one to log it.`}</p></section>`}
