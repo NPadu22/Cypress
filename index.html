@@ -1334,7 +1334,7 @@ function habStreak(){let n=0,d=isoToday();if((HAB[d]||[]).length<3)d=isoShift(d,
 function pennant(){const first=!store.get("st_1966",0);store.set("st_1966",1);const el=document.createElement("div");el.className="pennant";el.setAttribute("role","dialog");el.setAttribute("aria-label","Cypress Chargers, established 1966");
  el.innerHTML=`<svg viewBox="0 0 300 140" aria-hidden="true"><path d="M10 20 L290 70 L10 120 Z" fill="#003876" stroke="#FED41F" stroke-width="4"/><rect x="4" y="12" width="10" height="116" rx="3" fill="#B6B2A3"/><text x="40" y="66" fill="#FED41F" font-family="Futura,Jost,sans-serif" font-weight="600" font-size="30" letter-spacing="3">CHARGERS</text><text x="42" y="92" fill="#fff" font-family="Futura,Jost,sans-serif" font-size="14" letter-spacing="5">EST. 1966</text></svg><p>${first?"Hidden stamp found: Est. 1966":"Est. 1966"}</p>`;
  el.addEventListener("click",()=>el.remove());document.body.appendChild(el);setTimeout(()=>el.remove(),3200);if(first)setTimeout(render,300)}
-function vStartHere(){if(isStaff())return "";const t=isoToday(),D=HAB[t]||[],st=habStreak();
+function vStartHere(){const t=isoToday(),D=HAB[t]||[],st=habStreak();
  return `<section><div class="row"><h2 class="grow">Start here</h2><span class="stamp">${st?`🔥 ${st}-day streak`:"3 habits a day"}</span></div>
   <div class="card stack whiteboard" style="gap:4px"><span class="wb-tag" aria-hidden="true">Coach's board</span>${HABITS.map((h,i)=>{const on=D.includes(i);return `<div class="hab"><button class="rx-check" data-hab="${i}" aria-pressed="${on}" aria-label="Done: ${esc(h.t)}">${on?"✓":""}</button>
    <details class="grow"><summary><b>${esc(h.t)}</b></summary><p class="small">${esc(h.why)}</p><p class="muted small"><b>Try:</b> ${esc(h.ex)}</p></details></div>`}).join("")}
@@ -1366,7 +1366,7 @@ function dayScore(d){return PLAYS.filter(p=>playDone(p.k,d)).length}
 const LEVELS=[[0,"Walk-on"],[100,"Rookie"],[300,"Starter"],[700,"All-Conference"],[1500,"All-State"],[3000,"All-American"],[6000,"Hall of Famer"]];
 function careerPts(){let pts=0;const days=new Set([...Object.keys(CK),...Object.keys(J.days||{}),...Object.keys(H),...Object.keys(HAB)]);days.forEach(d=>{const s=dayScore(d);pts+=s*10+(s===5?20:0)});return pts}
 function winStreak(){let n=0,d=isoToday();if(dayScore(d)<3)d=isoShift(d,-1);while(dayScore(d)>=3){n++;d=isoShift(d,-1)}return n}
-function vScoreboard(){if(isStaff())return "";const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winStreak();
+function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winStreak();
  let li=0;LEVELS.forEach((l,i)=>{if(pts>=l[0])li=i});const nxt=LEVELS[li+1],pct=nxt?Math.round((pts-LEVELS[li][0])/(nxt[0]-LEVELS[li][0])*100):100;
  const mon=isoShift(t,-((new Date(t+"T12:00:00").getDay()+6)%7)),wk=[...Array(7)].map((_,i)=>isoShift(mon,i));
  const f0=firstDay(),W=wk.filter(d=>d<t&&dayScore(d)>=3).length+(s>=3?1:0),L=wk.filter(d=>d<t&&d>=f0&&dayScore(d)<3).length;
