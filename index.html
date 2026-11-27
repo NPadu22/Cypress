@@ -597,6 +597,8 @@ h3{font-weight:700}
 .ckgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.ckgrid div{display:flex;flex-direction:column;gap:2px}.ckgrid b{font:700 1rem var(--display)}
 .ckform .choice button{min-width:40px}
 .cartbtn{pointer-events:auto;border:3px solid #FED41F!important}
+.consult-cta{display:flex;align-items:center;gap:12px;border-left:5px solid #FED41F!important}.consult-cta b{display:block;font-family:var(--display);font-size:1.02rem;margin:3px 0}.consult-cta .btn{flex:none}
+@media (max-width:400px){.consult-cta{flex-direction:column;align-items:stretch}}
 </style>
 </head>
 <body>
@@ -1903,6 +1905,7 @@ function vStash(){
   <p class="src">Source: USDA FSIS, Shelf-Stable Food Safety; ACSM/AND/DC Joint Position Statement, 2016</p>`;
 }
 let eatSeg="plan";
+function consultCTA(topic){return `<section><div class="card consult-cta"><div class="grow"><span class="eyebrow">Sports dietitian</span><b>Book a consult with ${esc(S().rdName||"the dietitian")}</b><p class="small muted">${esc(topic)} Book through ${esc(atNames(" or "))}.</p></div><button class="btn" data-go="rd">Book a consult</button></div></section>`}
 function pantryHTML(){return `<section class="pantry"><h2>Free groceries for students</h2><div class="card stack"><p class="eyebrow">Cypress College</p><h3>Basic Needs Resource Center & Food Pantry</h3>
     <p class="small">Free for enrolled Cypress students. By appointment.</p>
     <div class="order"><span class="eyebrow">Where</span><span>Building 8, Student Life & Leadership</span>
@@ -1939,7 +1942,7 @@ function vEat(){
  <div class="row" style="justify-content:flex-end;margin:-46px 10px -14px 0;position:relative;z-index:2;pointer-events:none"><span class="grow"></span>${(n=>`<button class="cartbtn" data-segjump="${eatSeg==="glist"?"plan":"glist"}" aria-pressed="${eatSeg==="glist"}" aria-label="${eatSeg==="glist"?"Close":"Open"} my Grocery List${n?`, ${n} items`:""}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.5" fill="currentColor"/><circle cx="17" cy="20" r="1.5" fill="currentColor"/></svg>${n?`<span class="cartn">${n}</span>`:""}</button>`)(GLIST.filter(x=>!x.done).length)}</div>
   <div class="seg" data-eatseg-bar="1">${segs.map(([id,l])=>`<button data-eatseg="${id}" aria-pressed="${eatSeg===id}">${l}</button>`).join("")}</div>
   ${myAllergens().length?`<p class="small"><span class="chip stop">Red</span> = your allergens</p>`:""}
-  <div class="stack">${body}${eatSeg==="glist"?"":pantryHTML()}</div></div>`;
+  <div class="stack">${body}${eatSeg==="glist"?"":pantryHTML()}${consultCTA("Meal plans, budget eating, allergies, supplements or weight goals.")}</div></div>`;
 }
 
 function vInjury(){
@@ -2151,7 +2154,8 @@ function vJournal(){
     <p>${esc(x.what)}</p>${x.photo?`<img src="${x.photo}" alt="Photo of ${esc(x.what)}">`:""}${x.energy?`<span class="stamp">Energy: ${esc(x.energy)}</span>`:""}${x.note?`<p class="muted small">${esc(x.note)}</p>`:""}</button>`).join(""):`<p class="muted">Nothing logged. What did you eat?</p>`}</div>
   ${list.length?`<button class="btn ghost block" data-jshare="1">Copy this day to send to ${esc(S().rdName||"the dietitian")}</button><div id="jshare"></div>`:""}
   </section>
-  ${jDay===isoToday()?vHydro():(H[jDay]?`<section><h2>Hydration</h2><div class="card"><p><b>${H[jDay].n*BOTTLE} oz</b> <span class="muted small">· ${H[jDay].n} bottles</span></p></div></section>`:"")}
+${jDay===isoToday()?vHydro():(H[jDay]?`<section><h2>Hydration</h2><div class="card"><p><b>${H[jDay].n*BOTTLE} oz</b> <span class="muted small">· ${H[jDay].n} bottles</span></p></div></section>`:"")}
+  ${consultCTA("Want feedback on your log, sleep or energy? Bring it to a consult.")}
  </div>`;
 }
 function jForm(e){
