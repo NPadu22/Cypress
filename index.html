@@ -523,6 +523,40 @@ body[data-tab="learn"] details.fold,body[data-tab="learn"] section>.card{backgro
 .qlgrid button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold)}
 .wordmark{letter-spacing:.01em;font-weight:500}
 
+
+/* ===== Varsity layer: collegiate athletic department look. Bold uppercase Futura, navy and gold trim, crisp white cards. ===== */
+:root[data-theme="varsity"]{--bg:#F3F5F8;--surface:#FFFFFF;--surface-2:#EBEFF4;--line:#D9DFE7;--fg:#0B2545;--muted:#4F728F;--gold:#FED41F;--gold-text:#7A5A00;--on-gold:#003876;--info:#1C75BC;--stop:#C8161D;--ok:#2F6B3A;color-scheme:light}
+:root{--r:14px}
+h1{font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:.95;font-size:2.35rem}
+h2{font-weight:700;text-transform:uppercase;letter-spacing:.07em;font-size:1rem}
+h2::before{width:5px!important;height:18px!important;border-radius:2px!important;background:var(--gold)!important;margin:0 2px 0 0!important;transform:none!important}
+h3{font-weight:700}
+.eyebrow{font-weight:700;letter-spacing:.2em}
+.card,details{border-radius:14px!important;box-shadow:0 1px 2px rgba(11,37,69,.06),0 6px 18px rgba(11,37,69,.05)!important;border:1px solid var(--line)!important}
+.mdet{box-shadow:none!important;border:0!important;border-radius:10px!important}
+.btn{border-radius:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:.86rem}
+.btn.sm{font-size:.74rem}
+.linkbtn{font-weight:700}
+.seg button,.choice button{border-radius:8px!important;text-transform:uppercase;letter-spacing:.06em;font-weight:700;font-size:.76rem}
+.chip{border-radius:6px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;font-size:.66rem}
+.pct{font-weight:700;font-variant-numeric:tabular-nums}
+/* hero: navy field with varsity stripes */
+.hero{background:#003876!important;border-radius:16px!important;overflow:hidden;padding:22px 20px 20px!important}
+.hero::before{content:"";position:absolute;inset:-20px -70px -20px auto;width:200px;height:auto;border:0!important;border-radius:0!important;background:repeating-linear-gradient(-58deg,transparent 0 18px,#FED41F 18px 26px,transparent 26px 34px,rgba(255,255,255,.9) 34px 38px,transparent 38px 64px);opacity:.45;transform:none;pointer-events:none;-webkit-mask:linear-gradient(90deg,transparent,#000 45%);mask:linear-gradient(90deg,transparent,#000 45%)}
+.hero::after,.hero.sky-dawn::after,.hero.sky-day::after,.hero.sky-dusk::after,.hero.sky-night::after{content:"";position:absolute;left:0;right:0;bottom:0;top:auto;width:auto;height:6px;border-radius:0;background:linear-gradient(90deg,#FED41F 0 70%,#fff 70% 74%,#FED41F 74%);box-shadow:none;opacity:1}
+.hero h1{font-size:2.6rem;letter-spacing:.005em}
+.hero .eyebrow{color:#FED41F!important;opacity:1}
+/* top bar and tab bar */
+.wordmark span{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.wordmark small{letter-spacing:.14em}
+.topbar{border-bottom:3px solid #003876;box-shadow:0 3px 0 #FED41F;margin-bottom:14px;padding-bottom:10px}
+.tabs{background:#003876!important;border-top:3px solid #FED41F!important}
+.tabs button{color:rgba(255,255,255,.62)!important;text-transform:uppercase}
+.tabs button[aria-current="page"]{color:#FED41F!important}
+.tabs button[aria-current="page"]::after{background:#FED41F!important}
+/* jersey-style numbers on the locker and stamps */
+.lk-name,.wu-name{font-weight:700;text-transform:uppercase}
+.hab details{border:0!important;box-shadow:none!important;background:transparent!important}.hab summary{padding:4px 0!important}
 </style>
 </head>
 <body>
@@ -763,8 +797,8 @@ const PREHAB_FUEL_SRC="IOC Consensus on REDs, 2023; Milewski et al., J Pediatr O
 /* ============ state ============ */
 const store={get(k,f){try{const v=localStorage.getItem("cy_"+k);return v?JSON.parse(v):f}catch(e){return f}},set(k,v){try{localStorage.setItem("cy_"+k,JSON.stringify(v));return true}catch(e){return false}}};
 let profile=store.get("profile",null);
-let prefs=store.get("prefs",{theme:"mcm",large:0,mcm:1});
-if(!prefs.mcm){prefs.theme="mcm";prefs.mcm=1;store.set("prefs",prefs)}
+let prefs=store.get("prefs",{theme:"varsity",large:0,mcm:1,varsity:1});
+if(!prefs.varsity){prefs.theme="varsity";prefs.mcm=1;prefs.varsity=1;store.set("prefs",prefs)}
 let charge=store.get("charge",{});
 let J=store.get("journal",{days:{}});
 let draft={};
@@ -803,7 +837,7 @@ const LOGO="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAACXCAYAAADjyDymAA
 const BOLT='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>';
 
 /* ============ daily plan ============ */
-const THEMES=[["mcm","Mid-Century",["#F2ECDF","#003876","#FED41F"]],["auto","Match phone",["#003876","#F4F3EF","#FED41F"]],["dark","Charger Blue",["#001B3D","#003876","#FED41F"]],["midnight","Midnight",["#000C1F","#00234C","#FED41F"]],["light","Daylight",["#F4F3EF","#FFFFFF","#003876"]],["goldrush","Premier Gold",["#FFF4C2","#FED41F","#003876"]],["cyan","Modern Cyan",["#00213F","#003876","#00AEEF"]],["modernblue","Modern Blue",["#0B2F55","#1C75BC","#FFF200"]],["piazza","Piazza Blue",["#1D364D","#4F728F","#FED41F"]],["tile","Cement & Tile",["#EFEBE2","#B6B2A3","#614219"]],["tilered","Tile Red",["#001B3D","#003876","#ED1C24"]]];
+const THEMES=[["varsity","Varsity",["#F3F5F8","#003876","#FED41F"]],["mcm","Mid-Century",["#F2ECDF","#003876","#FED41F"]],["auto","Match phone",["#003876","#F4F3EF","#FED41F"]],["dark","Charger Blue",["#001B3D","#003876","#FED41F"]],["midnight","Midnight",["#000C1F","#00234C","#FED41F"]],["light","Daylight",["#F4F3EF","#FFFFFF","#003876"]],["goldrush","Premier Gold",["#FFF4C2","#FED41F","#003876"]],["cyan","Modern Cyan",["#00213F","#003876","#00AEEF"]],["modernblue","Modern Blue",["#0B2F55","#1C75BC","#FFF200"]],["piazza","Piazza Blue",["#1D364D","#4F728F","#FED41F"]],["tile","Cement & Tile",["#EFEBE2","#B6B2A3","#614219"]],["tilered","Tile Red",["#001B3D","#003876","#ED1C24"]]];
 const DAYTYPES=[["practice","Practice"],["game","Game day"],["double","Two-a-day"],["lift","Lift/conditioning"],["rehab","Rehab day"],["rest","Rest"]];
 function planFor(type,kind){
  const during={interval:"Water at every break. Sports drink if it's over an hour or hot.",skill:"Sip every inning or rotation. Small snack on long days.",power:"Sip between sets or drills. Easy carbs on long days.",aquatic:"Bottle on deck. Drink at every rest, even in the pool.",golf:"Snack every 3–4 holes. Drink at every tee box."}[kind]||"Drink at every break.";
@@ -2277,7 +2311,7 @@ document.addEventListener("click",async ev=>{
  if(d.large!==undefined){prefs.large=+d.large;store.set("prefs",prefs);render();return}
  if(d.wipe){draft.wipeAsk=true;render();return}
  if(d.wipeno){draft.wipeAsk=false;render();return}
- if(d.wipeyes){try{["profile","prefs","charge","journal","hydro","planpref","a2hs_done"].forEach(k=>localStorage.removeItem("cy_"+k))}catch(e){}profile=null;J={days:{}};charge={};prefs={theme:"mcm",large:0,mcm:1};draft={};tab="home";render();return}
+ if(d.wipeyes){try{["profile","prefs","charge","journal","hydro","planpref","a2hs_done"].forEach(k=>localStorage.removeItem("cy_"+k))}catch(e){}profile=null;J={days:{}};charge={};prefs={theme:"varsity",large:0,mcm:1,varsity:1};draft={};tab="home";render();return}
  /* journal */
  if(d.jday){jDay=isoShift(jDay,+d.jday);if(jDay>isoToday())jDay=isoToday();draft.jEdit=null;render();return}
  if(d.qlocc){draft.ql.occ=d.qlocc;render();return}
