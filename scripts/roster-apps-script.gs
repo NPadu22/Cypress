@@ -14,7 +14,7 @@
  * Meals, water and program check-offs go ONLY to the private staff sheet. Tabs there are created automatically.
  */
 const ROSTER_TAB = 'Roster';
-const STAFF_SHEET_ID = 'PASTE_PRIVATE_SHEET_LINK_HERE';
+const STAFF_SHEET_ID = '1-Aiua0P9YyE5TI3mu-g9fdhxERPU7Ygfs_DuwwJHQWE';
 
 const STAFF_TABS = {
   Meals: ['Date', 'Code', 'Name', 'Team', 'Position', 'Meal', 'Time', 'What they ate', 'Gut', 'From meal plan', 'Logged', 'Entry ID'],
