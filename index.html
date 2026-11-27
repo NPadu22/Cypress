@@ -2396,7 +2396,6 @@ document.addEventListener("click",async ev=>{
  if(d.a2done){store.set("a2hs_done",1);closeA2hs();toast("Nice. Open it from your Home Screen.");return}
  if(d.a2install){if(deferredInstall){deferredInstall.prompt();deferredInstall.userChoice.then(r=>{if(r&&r.outcome==="accepted")store.set("a2hs_done",1)}).catch(()=>{});deferredInstall=null}closeA2hs();return}
  if(d.a2show){a2hs(true);return}
- if(d.wcopy){try{const r=await fetch("widget.js",{cache:"no-store"});if(!r.ok)throw 0;const s=await r.text();await navigator.clipboard.writeText(s);toast("Copied. Paste it in Scriptable.")}catch(e){toast("Open the widget page and copy the script");setTimeout(()=>{location.href="widget.js"},900)}return}
  if(d.walkup){walkup();return}
  if(d.trainseg){trainSeg=d.trainseg;render();window.scrollTo(0,0);return}
  if(d.part){bodyPart=d.part;render();return}

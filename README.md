@@ -6,9 +6,6 @@ Nutrition and athletic training app for Cypress College athletes (all sports), r
 
 Share the GitHub Pages link. On iPhone: open it in Safari, tap Share, then **Add to Home Screen**. On Android: Chrome menu, then **Add to Home screen**. The Charger logo becomes the app icon.
 
-## iPhone widget
-
-In the app: profile (locker) → **Add the iPhone widget**. It uses the free Scriptable app and `widget.js`; content comes from `widget.json`. Rebuild the feed with `node tools/build-widget.mjs` when tips, sport rules or announcements change.
 
 ## Updates
 

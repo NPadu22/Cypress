@@ -18,8 +18,6 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 - Away-game travel list: `TRAVEL` in `index.html`. Drive times are rough, without traffic.
 - `manifest.webmanifest`, `icon-*.png`, `splash-*.png`, `logo.png`: home-screen install. The logo is the Cypress Chargers athletics mark.
 - `sw.js`: network-first pages, cached assets.
-- `widget.js`: iOS home-screen widget for the Scriptable app (small = today's tip, medium = sport rule of the day). It reads `widget.json`.
-- `widget.json`: the widget's feed, generated from `index.html`. **Run `node tools/build-widget.mjs` after changing Basics tips, sport rules (SIMPLE), sports or announcements**, and commit the result.
 
 ## Rules
 
