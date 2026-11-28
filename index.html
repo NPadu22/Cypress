@@ -691,6 +691,19 @@ body[data-gameday="1"] .sb-coach{background:#111;color:#eee;border-color:#2A2A2A
 @media (prefers-reduced-motion:reduce){.scoreboard.lit::before{animation:none}}
 .sticky{position:relative}.sticky::before{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#ED1C24 60%,#9e1218);box-shadow:0 2px 3px rgba(0,0,0,.35)}
 .sched-row .eyebrow{display:block;margin-bottom:2px}
+.glance{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gl-day{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.gl-day.now{border:2px solid #FED41F;box-shadow:0 2px 8px rgba(0,56,118,.08)}
+.gl-head{background:#003876;color:#fff;box-shadow:inset 0 0 0 1px rgba(254,212,31,.35);border-radius:8px;padding:5px 6px;display:flex;flex-direction:column;line-height:1.15}
+.gl-head b{font:700 .72rem var(--display);letter-spacing:.04em;text-transform:uppercase}.gl-head span{font:600 .62rem var(--mono);color:#FED41F;letter-spacing:.08em;text-transform:uppercase}
+.gl-game{display:flex;flex-direction:column;gap:1px;font-size:.72rem;line-height:1.25;padding-bottom:6px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.gl-game:last-child{border-bottom:0;padding-bottom:0}
+.gl-game b{font-size:.74rem;color:var(--fg)}.gl-t{font:700 .62rem var(--mono);letter-spacing:.06em;color:var(--muted,#667)}
+.gl-ha{align-self:flex-start;font:700 .56rem var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:1px 5px;border-radius:4px;background:var(--line);margin-top:2px}.gl-ha.home{background:#FED41F;color:#003876}
+.gl-off{font-size:.72rem;color:var(--muted,#667);margin:0}
+body[data-gameday="1"] .gl-day{background:#111;border-color:#333}body[data-gameday="1"] .gl-day.now{border-color:#FED41F}
+body[data-gameday="1"] .gl-head{background:#FED41F;color:#000}body[data-gameday="1"] .gl-head span{color:#000}
+body[data-gameday="1"] .gl-game{border-color:#333;color:#eee}body[data-gameday="1"] .gl-game b{color:#FED41F}
+
 </style>
 </head>
 <body>
@@ -1519,21 +1532,23 @@ function vHof(){const staff=isStaff(),mine=profile.sport;
 function gLine(g,showTeam){const s=sportById(g.sport);return `<div class="sched-row"><div class="sched-date"><b>${esc(new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{month:"short"}))}</b><span>${esc(new Date(g.date+"T12:00:00").getDate())}</span></div>
  <div class="grow">${showTeam?`<span class="eyebrow">${esc(sportLabel(s))}</span>`:""}<b class="small">${g.away?"at ":g.ha==="Neutral"?"vs ":"vs "}${esc(g.opp||"TBA")}</b><p class="stamp">${esc([new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{weekday:"short"}),g.time?fmtClock(new Date(g.date+"T"+g.time)):"Time TBA",g.ha,g.loc].filter(Boolean).join(" · "))}</p></div>
  ${g.date===isoToday()?`<span class="chip gold">Today</span>`:""}</div>`}
-function vSchedule(){const t=isoToday(),staff=isStaff();
- if(staff){const all=allTeamGames().filter(g=>g.date>=t).sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99")));
-  const today=all.filter(g=>g.date===t),next=all.filter(g=>g.date>t);
-  const byDay={};next.slice(0,12).forEach(g=>(byDay[g.date]=byDay[g.date]||[]).push(g));
-  const dayHead=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});
-  return `<section><div class="row"><h2 class="grow">Today's schedule</h2>${SHEET.sched&&S().schedSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.sched.fetched))}</span>`:""}</div>
-   <div class="card stack" style="gap:0"><span class="eyebrow" style="padding-bottom:4px">${esc(dayHead(t))} · all teams</span>
-   ${today.length?today.map(g=>gLine(g,true)).join(""):`<p class="muted small" style="padding:6px 0">No Charger games today.</p>`}</div>
-   <div class="row" style="margin-top:14px"><h2 class="grow">Coming up</h2></div>
-   <div class="card stack" style="gap:0">${Object.keys(byDay).length?Object.entries(byDay).map(([d,L])=>`<span class="eyebrow" style="padding-top:8px">${esc(dayHead(d))}</span>${L.map(g=>gLine(g,true)).join("")}`).join(""):`<p class="muted small">Nothing on the Schedule tab yet. Add games in the Google Sheet and every team shows here.</p>`}
-   ${next.length>12?`<p class="stamp" style="padding-top:8px">+ ${next.length-12} more games on the schedule</p>`:""}</div></section>`}
- const L=allTeamGames().filter(g=>g.date>=t&&g.sport===profile.sport).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)),show=L.slice(0,5);
- return `<section><div class="row"><h2 class="grow">Schedule</h2>${SHEET.sched&&S().schedSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.sched.fetched))}</span>`:""}</div>
-  <div class="card stack" style="gap:0">${show.length?show.map(g=>gLine(g,false)).join(""):`<p class="muted small">Your team's schedule isn't posted yet. You can add your own games below.</p>`}
-  ${L.length>show.length?`<p class="stamp" style="padding-top:8px">+ ${L.length-show.length} more on the schedule</p>`:""}</div></section>`}
+const isoPlus=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const sportShort=s=>s?`${s.who==="Men"?"M":"W"} ${s.n.replace("Swim & Dive","Swim").replace("Beach Volleyball","Beach VB").replace("Flag Football","Flag")}`:"";
+function glance(L,staff){const days=[0,1,2].map(isoPlus),nm=["Today","Tomorrow",new Date(days[2]+"T12:00:00").toLocaleDateString("en-US",{weekday:"long"})];
+ return `<div class="glance">${days.map((d,i)=>{const G=L.filter(g=>g.date===d);
+  return `<div class="gl-day${i===0?" now":""}"><div class="gl-head"><b>${esc(nm[i])}</b><span>${esc(new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}))}</span></div>
+  ${G.length?G.map(g=>`<div class="gl-game"><span class="gl-t">${esc(g.time?fmtClock(new Date(g.date+"T"+g.time)):"TBA")}</span>${staff?`<b>${esc(sportShort(sportById(g.sport)))}</b>`:""}<span>${g.away?"at ":"vs "}${esc(g.opp||"TBA")}</span>${g.ha?`<span class="gl-ha${g.ha==="Home"?" home":""}">${esc(g.ha)}</span>`:""}</div>`).join(""):`<p class="gl-off">${staff?"No games":"Off day"}</p>`}</div>`}).join("")}</div>`}
+function vSchedule(){const t=isoToday(),staff=isStaff(),d3=isoPlus(3);
+ const all=allTeamGames().filter(g=>g.date>=t&&(staff||g.sport===profile.sport)).sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99")));
+ const later=all.filter(g=>g.date>=d3),cap=staff?10:4,show=later.slice(0,cap);
+ const stamp=SHEET.sched&&S().schedSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.sched.fetched))}</span>`:"";
+ const dayHead=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});
+ const byDay={};show.forEach(g=>(byDay[g.date]=byDay[g.date]||[]).push(g));
+ return `<section><div class="row"><h2 class="grow">Next 3 days</h2>${stamp}</div>
+  ${!all.length&&!staff?`<div class="card"><p class="muted small">Your team's schedule isn't posted yet. You can add your own games below.</p></div>`:glance(all,staff)}
+  ${show.length?`<div class="row" style="margin-top:14px"><h2 class="grow">Later</h2></div>
+  <div class="card stack" style="gap:0">${staff?Object.entries(byDay).map(([d,L])=>`<span class="eyebrow" style="padding-top:8px">${esc(dayHead(d))}</span>${L.map(g=>gLine(g,true)).join("")}`).join(""):show.map(g=>gLine(g,false)).join("")}
+  ${later.length>cap?`<p class="stamp" style="padding-top:8px">+ ${later.length-cap} more on the schedule</p>`:""}</div>`:""}</section>`}
 /* ===== Game day: black and gold screen with sport-specific fueling ===== */
 const GAMEDAY={
  baseball:{pre:"3–4 h before: big carb meal. Rice or pasta bowl with chicken, or two turkey sandwiches and fruit.",top:"30–60 min before: banana, pretzels or a granola bar.",during:"Every 2–3 innings: sips of water. Between games of a doubleheader: a sandwich, fruit and a sports drink.",after:"Within 1 hour: chocolate milk or a recovery meal with carbs and protein.",tip:"Long day in the sun: drink before you're thirsty and keep snacks in your bag."},
