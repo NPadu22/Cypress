@@ -1349,7 +1349,7 @@ async function askAI(q){
   last.content=r.text||last.content;
  }catch(e){
   if(e&&e.code==="not_granted"){aiState="off";chat.splice(-2)}
-  else last.content=(e&&e.code==="rate_limited")?"Too many questions right now. Try again in a few minutes, or book a consult with "+rdName()+" through "+atNames(" or ")+" (Book a consult button on the Eat tab).":(e&&e.text)||"I couldn't answer that. Try again, or ask "+rdName()+" in the RD tab.";
+  else last.content=(e&&e.code==="rate_limited")?"Too many questions right now. Try again in a few minutes, or book a consult with "+rdName()+" through "+atNames(" or ")+" (Book a consult button on the Eat tab).":(e&&e.text)||"I couldn't answer that. Try again, or book a consult with "+rdName()+" from the Eat tab.";
  }
  aiBusy=false;render();
  const box=document.getElementById("ai-chat");if(box)box.lastElementChild?.scrollIntoView({block:"nearest"});
