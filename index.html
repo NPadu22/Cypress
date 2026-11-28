@@ -1534,21 +1534,14 @@ function gLine(g,showTeam){const s=sportById(g.sport);return `<div class="sched-
  ${g.date===isoToday()?`<span class="chip gold">Today</span>`:""}</div>`}
 const isoPlus=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const sportShort=s=>s?`${s.who==="Men"?"M":"W"} ${s.n.replace("Swim & Dive","Swim").replace("Beach Volleyball","Beach VB").replace("Flag Football","Flag")}`:"";
-function glance(L,staff){const days=[0,1,2].map(isoPlus),nm=["Today","Tomorrow",new Date(days[2]+"T12:00:00").toLocaleDateString("en-US",{weekday:"long"})];
- return `<div class="glance">${days.map((d,i)=>{const G=L.filter(g=>g.date===d);
-  return `<div class="gl-day${i===0?" now":""}"><div class="gl-head"><b>${esc(nm[i])}</b><span>${esc(new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}))}</span></div>
-  ${G.length?G.map(g=>`<div class="gl-game"><span class="gl-t">${esc(g.time?fmtClock(new Date(g.date+"T"+g.time)):"TBA")}</span>${staff?`<b>${esc(sportShort(sportById(g.sport)))}</b>`:""}<span>${g.away?"at ":"vs "}${esc(g.opp||"TBA")}</span>${g.ha?`<span class="gl-ha${g.ha==="Home"?" home":""}">${esc(g.ha)}</span>`:""}</div>`).join(""):`<p class="gl-off">${staff?"No games":"Off day"}</p>`}</div>`}).join("")}</div>`}
-function vSchedule(){const t=isoToday(),staff=isStaff(),d3=isoPlus(3);
- const all=allTeamGames().filter(g=>g.date>=t&&(staff||g.sport===profile.sport)).sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99")));
- const later=all.filter(g=>g.date>=d3),cap=staff?10:4,show=later.slice(0,cap);
+function dayName(d){const t=isoToday();return d===t?"Today":d===isoPlus(1)?"Tomorrow":new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"long"})}
+function vSchedule(){const t=isoToday(),staff=isStaff();
+ const G=allTeamGames().filter(g=>g.date>=t&&(staff||g.sport===profile.sport)).sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99"))).slice(0,3);
  const stamp=SHEET.sched&&S().schedSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.sched.fetched))}</span>`:"";
- const dayHead=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});
- const byDay={};show.forEach(g=>(byDay[g.date]=byDay[g.date]||[]).push(g));
- return `<section><div class="row"><h2 class="grow">Next 3 days</h2>${stamp}</div>
-  ${!all.length&&!staff?`<div class="card"><p class="muted small">Your team's schedule isn't posted yet. You can add your own games below.</p></div>`:glance(all,staff)}
-  ${show.length?`<div class="row" style="margin-top:14px"><h2 class="grow">Later</h2></div>
-  <div class="card stack" style="gap:0">${staff?Object.entries(byDay).map(([d,L])=>`<span class="eyebrow" style="padding-top:8px">${esc(dayHead(d))}</span>${L.map(g=>gLine(g,true)).join("")}`).join(""):show.map(g=>gLine(g,false)).join("")}
-  ${later.length>cap?`<p class="stamp" style="padding-top:8px">+ ${later.length-cap} more on the schedule</p>`:""}</div>`:""}</section>`}
+ return `<section><div class="row"><h2 class="grow">Next 3 games</h2>${stamp}</div>
+  ${G.length?`<div class="glance">${G.map(g=>`<div class="gl-day${g.date===t?" now":""}"><div class="gl-head"><b>${esc(dayName(g.date))}</b><span>${esc(new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}))}</span></div>
+   <div class="gl-game"><span class="gl-t">${esc(g.time?fmtClock(new Date(g.date+"T"+g.time)):"Time TBA")}</span>${staff?`<b>${esc(sportShort(sportById(g.sport)))}</b>`:""}<span>${g.away?"at ":"vs "}${esc(g.opp||"TBA")}</span>${g.ha?`<span class="gl-ha${g.ha==="Home"?" home":""}">${esc(g.ha)}</span>`:""}</div></div>`).join("")}</div>`
+  :`<div class="card"><p class="muted small">${staff?"No games on the schedule yet. Add them in the Google Sheet.":"Your team's schedule isn't posted yet. You can add your own games below."}</p></div>`}</section>`}
 /* ===== Game day: black and gold screen with sport-specific fueling ===== */
 const GAMEDAY={
  baseball:{pre:"3–4 h before: big carb meal. Rice or pasta bowl with chicken, or two turkey sandwiches and fruit.",top:"30–60 min before: banana, pretzels or a granola bar.",during:"Every 2–3 innings: sips of water. Between games of a doubleheader: a sandwich, fruit and a sports drink.",after:"Within 1 hour: chocolate milk or a recovery meal with carbs and protein.",tip:"Long day in the sun: drink before you're thirsty and keep snacks in your bag."},
