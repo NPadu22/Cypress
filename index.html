@@ -579,7 +579,7 @@ h3{font-weight:700}
 .sb-cell{background:#000F22;border-radius:10px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:2px}
 .sb-cell span{font:700 .58rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
 .sb-cell b{font:700 1.7rem/1 var(--display);color:#FED41F;font-variant-numeric:tabular-nums;letter-spacing:.04em}.sb-cell small{font-size:.9rem;color:rgba(254,212,31,.6)}
-.sb-plays{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sb-plays{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .sb-next{display:flex;align-items:center;gap:10px;background:rgba(254,212,31,.1);border:1.5px dashed rgba(254,212,31,.6);border-radius:12px;padding:10px 12px;color:#fff}
 .sb-next i{font-style:normal;font-size:1.3rem;flex:none}.sb-next p{margin:0;flex:1;font-size:.82rem;line-height:1.35}.sb-next p b{display:block;font:700 .6rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#FED41F;margin-bottom:2px}
 .sb-next .btn{flex:none;background:#FED41F;color:#003876;border:0;padding:8px 12px;border-radius:999px;font:700 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase}
@@ -1476,12 +1476,10 @@ function stampsHTML(){const got=STAMPS.filter(s=>s.ok());return `<section><div c
 /* ===== Charge Board: daily plays -> wins, records, streaks and levels (like the Orbit app's orbit + constellations) ===== */
 const PLAYS=[
  {k:"hab0",n:"Breakfast",i:"☀",how:"Eat within an hour of waking",hab:0},
- {k:"hab1",n:"Pre-fuel",i:"⚡",how:"Carbs 2–4 h or 30–60 min before practice",hab:1},
- {k:"hab2",n:"Recovery",i:"↻",how:"Carbs plus protein within an hour after",hab:2},
  {k:"sleep",n:"Sleep 7+",i:"☾",how:"Log 7+ hours in your Journal",go:"journal"},
  {k:"fuel",n:"Fuel log",i:"🍴",how:"Log 3+ meals or snacks",go:"journal"},
  {k:"water",n:"Hydrate",i:"💧",how:"Hit your water goal",go:"journal"}];
-const WIN=4;
+const WIN=3;
 function playDone(k,d){const c=CK[d];if(/^hab\d$/.test(k))return (HAB[d]||[]).includes(+k[3]);if(k==="sleep")return !!c&&ckSlpNum(c.sleep)>=7;if(k==="fuel")return (J.days[d]||[]).length>=3;
  if(k==="water"){const h=H[d];return !!h&&h.n*BOTTLE>=hydroGoal(h)}return false}
 /* Next play: one nudge that points at the easiest thing to log right now */
@@ -1489,10 +1487,8 @@ function nextPlay(t){const hr=new Date().getHours(),n=(J.days[t]||[]).length,P=k
  const L=[
   [hr<12&&!P("hab0"),"☀","Ate breakfast? Tap Breakfast. It's the easiest 10 points of the day.",'data-hab="0"',"Done"],
   [!P("fuel")&&n>0,"🍴",`${n}/3 logged. ${3-n} more meal${3-n===1?"":"s"} or snack${3-n===1?"":"s"} and Fuel log lights up.`,'data-go="journal"',"Log it"],
-  [!P("fuel"),"🍴","Log what you eat today. It takes 10 seconds and helps Nick coach your fueling.",'data-go="journal"',"Log it"],
+  [!P("fuel"),"🍴","Log what you eat today. It helps Nick coach your fueling.",'data-go="journal"',"Log it"],
   [!P("water"),"💧","Tap a bottle every time you finish one. Hit your goal for a play.",'data-go="journal"',"Add water"],
-  [!P("hab1"),"⚡","Practice today? Get carbs in first: a sandwich, rice bowl or a banana.",'data-hab="1"',"Done"],
-  [!P("hab2"),"↻","After practice: chocolate milk or a meal with carbs and protein.",'data-hab="2"',"Done"],
   [!P("sleep"),"☾","Log last night's sleep in your Journal. 7+ hours is a play.",'data-go="journal"',"Log sleep"]].find(x=>x[0]);
  if(!L)return `<div class="sb-next done"><i aria-hidden="true">🏆</i><p>Perfect day. Every play logged.</p></div>`;
  return `<div class="sb-next"><i aria-hidden="true">${L[1]}</i><p><b>Next play</b>${esc(L[2])}</p><button class="btn sm" ${L[3]}>${L[4]}</button></div>`}
