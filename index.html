@@ -580,6 +580,7 @@ h3{font-weight:700}
 .sb-cell span{font:700 .58rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
 .sb-cell b{font:700 1.7rem/1 var(--display);color:#FED41F;font-variant-numeric:tabular-nums;letter-spacing:.04em}.sb-cell small{font-size:.9rem;color:rgba(254,212,31,.6)}
 .sb-plays{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.sb-blurb{margin:-4px 0 10px;font-size:.85rem;line-height:1.4;color:var(--muted,#5b6b80)}
 .sb-next{display:flex;align-items:center;gap:10px;background:rgba(254,212,31,.1);border:1.5px dashed rgba(254,212,31,.6);border-radius:12px;padding:10px 12px;color:#fff}
 .sb-next i{font-style:normal;font-size:1.3rem;flex:none}.sb-next p{margin:0;flex:1;font-size:.82rem;line-height:1.35}.sb-next p b{display:block;font:700 .6rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#FED41F;margin-bottom:2px}
 .sb-next .btn{flex:none;background:#FED41F;color:#003876;border:0;padding:8px 12px;border-radius:999px;font:700 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase}
@@ -1512,6 +1513,7 @@ function vScoreboard(){const t=isoToday(),s=dayScore(t),pts=careerPts(),st=winSt
  const f0=firstDay(),W=wk.filter(d=>d<t&&dayScore(d)>=WIN).length+(s>=WIN?1:0),L=wk.filter(d=>d<t&&d>=f0&&dayScore(d)<WIN).length;
  const isSun=new Date().getDay()===0;
  return `<section><div class="row"><h2 class="grow">Performance Scoreboard</h2><span class="stamp">${st?`🔥 ${st}-day win streak`:`${WIN} plays = a win`}</span></div>
+ <p class="sb-blurb">Your daily game against yourself. Eat breakfast, sleep 7+ hours, log 3 meals or snacks, and hit your water goal. Get ${WIN} of ${PLAYS.length} for a W. Every play earns points toward your next level.</p>
  <div class="scoreboard ${s>=WIN?"lit":""}">${s>=WIN?`<span class="sb-w" aria-hidden="true">W</span>`:""}
   <div class="sb-top"><div class="sb-cell"><span>Today</span><b>${s}<small>/${PLAYS.length}</small></b></div><div class="sb-cell"><span>${isSun?"Final · week":"This week"}</span><b>${W}-${L}</b></div><div class="sb-cell"><span>Points</span><b>${pts}</b></div></div>
   <div class="sb-plays">${PLAYS.map(p=>{const on=playDone(p.k,t);return `<button class="sb-play ${on?"on":""}" ${p.hab!==undefined?`data-hab="${p.hab}"`:`data-go="${p.go}"`} aria-label="${esc(p.n)}: ${on?"done":"not yet"}. ${esc(p.how)}"><i aria-hidden="true">${p.i}</i><span>${esc(p.n)}</span></button>`}).join("")}</div>
