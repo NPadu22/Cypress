@@ -1127,7 +1127,7 @@ async function loadSheet(kind,url,parse){if(!url)return;try{const r=await fetch(
  const changed=JSON.stringify((SHEET[kind]||{}).rows)!==JSON.stringify(rows);SHEET[kind]=val;store.set("sheet_"+kind,val);
  if(changed&&profile&&!document.querySelector("form:focus-within"))render()}catch(e){if(!SHEET_ERR[kind]){SHEET_ERR[kind]="blocked";profile&&render()}}}
 function schedRows(text){const T=sheetTable(text);if(!T)return [];const {R,col,g}=T,iD=col("date"),iT=col("time"),iM=col("team"),iO=col("opp"),iH=col("home"),iL=col("loc"),iN=col("notes"),iS=col("show");if(iD<0||iM<0)return null;
- return R.map(r=>{const s=sportByLabel(g(r,iM));return s?{date:sheetDate(g(r,iD)),time:to24(g(r,iT)),sport:s.id,opp:g(r,iO),ha:g(r,iH)||"Home",away:/away/i.test(g(r,iH)),loc:g(r,iL),note:g(r,iN),show:g(r,iS)||"yes"}:null}).filter(x=>x&&x.date&&x.show.toLowerCase()!=="no")}
+ return R.map(r=>{const s=sportByLabel(g(r,iM));return s?{date:sheetDate(g(r,iD)),time:to24(g(r,iT)),sport:s.id,opp:g(r,iO),ha:g(r,iH),away:/away/i.test(g(r,iH)),loc:g(r,iL),note:g(r,iN),show:g(r,iS)||"yes"}:null}).filter(x=>x&&x.date&&x.show.toLowerCase()!=="no")}
 function to24(v){v=(v||"").trim();if(!v||/tba|tbd/i.test(v))return "";const m=v.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);if(!m)return "";let h=+m[1];const mi=m[2]||"00",ap=(m[3]||"").toLowerCase();if(ap==="pm"&&h<12)h+=12;if(ap==="am"&&h===12)h=0;return String(h).padStart(2,"0")+":"+mi}
 function loadSheets(){const s=S();loadSheet("sched",s.schedSheet,schedRows);loadSheet("team",s.teamSheet,annRows);loadSheet("at",s.atSheet,annRows);loadSheet("nut",s.nutSheet,annRows)}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){loadSheets();staffFlush()}});
