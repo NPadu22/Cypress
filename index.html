@@ -1319,7 +1319,7 @@ function aiPreamble(){
  return `You are "Ask the RD," the assistant inside "At the Clinic," the nutrition and athletic training app for Cypress College athletes (adults). The team dietitian is ${rdName()}.
 RULES:
 - Answer ONLY from the APPROVED CONTENT below. Do not add facts, numbers or products that aren't in it.
-- If the content doesn't cover the question, say: "I don't have an approved answer for that. Book a consult with ${rdName()} through ${atNames(" or ")} (RD tab)." You may add one related tip that IS in the content.
+- If the content doesn't cover the question, say: "I don't have an approved answer for that. Book a consult with ${rdName()} through ${atNames(" or ")} (Book a consult button on the Eat tab)." You may add one related tip that IS in the content.
 - Write at a 10th-grade reading level. Short sentences. Everyday words.
 - Coach voice: direct, confident, encouraging. No fluff. 2 to 5 short sentences, or a short list of up to 5 items.
 - End with one line: "Source: " plus the source listed in the content you used.
@@ -1349,7 +1349,7 @@ async function askAI(q){
   last.content=r.text||last.content;
  }catch(e){
   if(e&&e.code==="not_granted"){aiState="off";chat.splice(-2)}
-  else last.content=(e&&e.code==="rate_limited")?"Too many questions right now. Try again in a few minutes, or book a consult with "+rdName()+" through "+atNames(" or ")+" in the RD tab.":(e&&e.text)||"I couldn't answer that. Try again, or ask "+rdName()+" in the RD tab.";
+  else last.content=(e&&e.code==="rate_limited")?"Too many questions right now. Try again in a few minutes, or book a consult with "+rdName()+" through "+atNames(" or ")+" (Book a consult button on the Eat tab).":(e&&e.text)||"I couldn't answer that. Try again, or ask "+rdName()+" in the RD tab.";
  }
  aiBusy=false;render();
  const box=document.getElementById("ai-chat");if(box)box.lastElementChild?.scrollIntoView({block:"nearest"});
