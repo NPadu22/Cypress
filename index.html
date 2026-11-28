@@ -481,8 +481,21 @@ body[data-tab="learn"] details.fold,body[data-tab="learn"] section>.card{backgro
 .stampx.on .sx-ring{border:3px double #003876;background:#FED41F;color:#003876;opacity:1;transform:rotate(-8deg)}
 .sx-n{font:600 .74rem/1.1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .stampx p{grid-column:1/-1;margin-top:6px;text-align:center}
-.lk-stickers{position:absolute;left:14px;bottom:44px;display:flex;gap:4px}
-.lk-stickers span{width:24px;height:24px;border-radius:50%;background:#FED41F;color:#003876;display:grid;place-items:center;font-size:.8rem;transform:rotate(var(--r));box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.lk-stickers{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:260px}
+.lk-stickers .stk{width:46px;height:46px}.lk-stickers .stk i{display:none}.lk-stickers .stk b{font-size:.95rem}
+.stk{flex:none;box-sizing:border-box;width:68px;height:68px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transform:rotate(var(--r));border:2px dashed #B6B2A3;color:#9AA3AE;background:transparent;text-align:center;line-height:1.05}
+.stk b{font:700 1.1rem var(--display)}.stk i{font:700 .48rem var(--mono);letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:0 4px}
+.stk.on{background:#FED41F;color:#003876;border:3px solid #fff;box-shadow:0 0 0 2px #003876,0 3px 6px rgba(0,0,0,.25)}
+.stkbook{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:12px 8px}
+.stkx{border:0!important;box-shadow:none!important;background:transparent!important}.stkx summary{list-style:none;display:flex;justify-content:center;cursor:pointer;padding:0!important;background:transparent!important}.stkx summary::after{display:none!important;content:none!important}.stkx summary::-webkit-details-marker{display:none}.stkx p{text-align:center;margin:6px 0 0}
+.lk-inside{background:linear-gradient(#1a2433,#0d1520);border-radius:14px;padding:14px;color:#fff;box-shadow:inset 0 2px 10px rgba(0,0,0,.5)}
+.lk-shelf{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.lk-gear{display:flex;flex-direction:column;align-items:center;gap:2px;transform:rotate(var(--r));background:rgba(255,255,255,.06);border-radius:10px;padding:8px 6px;min-width:62px}.lk-gear b{font-size:1.6rem;line-height:1}.lk-gear i{font:700 .52rem var(--mono);letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:rgba(255,255,255,.7)}
+.lk-card{position:relative;flex:1;min-width:170px;background:#fdfdfb;color:#0B1F3A;border-radius:3px;padding:12px 12px 8px;transform:rotate(var(--r));box-shadow:0 3px 8px rgba(0,0,0,.35);background-image:repeating-linear-gradient(#fdfdfb 0 19px,#dfe8f2 19px 20px)}
+.lk-card p{margin:4px 0 2px;font-size:.84rem;line-height:1.25rem}.lk-card-h{font:700 .58rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#ED1C24}
+.lk-sig{display:block;text-align:right;font-family:"Marker Felt","Chalkboard SE","Comic Sans MS",cursive;color:#003876;font-size:.85rem}
+.lk-tape{position:absolute;top:-8px;left:50%;width:54px;height:16px;margin-left:-27px;background:rgba(254,212,31,.75);transform:rotate(-3deg)}
+.lk-brass{margin:12px auto 0;width:fit-content;max-width:100%;text-align:center;font:700 .6rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#3a2c05;background:linear-gradient(135deg,#d9b54a,#f5dd8a 45%,#b8902b);padding:5px 10px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .pennant{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(0,20,45,.82);color:#FED41F;font:600 1rem var(--mono);letter-spacing:.12em;text-transform:uppercase;animation:wuIn .3s ease both}
 .pennant svg{width:min(80vw,340px);transform-origin:left center;animation:flap 1.6s ease-in-out infinite alternate}
 @keyframes flap{from{transform:skewY(-2deg) scaleX(.98)}to{transform:skewY(2deg) scaleX(1)}}
@@ -1476,16 +1489,54 @@ function vStartHere(){const t=isoToday(),D=HAB[t]||[],st=habStreak();
    <p class="stamp">${D.length===3?"All three today. That's how you stay charged.":`${D.length}/3 today · tap a habit to see why it matters`}</p>
    <p class="src">Thomas, Erdman & Burke, ACSM/AND/DC Nutrition and Athletic Performance, 2016</p></div></section>`}
 /* Locker stamps: earned by real habits, each with a one-line story. Keys stay stable. */
+/* ===== Locker stickers: earned only by real logging. Bests are saved so old days pruned from storage never take a sticker away. ===== */
+function lkStats(){const days=[...new Set([...Object.keys(CK),...Object.keys(J.days||{}),...Object.keys(H),...Object.keys(HAB)])].sort();
+ let run=0,best=0,prev=null,bf=0,water=0,sleep=0,perfect=0,meals=0;
+ days.forEach(d=>{const sc=dayScore(d);if(sc>=WIN){run=prev&&isoShift(prev,1)===d?run+1:1;prev=d;best=Math.max(best,run)}
+  if(playDone("hab0",d))bf++;if(playDone("water",d))water++;if(playDone("sleep",d))sleep++;if(sc===PLAYS.length)perfect++;meals+=(J.days[d]||[]).length});
+ const o=store.get("lkbest",{}),n={best,bf,water,sleep,perfect,meals,pts:careerPts()};let ch=false;
+ for(const k in n)if((o[k]||0)<n[k]){o[k]=n[k];ch=true}if(ch)store.set("lkbest",o);return o}
 const STAMPS=[
- {k:"first",n:"First Charge",d:"All three habits in one day. Every streak starts here.",ok:()=>habBest()>=1},
- {k:"three",n:"Three-Peat",d:"Three days straight. Now it's a habit, not a mood.",ok:()=>habBest()>=3},
- {k:"week",n:"Full Week",d:"Seven straight days. That's how pros eat.",ok:()=>habBest()>=7},
- {k:"two",n:"Fortnight",d:"Fourteen days. Your body has noticed.",ok:()=>habBest()>=14},
- {k:"prep",n:"Sunday Cook",d:"Sent a meal prep list to your Grocery List.",ok:()=>!!store.get("st_prep",0)},
- {k:"est",n:"Est. 1966",d:"Found the old pennant. Cypress College opened its doors in 1966.",ok:()=>!!store.get("st_1966",0)}];
-function habBest(){const b=Math.max(store.get("habbest",0),habStreak());if(b>store.get("habbest",0))store.set("habbest",b);return b}
-function stampsHTML(){const got=STAMPS.filter(s=>s.ok());return `<section><div class="row"><h2 class="grow">Locker stamps</h2><span class="stamp">${got.length}/${STAMPS.length}</span></div>
- <div class="stamps">${STAMPS.map(s=>{const on=s.ok(),hide=s.k==="est"&&!on;return `<details class="stampx ${on?"on":""}"><summary aria-label="${esc(hide?"Hidden stamp":s.n)}"><span class="sx-ring">${on?"★":hide?"?":"·"}</span><span class="sx-n">${esc(hide?"Hidden":s.n)}</span></summary><p class="small">${esc(on?s.d:hide?"Somewhere in the app, an old pennant is waiting.":"Not yet: "+s.d)}</p></details>`}).join("")}</div></section>`}
+ {k:"firstw",n:"First W",i:"W",d:"Your first win on the Performance Scoreboard.",ok:x=>x.best>=1},
+ {k:"hat",n:"Hat Trick",i:"3",d:"Three wins in a row.",ok:x=>x.best>=3},
+ {k:"week",n:"Full Week",i:"7",d:"Seven straight wins. That's how pros eat.",ok:x=>x.best>=7},
+ {k:"iron",n:"Iron Streak",i:"14",d:"Fourteen straight wins. Your body has noticed.",ok:x=>x.best>=14},
+ {k:"perfect",n:"Perfect Day",i:"★",d:"All four plays in one day.",ok:x=>x.perfect>=1},
+ {k:"bfast",n:"Breakfast Club",i:"☀",d:"Breakfast on 10 different days.",ok:x=>x.bf>=10},
+ {k:"hydro",n:"Hydrated",i:"💧",d:"Hit your water goal on 10 days.",ok:x=>x.water>=10},
+ {k:"sleep",n:"Sleep Bank",i:"☾",d:"7+ hours of sleep logged on 10 nights.",ok:x=>x.sleep>=10},
+ {k:"log",n:"Fuel Logger",i:"🍴",d:"50 meals and snacks logged.",ok:x=>x.meals>=50},
+ {k:"rookie",n:"Rookie",i:"R",d:"Reached 100 points.",ok:x=>x.pts>=100},
+ {k:"allconf",n:"All-Conference",i:"AC",d:"Reached 700 points.",ok:x=>x.pts>=700},
+ {k:"prep",n:"Sunday Cook",i:"🛒",d:"Sent a meal prep list to your Grocery List.",ok:()=>!!store.get("st_prep",0)},
+ {k:"est",n:"Est. 1966",i:"66",d:"Found the old pennant. Cypress College opened its doors in 1966.",ok:()=>!!store.get("st_1966",0)}];
+function stickersEarned(){const x=lkStats();return STAMPS.filter(s=>s.ok(x))}
+function stickerCheck(){const seen=store.get("stk_seen",null),got=stickersEarned().map(s=>s.k);if(seen===null){store.set("stk_seen",got);return}
+ const nw=got.filter(k=>!seen.includes(k));if(nw.length){store.set("stk_seen",[...seen,...nw]);const s=STAMPS.find(z=>z.k===nw[0]);setTimeout(()=>toast("New locker sticker: "+s.n),400)}}
+const stk=(s,on,r)=>`<span class="stk ${on?"on":""}" style="--r:${r||0}deg"><b>${esc(s.i)}</b><i>${esc(s.n)}</i></span>`;
+function stampsHTML(){const got=stickersEarned().map(s=>s.k);
+ return `<section><div class="row"><h2 class="grow">Sticker book</h2><span class="stamp">${got.length}/${STAMPS.length}</span></div>
+ <p class="muted small" style="margin:-4px 0 10px">Earn stickers by logging. They go on your locker door.</p>
+ <div class="stkbook">${STAMPS.map(s=>{const on=got.includes(s.k),hide=s.k==="est"&&!on;return `<details class="stkx"><summary aria-label="${esc(hide?"Hidden sticker":s.n)}${on?", earned":""}">${hide?`<span class="stk"><b>?</b><i>Hidden</i></span>`:stk(s,on)}</summary><p class="small">${esc(on?s.d:hide?"Somewhere in the app, an old pennant is waiting.":"To earn: "+s.d)}</p></details>`}).join("")}</div></section>`}
+/* ===== Inside the locker: sport and position gear plus a taped note from the staff ===== */
+const GEAR={baseball:[["⚾","Game ball"],["🧢","Cap"]],softball:[["🥎","Game ball"],["🧢","Visor"]],mbb:[["🏀","Ball"],["👟","High-tops"]],wbb:[["🏀","Ball"],["👟","High-tops"]],msoc:[["⚽","Ball"],["🥅","Shin guards"]],wsoc:[["⚽","Ball"],["🥅","Shin guards"]],
+ wvb:[["🏐","Ball"],["🦵","Knee pads"]],bvb:[["🏐","Ball"],["🕶️","Shades"]],flag:[["🏈","Ball"],["🎽","Flag belt"]],mwp:[["🤽","Cap"],["🥽","Goggles"]],wwp:[["🤽","Cap"],["🥽","Goggles"]],mswim:[["🏊","Cap"],["🥽","Goggles"]],wswim:[["🏊","Cap"],["🥽","Goggles"]],golf:[["⛳","Ball marker"],["🧤","Glove"]]};
+const POSNOTE={
+ bat:{Pitcher:"You can throw 100+ pitches on a doubleheader day. Eat between games: half a PB&J, pretzels or a banana, plus a sports drink.",Catcher:"You squat 100+ times a game in full gear. Drink before you're thirsty and add a salty snack on hot days.",Infield:"Quick first steps run on carbs. Eat a real meal 3 to 4 hours before first pitch.",Outfield:"Long innings in the sun. Take your bottle to the dugout and drink every inning.",_:"Long game days. Pack snacks for between innings and between games."},
+ bb:{Guard:"You cover the most ground on the floor. Top off at halftime with a sports drink or fruit snacks.",Forward:"Contact and rebounds every trip. Protein at every meal helps you recover for back-to-backs.",Center:"Bigger bodies need more fuel. Never skip the post-game meal, even after a late tip.",_:"Fast breaks run on carbs. Eat a meal 3 to 4 hours before tip-off."},
+ soc:{Goalkeeper:"Short, explosive dives. A carb snack 30 to 60 minutes before kickoff keeps you sharp.",Defender:"Ninety minutes of tracking runners. Eat extra carbs the day before matches.",Midfielder:"You run the most, often 6+ miles a match. Carbs at halftime keep your legs going.",Forward:"Late sprints decide games. Fuel at halftime so your last sprint is as fast as your first.",_:"Ninety minutes is a long time. Carbs the day before and at halftime."},
+ wvb:{Setter:"You touch almost every rally. Steady fuel keeps decisions sharp in the fifth set.",Outside:"Most swings on the team. A recovery snack right after practice protects your legs and shoulder.",Opposite:"Big swings and big blocks. Carbs before practice power every jump.",Middle:"Up to 100 jumps a match. Carbs plus protein after to bounce back.","Libero/DS":"Dig after dig. Snack between sets and keep water close.",_:"Every jump runs on carbs. Eat before practice, recover after."},
+ bvb:{Blocker:"Jumping in sand takes more energy. Eat between matches on tournament days.",Defender:"Long rallies in full sun. Drink on every side switch and add electrolytes.",_:"Sun and sand drain you fast. Drink on every side switch."},
+ flag:{QB:"Decisions get worse when you're under-fueled. Eat a meal 2 to 3 hours before kickoff.",Receiver:"Sprint after sprint. Carbs before the game and a sports drink between drives.",Rusher:"Short bursts every snap. Protein after games helps you recover.","Defensive back":"You mirror every route. Stay hydrated so your reactions stay quick.",_:"Repeat sprints all game. Carbs before, fluids between drives."},
+ wp:{Field:"Treading water all game burns a lot of energy. Eat a real meal 3 to 4 hours before.",Center:"The most contact in the pool. Protein at every meal for recovery.",Defender:"You wrestle the center every possession. Eat your recovery snack before you leave the pool deck.",Goalkeeper:"Explosive eggbeater and lunges. Carbs before practice keep you high in the water.",_:"You sweat in the pool too. Drink during practice, not just after."},
+ swim:{Sprint:"Short races, big power. Carbs before your session and protein after.",Distance:"Long yardage burns a lot. Eat more on double days, even if you're not hungry.",Stroke:"Two-a-days add up. Pack a snack for right after morning practice.",IM:"Every stroke, every set. Steady meals all day keep you from fading.",Diver:"Power and focus. A light carb snack 1 to 2 hours before keeps you sharp on the board.",_:"Two-a-days add up. Eat soon after morning practice."},
+ golf:{_:"Four to five hours on the course. Eat something every 3 to 4 holes: half a sandwich, nuts or fruit."}};
+const POSGRP={baseball:"bat",softball:"bat",mbb:"bb",wbb:"bb",msoc:"soc",wsoc:"soc",wvb:"wvb",bvb:"bvb",flag:"flag",mwp:"wp",wwp:"wp",mswim:"swim",wswim:"swim",golf:"golf"};
+function lockerInside(){const sp=profile.sport,G=GEAR[sp]||[],grp=POSNOTE[POSGRP[sp]]||{},note=grp[profile.position]||grp._;if(!G.length&&!note)return "";
+ const h=HOF[sp];
+ return `<section class="lk-inside" aria-label="Inside your locker"><div class="lk-shelf">${G.map(([e,l],i)=>`<span class="lk-gear" style="--r:${i?4:-3}deg"><b aria-hidden="true">${e}</b><i>${esc(l)}</i></span>`).join("")}
+  ${note?`<div class="lk-card" style="--r:-1.2deg"><span class="lk-tape" aria-hidden="true"></span><span class="lk-card-h">Staff note${profile.position?" · "+esc(profile.position):""}</span><p>${esc(note)}</p><span class="lk-sig">— Nick</span></div>`:""}</div>
+  ${h?`<p class="lk-brass">Charger ${esc(sportById(sp).n)} · ${esc(h.h)}</p>`:""}</section>`}
 
 /* ===== Charge Board: daily plays -> wins, records, streaks and levels (like the Orbit app's orbit + constellations) ===== */
 const PLAYS=[
@@ -1612,6 +1663,7 @@ function vGameDay(){
   <p class="src" style="color:rgba(255,255,255,.55)">ACSM/AND/DC 2016; ISSN Nutrient Timing, 2017</p></section>`}
 function greet(){const h=new Date().getHours();return h<5?"Up late":h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
 function vHome(){
+ if(!isStaff())stickerCheck();
  if(!isStaff())autoGameDay();
  const first=(profile.name||"").trim().split(" ")[0];
  const sp=sportById(profile.sport);
@@ -2471,8 +2523,9 @@ function vMe(){
    <div class="lk-plate"><span class="lk-first">${esc(first)}</span><span class="lk-last">${esc(last)}</span></div>
    <p class="lk-sub">${esc(sub)}</p>
    <div class="lk-foot" aria-hidden="true"><img src="${LOGO}" alt=""><span class="lk-handle"></span></div>
-   ${isStaff()?"":`<div class="lk-stickers" aria-hidden="true">${STAMPS.filter(s=>s.ok()).slice(0,5).map((s,i)=>`<span style="--r:${[-8,6,-3,9,-5][i]}deg">★</span>`).join("")}</div>`}
+   ${isStaff()?"":`<div class="lk-stickers" aria-hidden="true">${stickersEarned().slice(-6).map((x,i)=>stk(x,true,[-8,6,-3,9,-5,4][i])).join("")}</div>`}
   </div>
+  ${isStaff()?"":lockerInside()}
   ${isStaff()?"":stampsHTML()}
   <div class="card stack">
    ${isStaff()?`<div class="row"><span class="grow muted">Role</span><b>${esc(profile.title||"Staff")}</b></div>`:""}
@@ -2566,7 +2619,7 @@ document.addEventListener("click",async ev=>{
  if(d.codecancel){draft.codeEdit=false;render();return}
  if(d.logotap){window._lt=(window._lt||0)+1;clearTimeout(window._ltT);window._ltT=setTimeout(()=>window._lt=0,1500);if(window._lt>=5){window._lt=0;pennant()}return}
  if(d.hab!==undefined){const k=isoToday(),L=HAB[k]||(HAB[k]=[]),i=+d.hab,j=L.indexOf(i);j<0?L.push(i):L.splice(j,1);
-  for(const x of Object.keys(HAB))if(new Date(k)-new Date(x)>60*864e5)delete HAB[x];store.set("habits",HAB);render();if(L.length===3&&j<0){const b0=store.get("habbest",0);habBest();const nb=STAMPS.find(s=>["first","three","week","two"].includes(s.k)&&s.ok()&&!store.get("seen_"+s.k,0));if(nb){store.set("seen_"+nb.k,1);toast("Stamp earned: "+nb.n)}else toast("All three today. Nice work.")}return}
+  for(const x of Object.keys(HAB))if(new Date(k)-new Date(x)>60*864e5)delete HAB[x];store.set("habits",HAB);render();stickerCheck();return}
  if(d.progday!==undefined){progDay[d.progday]=d.day;render();return}
  if(d.prog!==undefined){const iso=isoToday(),day=PROGDONE[iso]||(PROGDONE[iso]={}),L=day[d.prog]||(day[d.prog]=[]),i=+d.progi,k=L.indexOf(i),pg=myPrograms().find(x=>x.id===d.prog);k<0?L.push(i):L.splice(k,1);
   for(const x of Object.keys(PROGDONE))if(new Date(iso)-new Date(x)>21*864e5)delete PROGDONE[x];store.set("progdone",PROGDONE);
