@@ -488,6 +488,14 @@ body[data-tab="learn"] details.fold,body[data-tab="learn"] section>.card{backgro
 .stk.on{background:#FED41F;color:#003876;border:3px solid #fff;box-shadow:0 0 0 2px #003876,0 3px 6px rgba(0,0,0,.25)}
 .stkbook{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:12px 8px}
 .stkx{border:0!important;box-shadow:none!important;background:transparent!important}.stkx summary{list-style:none;display:flex;justify-content:center;cursor:pointer;padding:0!important;background:transparent!important}.stkx summary::after{display:none!important;content:none!important}.stkx summary::-webkit-details-marker{display:none}.stkx p{text-align:center;margin:6px 0 0}
+.lk-wrap{position:relative;perspective:1400px;min-height:400px;margin-bottom:4px}
+.lk-wrap .lk-inside{min-height:400px;display:flex;flex-direction:column;justify-content:center;cursor:pointer}
+.lk-door{position:absolute;inset:0;z-index:2;cursor:pointer;transform-origin:left center;transition:transform .7s cubic-bezier(.5,.1,.25,1),box-shadow .7s;backface-visibility:hidden;-webkit-backface-visibility:hidden;justify-content:center}
+.lk-wrap.open .lk-door{transform:rotateY(-104deg);box-shadow:20px 0 30px rgba(0,0,0,.35);pointer-events:none}
+.lk-hint{font:700 .56rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.lk-hint.in{display:block;text-align:center;margin-top:12px}
+.lk-wrap .lk-inside > *{opacity:0;transition:opacity .3s .25s}.lk-wrap.open .lk-inside > *{opacity:1}
+@media (prefers-reduced-motion:reduce){.lk-door{transition:none}}
 .lk-inside{background:linear-gradient(#1a2433,#0d1520);border-radius:14px;padding:14px;color:#fff;box-shadow:inset 0 2px 10px rgba(0,0,0,.5)}
 .lk-shelf{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
 .lk-gear{display:flex;flex-direction:column;align-items:center;gap:2px;transform:rotate(var(--r));background:rgba(255,255,255,.06);border-radius:10px;padding:8px 6px;min-width:62px}.lk-gear b{font-size:1.6rem;line-height:1}.lk-gear i{font:700 .52rem var(--mono);letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:rgba(255,255,255,.7)}
@@ -1522,7 +1530,7 @@ function stampsHTML(){const got=stickersEarned().map(s=>s.k);
 const GEAR={baseball:[["⚾","Game ball"],["🧢","Cap"]],softball:[["🥎","Game ball"],["🧢","Visor"]],mbb:[["🏀","Ball"],["👟","High-tops"]],wbb:[["🏀","Ball"],["👟","High-tops"]],msoc:[["⚽","Ball"],["🥅","Shin guards"]],wsoc:[["⚽","Ball"],["🥅","Shin guards"]],
  wvb:[["🏐","Ball"],["🦵","Knee pads"]],bvb:[["🏐","Ball"],["🕶️","Shades"]],flag:[["🏈","Ball"],["🎽","Flag belt"]],mwp:[["🤽","Cap"],["🥽","Goggles"]],wwp:[["🤽","Cap"],["🥽","Goggles"]],mswim:[["🏊","Cap"],["🥽","Goggles"]],wswim:[["🏊","Cap"],["🥽","Goggles"]],golf:[["⛳","Ball marker"],["🧤","Glove"]]};
 const POSNOTE={
- bat:{Pitcher:"You can throw 100+ pitches on a doubleheader day. Eat between games: half a PB&J, pretzels or a banana, plus a sports drink.",Catcher:"You squat 100+ times a game in full gear. Drink before you're thirsty and add a salty snack on hot days.",Infield:"Quick first steps run on carbs. Eat a real meal 3 to 4 hours before first pitch.",Outfield:"Long innings in the sun. Take your bottle to the dugout and drink every inning.",_:"Long game days. Pack snacks for between innings and between games."},
+ bat:{Pitcher:"You can throw 100 pitches in a game. Sip a sports drink between innings and eat a real meal 3 to 4 hours before first pitch.",Catcher:"You squat 100+ times a game in full gear. Drink before you're thirsty and add a salty snack on hot days.",Infield:"Quick first steps run on carbs. Eat a real meal 3 to 4 hours before first pitch.",Outfield:"Long innings in the sun. Take your bottle to the dugout and drink every inning.",_:"Long game days. Pack snacks for between innings and between games."},
  bb:{Guard:"You cover the most ground on the floor. Top off at halftime with a sports drink or fruit snacks.",Forward:"Contact and rebounds every trip. Protein at every meal helps you recover for back-to-backs.",Center:"Bigger bodies need more fuel. Never skip the post-game meal, even after a late tip.",_:"Fast breaks run on carbs. Eat a meal 3 to 4 hours before tip-off."},
  soc:{Goalkeeper:"Short, explosive dives. A carb snack 30 to 60 minutes before kickoff keeps you sharp.",Defender:"Ninety minutes of tracking runners. Eat extra carbs the day before matches.",Midfielder:"You run the most, often 6+ miles a match. Carbs at halftime keep your legs going.",Forward:"Late sprints decide games. Fuel at halftime so your last sprint is as fast as your first.",_:"Ninety minutes is a long time. Carbs the day before and at halftime."},
  wvb:{Setter:"You touch almost every rally. Steady fuel keeps decisions sharp in the fifth set.",Outside:"Most swings on the team. A recovery snack right after practice protects your legs and shoulder.",Opposite:"Big swings and big blocks. Carbs before practice power every jump.",Middle:"Up to 100 jumps a match. Carbs plus protein after to bounce back.","Libero/DS":"Dig after dig. Snack between sets and keep water close.",_:"Every jump runs on carbs. Eat before practice, recover after."},
@@ -1532,11 +1540,14 @@ const POSNOTE={
  swim:{Sprint:"Short races, big power. Carbs before your session and protein after.",Distance:"Long yardage burns a lot. Eat more on double days, even if you're not hungry.",Stroke:"Two-a-days add up. Pack a snack for right after morning practice.",IM:"Every stroke, every set. Steady meals all day keep you from fading.",Diver:"Power and focus. A light carb snack 1 to 2 hours before keeps you sharp on the board.",_:"Two-a-days add up. Eat soon after morning practice."},
  golf:{_:"Four to five hours on the course. Eat something every 3 to 4 holes: half a sandwich, nuts or fruit."}};
 const POSGRP={baseball:"bat",softball:"bat",mbb:"bb",wbb:"bb",msoc:"soc",wsoc:"soc",wvb:"wvb",bvb:"bvb",flag:"flag",mwp:"wp",wwp:"wp",mswim:"swim",wswim:"swim",golf:"golf"};
+let lkOpen=false;
+document.addEventListener("click",e=>{const d=e.target.closest("[data-lkdoor]");if(!d)return;const w=d.closest(".lk-wrap");if(!w)return;lkOpen=!w.classList.contains("open");w.classList.toggle("open",lkOpen);const door=w.querySelector(".lk-door");door.setAttribute("aria-expanded",lkOpen);door.setAttribute("aria-label",door.getAttribute("aria-label").replace(/Tap to (open|close)\./,lkOpen?"Tap to close.":"Tap to open."))});
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches(".lk-door")){e.preventDefault();e.target.click()}});
 function lockerInside(){const sp=profile.sport,G=GEAR[sp]||[],grp=POSNOTE[POSGRP[sp]]||{},note=grp[profile.position]||grp._;if(!G.length&&!note)return "";
  const h=HOF[sp];
- return `<section class="lk-inside" aria-label="Inside your locker"><div class="lk-shelf">${G.map(([e,l],i)=>`<span class="lk-gear" style="--r:${i?4:-3}deg"><b aria-hidden="true">${e}</b><i>${esc(l)}</i></span>`).join("")}
+ return `<section class="lk-inside" aria-label="Inside your locker" data-lkdoor="1"><div class="lk-shelf">${G.map(([e,l],i)=>`<span class="lk-gear" style="--r:${i?4:-3}deg"><b aria-hidden="true">${e}</b><i>${esc(l)}</i></span>`).join("")}
   ${note?`<div class="lk-card" style="--r:-1.2deg"><span class="lk-tape" aria-hidden="true"></span><span class="lk-card-h">Staff note${profile.position?" · "+esc(profile.position):""}</span><p>${esc(note)}</p><span class="lk-sig">— Nick</span></div>`:""}</div>
-  ${h?`<p class="lk-brass">Charger ${esc(sportById(sp).n)} · ${esc(h.h)}</p>`:""}</section>`}
+  ${h?`<p class="lk-brass">Charger ${esc(sportById(sp).n)} · ${esc(h.h)}</p>`:""}<span class="lk-hint in">Tap to close</span></section>`}
 
 /* ===== Charge Board: daily plays -> wins, records, streaks and levels (like the Orbit app's orbit + constellations) ===== */
 const PLAYS=[
@@ -2517,15 +2528,16 @@ function vMe(){
  const sp=sportById(profile.sport);
  const nm=(profile.name||"").trim().split(/\s+/), last=(nm.length>1?nm[nm.length-1]:nm[0]||"").toUpperCase(), first=nm.length>1?nm.slice(0,-1).join(" "):"";
  const sub=isStaff()?(profile.title||"Staff")+" · "+teamLabel():[sportLabel(sp),profile.position].filter(Boolean).join(" · ");
- return `<div class="view"><div class="locker" role="img" aria-label="Locker for ${esc(profile.name)}">
+ const inside=isStaff()?"":lockerInside();
+ return `<div class="view">${inside?`<div class="lk-wrap${lkOpen?" open":""}">${inside}`:""}<div class="locker${inside?" lk-door":""}" ${inside?`role="button" tabindex="0" data-lkdoor="1" aria-expanded="${lkOpen}" aria-label="Locker for ${esc(profile.name)}. Tap to open."`:`role="img" aria-label="Locker for ${esc(profile.name)}"`}>
    <div class="lk-vents" aria-hidden="true"></div>
    ${!isStaff()&&profile.num?`<span class="lk-num">${esc(profile.num)}</span>`:""}
    <div class="lk-plate"><span class="lk-first">${esc(first)}</span><span class="lk-last">${esc(last)}</span></div>
    <p class="lk-sub">${esc(sub)}</p>
    <div class="lk-foot" aria-hidden="true"><img src="${LOGO}" alt=""><span class="lk-handle"></span></div>
    ${isStaff()?"":`<div class="lk-stickers" aria-hidden="true">${stickersEarned().slice(-6).map((x,i)=>stk(x,true,[-8,6,-3,9,-5,4][i])).join("")}</div>`}
-  </div>
-  ${isStaff()?"":lockerInside()}
+   ${inside?`<span class="lk-hint">Tap to open</span>`:""}
+  </div>${inside?`</div>`:""}
   ${isStaff()?"":stampsHTML()}
   <div class="card stack">
    ${isStaff()?`<div class="row"><span class="grow muted">Role</span><b>${esc(profile.title||"Staff")}</b></div>`:""}
