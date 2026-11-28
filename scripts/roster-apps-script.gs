@@ -34,7 +34,7 @@ function doPost(e) {
     if (t === 'roster') return roster(d, id);
     if (STAFF_SHEET_ID.indexOf('PASTE_') === 0) return reply({ ok: false, error: 'staff sheet not set' });
     const ss = SpreadsheetApp.openById(staffSheetId());
-    const who = [clean(d.code, 8).toUpperCase(), clean(d.name, 80), clean(d.team, 40), clean(d.position, 40)];
+    const who = [rosterCode(id, clean(d.code, 8).toUpperCase()), clean(d.name, 80), clean(d.team, 40), clean(d.position, 40)];
     const date = clean(d.date, 10), now = new Date();
     if (t === 'meal') {
       upsert(tab(ss, 'Meals'), [date].concat(who, [clean(d.occ, 20), clean(d.time, 5), clean(d.what, 120), clean(d.gut, 20), clean(d.plan, 3), now, clean(d.entryId, 40)]), 11);
@@ -59,18 +59,43 @@ function doPost(e) {
 function roster(d, id) {
   const first = clean(d.first, 40), last = clean(d.last, 40);
   if (!first || !last) return reply({ ok: false });
-  const row = [clean(d.code, 8).toUpperCase(), first, last, clean(d.role, 10), clean(d.teamName, 40), clean(d.pos, 40), clean(d.num, 3)];
   const sh = SpreadsheetApp.getActive().getSheetByName(ROSTER_TAB);
   const now = new Date(), vals = sh.getDataRange().getValues();
-  for (let i = 1; i < vals.length; i++) {
-    if (String(vals[i][9]) === id) {
-      sh.getRange(i + 1, 1, 1, 7).setValues([row]);
-      sh.getRange(i + 1, 9).setValue(now);
-      return reply({ ok: true, updated: true });
-    }
+  let mine = -1;
+  for (let i = 1; i < vals.length; i++) if (String(vals[i][9]) === id) { mine = i; break; }
+  // Codes are assigned here, never by the athlete: first initial + first 3 letters of last name.
+  // If someone else already has it, the next person gets JLEE2, JLEE3, and so on.
+  const base = baseCode(first, last);
+  const taken = {};
+  for (let i = 1; i < vals.length; i++) if (i !== mine) taken[String(vals[i][0]).toUpperCase()] = true;
+  let code = mine > 0 ? String(vals[mine][0]).toUpperCase() : '';
+  if (!code || code.replace(/\d+$/, '') !== base || taken[code]) {
+    code = base; let n = 2;
+    while (taken[code]) code = base + (n++);
+  }
+  const row = [code, first, last, clean(d.role, 10), clean(d.teamName, 40), clean(d.pos, 40), clean(d.num, 3)];
+  if (mine > 0) {
+    sh.getRange(mine + 1, 1, 1, 7).setValues([row]);
+    sh.getRange(mine + 1, 9).setValue(now);
+    return reply({ ok: true, updated: true, code: code });
   }
   sh.appendRow(row.concat([now, now, id]));
-  return reply({ ok: true });
+  return reply({ ok: true, code: code });
+}
+
+function baseCode(first, last) {
+  const L = x => String(x || '').normalize('NFD').replace(/[^A-Za-z]/g, '');
+  const f = L(first), l = L(last);
+  if (!l) return f.slice(0, 4).toUpperCase();
+  return (f.charAt(0) + l.slice(0, 3)).toUpperCase();
+}
+
+// The code on every staff-sheet row comes from the Roster tab (by device), so it always matches.
+function rosterCode(id, fallback) {
+  const sh = SpreadsheetApp.getActive().getSheetByName(ROSTER_TAB);
+  const vals = sh.getDataRange().getValues();
+  for (let i = 1; i < vals.length; i++) if (String(vals[i][9]) === id) return String(vals[i][0]);
+  return fallback;
 }
 
 function staffSheetId() { const m = String(STAFF_SHEET_ID).match(/\/d\/([a-zA-Z0-9_-]+)/); return m ? m[1] : String(STAFF_SHEET_ID).trim(); }
