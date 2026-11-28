@@ -1541,7 +1541,7 @@ function vSchedule(){const t=isoToday(),staff=isStaff();
  return `<section><div class="row"><h2 class="grow">Next 3 games</h2>${stamp}</div>
   ${G.length?`<div class="glance">${G.map(g=>`<div class="gl-day${g.date===t?" now":""}"><div class="gl-head"><b>${esc(dayName(g.date))}</b><span>${esc(new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}))}</span></div>
    <div class="gl-game"><span class="gl-t">${esc(g.time?fmtClock(new Date(g.date+"T"+g.time)):"Time TBA")}</span>${staff?`<b>${esc(sportShort(sportById(g.sport)))}</b>`:""}<span>${g.away?"at ":"vs "}${esc(g.opp||"TBA")}</span>${g.ha?`<span class="gl-ha${g.ha==="Home"?" home":""}">${esc(g.ha)}</span>`:""}</div></div>`).join("")}</div>`
-  :`<div class="card"><p class="muted small">${staff?"No games on the schedule yet. Add them in the Google Sheet.":"Your team's schedule isn't posted yet. You can add your own games below."}</p></div>`}</section>`}
+  :`<div class="card"><p class="muted small">${staff?"No games on the schedule yet. Add them in the Google Sheet.":"Your team's schedule isn't posted yet. Check back soon."}</p></div>`}</section>`}
 /* ===== Game day: black and gold screen with sport-specific fueling ===== */
 const GAMEDAY={
  baseball:{pre:"3–4 h before: big carb meal. Rice or pasta bowl with chicken, or two turkey sandwiches and fruit.",top:"30–60 min before: banana, pretzels or a granola bar.",during:"Every 2–3 innings: sips of water. Between games of a doubleheader: a sandwich, fruit and a sports drink.",after:"Within 1 hour: chocolate milk or a recovery meal with carbs and protein.",tip:"Long day in the sun: drink before you're thirsty and keep snacks in your bag."},
@@ -1592,7 +1592,7 @@ function vHome(){
   ${c.type==="game"?vCountdown(c):""}
   ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   ${isStaff()?"":vSchedule()}
-  ${isStaff()?"":vGames()}
+
   ${vHof()}
  </div>`;
 }
