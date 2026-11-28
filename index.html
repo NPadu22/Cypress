@@ -1619,11 +1619,11 @@ function vHome(){
    <h1>${esc(greet())}, ${esc(first)}</h1>
    
   </div>
+  ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   ${vGameDay()}
   ${isStaff()?vSchedule():""}
   ${vScoreboard()}
   ${c.type==="game"?vCountdown(c):""}
-  ${ann.length?`<section><div class="stack" style="gap:4px"><h2>Announcements</h2>${SHEET.team&&S().teamSheet?`<span class="stamp">Synced ${esc(syncAgo(SHEET.team.fetched))}</span>`:DATA.updated?`<span class="stamp">Updated ${esc(fmtDate(DATA.updated))}</span>`:""}</div><div class="card stack">${ann.map(a=>`<div class="ann">${a.who!==undefined&&(a.tag||forLabel(a.who))?`<div class="tags">${a.tag?`<span class="chip">${esc(a.tag)}</span>`:""}${forLabel(a.who)?`<span class="chip gold">${esc(forLabel(a.who))}</span>`:""}</div>`:""}<b>${esc(a.t)}</b>${a.d?`<p class="muted small">${esc(a.d)}</p>`:""}${a.link?`<a class="linkbtn small" href="${esc(a.link)}" target="_blank" rel="noopener">Open link ›</a>`:""}${a.when?`<span class="stamp">${esc(fmtDate(a.when))}</span>`:""}</div>`).join("")}</div></section>`:""}
   ${isStaff()?"":vSchedule()}
 
   ${vHof()}
