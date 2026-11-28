@@ -696,7 +696,7 @@ body[data-gameday="1"] .sb-coach{background:#111;color:#eee;border-color:#2A2A2A
 .sticky{position:relative}.sticky::before{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#ED1C24 60%,#9e1218);box-shadow:0 2px 3px rgba(0,0,0,.35)}
 .sched-row .eyebrow{display:block;margin-bottom:2px}
 .od-row{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.od-row:last-child{border-bottom:0}.od-row p{margin:0}.od-row .eyebrow{display:block;margin-bottom:2px}
-.od-n{flex:none;width:52px;text-align:center;border-radius:8px;background:#003876;color:#FED41F;padding:5px 0;display:flex;flex-direction:column;line-height:1}.od-n b{font:700 1.25rem var(--display)}.od-n span{font:700 .52rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff}
+.od-n{flex:none;width:52px;text-align:center;border-radius:8px;background:#003876;color:#FED41F;padding:5px 0;display:flex;flex-direction:column;line-height:1}.od-n b{font:700 1.25rem var(--display)}.od-n.today{background:#FED41F;color:#003876}.od-n.today b{font-size:.9rem;padding:6px 0}.od-tag{font-style:normal;white-space:nowrap;display:inline-block;background:#FED41F;color:#003876;padding:1px 5px;border-radius:4px;margin-left:4px;letter-spacing:.08em}.od-n span{font:700 .52rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff}
 .od-hero{background:linear-gradient(160deg,#001B3D,#003876);color:#fff;border-radius:18px;padding:18px 18px 16px;border-bottom:4px solid #FED41F;position:relative;overflow:hidden}
 .od-hero:after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border:10px solid rgba(254,212,31,.12);border-radius:50%}
 .od-eye{font:700 .62rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#FED41F}
@@ -1561,11 +1561,15 @@ function dayName(d){const t=isoToday();return d===t?"Today":d===isoPlus(1)?"Tomo
 /* Opening day: a team whose next real game (not a scrimmage) is 3+ weeks out hasn't started its season */
 function daysTo(d){return Math.round((new Date(d+"T12:00:00")-new Date(isoToday()+"T12:00:00"))/864e5)}
 function openers(){const t=isoToday(),by={};allTeamGames().filter(g=>g.date>=t).sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99"))).forEach(g=>{(by[g.sport]=by[g.sport]||[]).push(g)});
- return Object.entries(by).map(([sp,L])=>{if(daysTo(L[0].date)<21)return null;const g=L.find(x=>!/scrimmage|exhibition/i.test(x.note||""))||L[0];return {sp,g,n:daysTo(g.date)}}).filter(Boolean).sort((a,b)=>a.n-b.n)}
+ return Object.entries(by).map(([sp,L])=>{if(daysTo(L[0].date)<21)return null;const g=L.find(x=>!/scrimmage|exhibition/i.test((x.note||"")+" "+(x.opp||"")))||L[0];return {sp,g,n:daysTo(g.date)}}).filter(Boolean).sort((a,b)=>a.n-b.n)}
 function gWhen(g){return [new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}),(g.away?"at ":"vs ")+(g.opp||"TBA"),g.time?fmtClock(new Date(g.date+"T"+g.time)):""].filter(Boolean).join(" · ")}
 function vOpening(){const O=openers();
- if(isStaff()){if(!O.length)return "";return `<section><div class="row"><h2 class="grow">Opening day countdown</h2><span class="stamp">${O.length} team${O.length===1?"":"s"}</span></div>
-  <div class="card stack" style="gap:0">${O.map(o=>`<div class="od-row"><div class="od-n"><b>${o.n}</b><span>days</span></div><div class="grow"><span class="eyebrow">${esc(sportLabel(sportById(o.sp)))}</span><p class="small"><b>${esc(gWhen(o.g))}</b></p></div></div>`).join("")}</div></section>`}
+ if(isStaff()){const t=isoToday(),by={};allTeamGames().filter(g=>g.date>=t).sort((x,y)=>(x.date+(x.time||"99")).localeCompare(y.date+(y.time||"99"))).forEach(g=>{if(!by[g.sport])by[g.sport]=g});
+  const L=Object.entries(by).map(([sp,g])=>{const op=O.find(x=>x.sp===sp);return {sp,g:op?op.g:g,n:daysTo((op?op.g:g).date),open:!!op}}).sort((x,y)=>x.n-y.n);if(!L.length)return "";
+  const lbl=n=>n===0?["Today",""]:n===1?["1","day"]:[String(n),"days"];
+  return `<section><div class="row"><h2 class="grow">All teams · next up</h2><span class="stamp">${L.length} teams</span></div>
+  <div class="card stack" style="gap:0">${L.map(o=>{const [b,u]=lbl(o.n);return `<div class="od-row"><div class="od-n${o.n===0?" today":""}"><b>${b}</b><span>${u}</span></div><div class="grow"><span class="eyebrow">${esc(sportLabel(sportById(o.sp)))}${o.open?` <i class="od-tag">Opening day</i>`:""}</span><p class="small"><b>${esc(gWhen(o.g))}</b></p></div></div>`}).join("")}</div>
+  <p class="stamp" style="margin-top:6px">Teams with no games left this year drop off the list.</p></section>`}
  const o=O.find(x=>x.sp===profile.sport);if(!o)return "";
  return `<section class="od-hero"><span class="od-eye">Opening day countdown</span><div class="od-big"><b>${o.n}</b><span>day${o.n===1?"":"s"} to<br>opening day</span></div><p class="od-sub">${esc(gWhen(o.g))}${o.g.loc?` · ${esc(o.g.loc)}`:""}</p>
   <p class="od-tip">${o.n>60?"Build the base now. Breakfast every day and a recovery snack after every lift.":o.n>21?"Preseason is when habits stick. Log your meals and water so Nick can help you dial in.":"Final stretch. Sleep 7+ hours and practice your game-day fueling plan."}</p></section>`}
