@@ -1564,12 +1564,7 @@ function openers(){const t=isoToday(),by={};allTeamGames().filter(g=>g.date>=t).
  return Object.entries(by).map(([sp,L])=>{if(daysTo(L[0].date)<21)return null;const g=L.find(x=>!/scrimmage|exhibition/i.test((x.note||"")+" "+(x.opp||"")))||L[0];return {sp,g,n:daysTo(g.date)}}).filter(Boolean).sort((a,b)=>a.n-b.n)}
 function gWhen(g){return [new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}),(g.away?"at ":"vs ")+(g.opp||"TBA"),g.time?fmtClock(new Date(g.date+"T"+g.time)):""].filter(Boolean).join(" · ")}
 function vOpening(){const O=openers();
- if(isStaff()){const t=isoToday(),by={};allTeamGames().filter(g=>g.date>=t).sort((x,y)=>(x.date+(x.time||"99")).localeCompare(y.date+(y.time||"99"))).forEach(g=>{if(!by[g.sport])by[g.sport]=g});
-  const L=Object.entries(by).map(([sp,g])=>{const op=O.find(x=>x.sp===sp);return {sp,g:op?op.g:g,n:daysTo((op?op.g:g).date),open:!!op}}).sort((x,y)=>x.n-y.n);if(!L.length)return "";
-  const lbl=n=>n===0?["Today",""]:n===1?["1","day"]:[String(n),"days"];
-  return `<section><div class="row"><h2 class="grow">All teams · next up</h2><span class="stamp">${L.length} teams</span></div>
-  <div class="card stack" style="gap:0">${L.map(o=>{const [b,u]=lbl(o.n);return `<div class="od-row"><div class="od-n${o.n===0?" today":""}"><b>${b}</b><span>${u}</span></div><div class="grow"><span class="eyebrow">${esc(sportLabel(sportById(o.sp)))}${o.open?` <i class="od-tag">Opening day</i>`:""}</span><p class="small"><b>${esc(gWhen(o.g))}</b></p></div></div>`}).join("")}</div>
-  <p class="stamp" style="margin-top:6px">Teams with no games left this year drop off the list.</p></section>`}
+ if(isStaff())return "";
  const o=O.find(x=>x.sp===profile.sport);if(!o)return "";
  return `<section class="od-hero"><span class="od-eye">Opening day countdown</span><div class="od-big"><b>${o.n}</b><span>day${o.n===1?"":"s"} to<br>opening day</span></div><p class="od-sub">${esc(gWhen(o.g))}${o.g.loc?` · ${esc(o.g.loc)}`:""}</p>
   <p class="od-tip">${o.n>60?"Build the base now. Breakfast every day and a recovery snack after every lift.":o.n>21?"Preseason is when habits stick. Log your meals and water so Nick can help you dial in.":"Final stretch. Sleep 7+ hours and practice your game-day fueling plan."}</p></section>`}
@@ -1579,7 +1574,7 @@ function vSchedule(){const t=isoToday(),staff=isStaff(),od=vOpening();
  return `${staff?"":od}<section><div class="row"><h2 class="grow">Next 3 games</h2>${stamp}</div>
   ${G.length?`<div class="glance">${G.map(g=>`<div class="gl-day${g.date===t?" now":""}"><div class="gl-head"><b>${esc(dayName(g.date))}</b><span>${esc(new Date(g.date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}))}</span></div>
    <div class="gl-game"><span class="gl-t">${esc(g.time?fmtClock(new Date(g.date+"T"+g.time)):"Time TBA")}</span>${staff?`<b>${esc(sportShort(sportById(g.sport)))}</b>`:""}<span>${g.away?"at ":"vs "}${esc(g.opp||"TBA")}</span>${g.ha?`<span class="gl-ha${g.ha==="Home"?" home":""}">${esc(g.ha)}</span>`:""}</div></div>`).join("")}</div>`
-  :`<div class="card"><p class="muted small">${staff?"No games on the schedule yet. Add them in the Google Sheet.":"Your team's schedule isn't posted yet. Check back soon."}</p></div>`}</section>${staff?od:""}`}
+  :`<div class="card"><p class="muted small">${staff?"No games on the schedule yet. Add them in the Google Sheet.":"Your team's schedule isn't posted yet. Check back soon."}</p></div>`}</section>`}
 /* ===== Game day: black and gold screen with sport-specific fueling ===== */
 const GAMEDAY={
  baseball:{pre:"3–4 h before: big carb meal. Rice or pasta bowl with chicken, or two turkey sandwiches and fruit.",top:"30–60 min before: banana, pretzels or a granola bar.",during:"Every 2–3 innings: sips of water. Between games of a doubleheader: a sandwich, fruit and a sports drink.",after:"Within 1 hour: chocolate milk or a recovery meal with carbs and protein.",tip:"Long day in the sun: drink before you're thirsty and keep snacks in your bag."},
