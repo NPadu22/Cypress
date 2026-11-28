@@ -39,7 +39,7 @@ A mobile-first web app for Cypress College athletes (adults, all sports): sports
 2. Check the browser console for errors.
 
 ## Home: Charge Board and Hall of Fame
-- Charger Scoreboard (`PLAYS`, `vScoreboard`): 4 daily plays (check-in, sleep 7+, 3+ food logs, water goal). 3+ = a W. Points: 10 per play, +20 for 4/4. Levels in `LEVELS`. Days before first use (`cy_firstday`) never count as losses.
+- Performance Scoreboard (`PLAYS`, `vScoreboard`): 6 daily plays: the 3 Coach's board habits (breakfast, pre-fuel, recovery; tap to toggle, stored in `HAB`), sleep 7+, 3+ food logs, water goal. `WIN`=4 plays = a W. `nextPlay()` shows one nudge to log the easiest missing play. Points: 10 per play, +20 for 6/6. Levels in `LEVELS`. Days before first use (`cy_firstday`) never count as losses.
 - Charger Hall of Fame (`HOF`): only verified facts. Sources (Nov 2026): baseball-reference.com Cypress College pages (5 baseball state titles 1991, 1994, 1997, 2003, 2013; 13 state appearances); cypresschargers.com / cypress.prestosports.com releases (softball 10 titles, 48-0 in 2017, 2010-12 three-peat, 2023 title, 31 appearances; men's golf 2018 title; women's basketball 2005 title per 3C2A preview; women's soccer state finals 2021/2023/2024; volleyball OEC 2010/2016/2021; flag football 2026 inaugural OEC co-champs; swim 2022 Umpornpuckdi 1650 free and 36th state banner; diving Alejandra Gomez 3 titles; baseball 2025 OEC title and Final Four). Update each season.
 
 ## Performance Journal
